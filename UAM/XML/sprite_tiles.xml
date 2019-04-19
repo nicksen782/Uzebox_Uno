@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<gfx-xform version="SINGLE_TS">
+ <input file="/non-web/Uzebox/UZEUNO/UAM/IMG/sprite_tiles.png" type="png" tile-width="8" tile-height="8" />
+ <output file="UAM/PROGMEM/sprite_tiles_progmem.inc">
+ <tiles var-name="sprite_tiles" tilesetOutputTo="PROGMEM" removeDupeTiles="1" />
+ <maps pointers-size="8">
+  <map var-name="offBlackTile" left="1" top="0" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="blackTile" left="2" top="1" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="main_menu_cursor1_f1" left="1" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="main_menu_cursor1_f2" left="1" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="main_menu_cursor2_f1" left="1" top="3" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="main_menu_cursor2_f2" left="1" top="4" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor_f1_d" left="3" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor_f2_d" left="3" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor_f1_l" left="4" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor_f2_l" left="4" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor_f1_u" left="5" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor_f2_u" left="5" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor_f1_r" left="6" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor_f2_r" left="6" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor2_f1_d" left="7" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor2_f2_d" left="7" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor2_f1_l" left="8" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor2_f2_l" left="8" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor2_f1_u" left="9" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor2_f2_u" left="9" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor2_f1_r" left="10" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="cursor2_f2_r" left="10" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
+ </maps> 
+ </output> 
+</gfx-xform> 

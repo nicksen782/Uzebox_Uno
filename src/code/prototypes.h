@@ -1,0 +1,16 @@
+void N782_print(int x,int y,const char *string, u8 fromRam);
+void N782_print_u8(int x,int y, u8 num);
+void clearRamtile( u8 id, u8 newColor);
+u8 countUsedRamtile_ids();
+u8 countAvailableRamtile_ids();
+u8 countDrawPile();
+u8 countDiscardPile();
+u8 countPlayerCards(u8 playerNum);
+void setVramTilemap(u8 x, u8 y, u8 w, u8 h, u8 *map);
+void removeUnusedRamtilesInTilemap(u8 *map);
+void redrawUnderDrawPile();
+void redrawUnderDiscardPile();
+void updatePlayerDisplayedData();
+void get_cardDims_byPlayerAndCardPosition(u8 playerNum, u8 position, u8 *x, u8 *y);
+void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay, u8 option);
+void redrawMainInfoRegion();
