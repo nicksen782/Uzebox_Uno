@@ -59,7 +59,9 @@ void debug_showDebugData(){
 	N782_print_u8(xx_start-1, yy  , game.activePlayers[2]);
 	N782_print_u8(xx_start+0, yy  , game.activePlayers[3]);
 	yy++;
-	N782_print_u8(xx_start-2, yy  , game.activePlayer);
+	yy++;
+	// N782_print_u8(xx_start-2, yy  , game.activePlayer);
+	N782_print_u8(xx_start-0, yy  , game.handRow);
 
 	yy++;
 
@@ -82,11 +84,25 @@ void debug_showDebugData(){
 // Error handler - Called upon reaching fatal errors.
 void errorHandler(enum errorTypes error){
 	// EXAMPLE USAGE: errorHandler(RAMTILEUSAGE);
+	// Intended for fatal errors.
+	// u8 fatalError;
 
 	// Display the error text.
 	switch(error){
-		case RAMTILEUSAGE   : { N782_print( 0 , VRAM_TILES_V-1, S_RAMTILEUSAGE  , 0 ) ; break; }
-		case NOTENOUGHCARDS : { N782_print( 0 , VRAM_TILES_V-1, S_NOTENOUGHCARDS, 0 ) ; break; }
+		// If there are no more free reserved ramtiles.
+		case RAMTILEUSAGE      : {
+			N782_print( 0 , VRAM_TILES_V-1, S_RAMTILEUSAGE  , 0 ) ;
+			// fatalError=true; 
+			break;
+		}
+
+		// If not enough cards are available.
+		case NOTENOUGHCARDS    : {
+			N782_print( 0 , VRAM_TILES_V-1, S_NOTENOUGHCARDS, 0 ) ;
+			// fatalError=true; 
+			break;
+		}
+
 		default : { break; }
 	}
 
@@ -94,21 +110,23 @@ void errorHandler(enum errorTypes error){
 	debug_showDebugData();
 
 	// Blink the "!!" and do not let the program continue.
-	while(1){
-		N782_print( 0 , VRAM_TILES_V-2, S_DBLSPACE, 0 ) ;
-		WaitVsync(20);
-		N782_print( 0 , VRAM_TILES_V-2, S_DBLEXCLAMATION, 0 ) ;
-		WaitVsync(20);
+	// if(fatalError==true){
+		while(1){
+			N782_print( 0 , VRAM_TILES_V-2, S_DBLSPACE, 0 ) ;
+			WaitVsync(20);
+			N782_print( 0 , VRAM_TILES_V-2, S_DBLEXCLAMATION, 0 ) ;
+			WaitVsync(20);
 
-		// WaitVsync(300); // 5 seconds
-		WaitVsync(240); // 4 seconds
-		// WaitVsync(180); // 3 seconds
-		// WaitVsync(120); // 2 seconds
-		// WaitVsync(60);  // 1 second
+			// WaitVsync(300); // 5 seconds
+			WaitVsync(240); // 4 seconds
+			// WaitVsync(180); // 3 seconds
+			// WaitVsync(120); // 2 seconds
+			// WaitVsync(60);  // 1 second
 
-		SoftReset();
-		// WaitVsync(1);
-	}
+			SoftReset();
+			// WaitVsync(1);
+		}
+	// }
 }
 // DEBUG
 
@@ -284,7 +302,7 @@ void N782_print_u8(int x,int y, u8 num){
 
 	// Start indexes for letters, numbers.
 	// u8 numbers_start_index=5;  // numbers_start_index is the tile index of 0.
-	u8 start_i;
+	u8 start_i=0;
 
 	u8 numbers_start_index=17;  // numbers_start_index is the tile index of 0.
 
@@ -329,7 +347,7 @@ void N782_print_u16(int x,int y, u16 num){
 
 	// Start indexes for letters, numbers.
 	// u8 numbers_start_index=5;  // numbers_start_index is the tile index of 0.
-	u8 start_i;
+	u8 start_i=0;
 
 	u8 numbers_start_index=17;  // numbers_start_index is the tile index of 0.
 
@@ -366,6 +384,85 @@ void N782_print_u16(int x,int y, u16 num){
 
 	// // Print the character to the screen.
 	// SetTile(x++,y+0 , charAsTileNum);
+}
+// Message handler - Central place for drawing game messages.
+void msgHandler(enum msgTypes msg){
+	// EXAMPLE USAGE: msgHandler(COULDNOTASSIGNALL);
+	// EXAMPLE USAGE: msgHandler(GAMESTART_FIRST);
+	// Intended for non-fatal errors.
+	u8 fatalError;
+
+	// clearbgmessage : Fill(8,17, 12,5, replacementTile);
+	// Region starts at 8,17, has width of 12 and height of 5.
+
+	// Display the msg text.
+	switch(msg){
+		// If not enough cards are available.
+		case COULDNOTASSIGNALL : {
+			N782_print(9,18, S_COULDNOTASSIGNALL1, 0);
+			N782_print(8,19, S_COULDNOTASSIGNALL2, 0);
+			N782_print(10,20, S_COULDNOTASSIGNALL3, 0);
+			WaitVsync(100);
+		}
+		case GAMESTART_FIRST : {
+			N782_print   ( 9  , 18, S_PLAYER, 0);
+			N782_print_u8( 14 , 18, game.activePlayer );
+			N782_print   ( 9  , 19, S_PLAYSFIRST, 0);
+			break;
+		}
+		case DRAW2_PLAYER : {
+			N782_print   ( 9  , 18, S_PLAYER   , 0 ) ;
+			N782_print_u8( 14 , 18, game.activePlayer );
+			N782_print   ( 9  , 19, S_DRAW2,0);
+			N782_print   ( 9  , 20, S_LOSETURN,0);
+			break;
+		}
+		case DRAW4_PLAYER : {
+			N782_print   ( 9  , 18, S_PLAYER   , 0 ) ;
+			N782_print_u8( 14 , 18, game.activePlayer );
+			N782_print   ( 9  , 19, S_DRAW4,0);
+			N782_print   ( 9  , 20, S_LOSETURN,0);
+			break;
+		}
+		case SKIP_PLAYER : {
+			N782_print   ( 9  , 18, S_PLAYER   , 0 ) ;
+			N782_print_u8( 14 , 18, game.activePlayer );
+			N782_print   ( 9  , 19, S_LOSETURN,0);
+			break;
+		}
+		case REVERSE_PLAYER : {
+			N782_print   ( 9  , 19, S_REVERSE1,0);
+			N782_print   ( 9  , 20, S_REVERSE2,0);
+			break;
+		}
+		case INCORRECTCARD : {
+			N782_print( 8 , 17, S_INCORRECTYCARD  , 0 ) ;
+			N782_print( 8 , 18, S_CHOSEANOTHER    , 0 ) ;
+			break;
+		}
+		case PLAYORPASS : {
+			N782_print( 9 , 17, S_A_TO_PLAY  , 0 ) ;
+			N782_print( 9 , 18, S_B_TO_CANCEL, 0 ) ;
+			break;
+		}
+		case PASSORCANCEL : {
+			N782_print( 9 , 17, S_A_TO_PASS   , 0 ) ;
+			N782_print( 9 , 18, S_B_TO_CANCEL , 0 ) ;
+			break;
+		}
+		case GAMEWIN_PLAYER : {
+			N782_print   ( 9  , 18, S_PLAYER, 0);
+			N782_print_u8( 14 , 18, game.activePlayer );
+			N782_print   ( 9  , 19, S_WINSROUND1 , 0);
+			N782_print   ( 9  , 20, S_WINSROUND2 , 0);
+			break;
+		}
+
+		default : { break; }
+	}
+
+	// Update the debug data.
+	debug_showDebugData();
 }
 // TEXT DISPLAY
 
@@ -622,7 +719,7 @@ u8 tileIsDuplicateOf(u8 ramtile_id){
 		currentRamtileId+=1                    // Do at end of each iteration.
 	){
 		// Skip if the ramtile is set to available. (No point in searching ramtiles that are not in play.)
-		// if(game.ramtile_ids_used[currentRamtileId-1]==0){ continue; }
+		if(game.ramtile_ids_used[currentRamtileId-1]==0){ continue; }
 
 		//
 		isMatch = true;
@@ -761,6 +858,7 @@ void returnDiscardsToDrawPile(){
 	for(u8 i=0; i<totalCardsInDeck; i+=1){
 		if( cards[i].location==CARD_LOCATION_DISCARD ) {
 			cards[i].location = CARD_LOCATION_DRAW ;
+			debug_showDebugData();
 		}
 	}
 
@@ -774,6 +872,8 @@ void returnDiscardsToDrawPile(){
 
 	// Discard pile (below.)
 	redrawUnderDiscardPile();
+
+	// debug_showDebugData();
 }
 // Returns ALL cards to the Draw Pile.
 void resetTheDeck(){
@@ -1348,7 +1448,6 @@ void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
 				WaitVsync(cardDelay);
 			}
 		}
-
 	}
 
 	// Did we not assign 5 cards? Blank out the remaining card positions.
@@ -1381,7 +1480,6 @@ void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
 		}
 		game.playerVisibleHand[cardsAssigned]=255;
 		cardsAssigned++;
-
 	}
 }
 // Remove all cards displayed for the specified player.
@@ -1399,7 +1497,7 @@ void removePlayerCards(u8 playerNumber){
 void clearbgmessage(){
 	// const u8 replacementTile = pgm_read_byte(&(wood_color1[2])) ;
 	const u8 replacementTile = pgm_read_byte(&(wood_color2[2])) ;
-	Fill(7,17, 14,4, replacementTile);
+	Fill(8,17, 12,5, replacementTile);
 }
 // Assigns the specified number of cards to the specified player. (Not shown visually.)
 u8 getCardFromDrawPile(u8 playerNum, u8 howMany){
@@ -1424,43 +1522,53 @@ u8 getCardFromDrawPile(u8 playerNum, u8 howMany){
 
 	// Make sure enough cards exist in the draw pile!
 	if( inDrawPile < howMany ) {
-		if( inDiscardPile >=howMany ){
-			// Return discarded cards to the Draw Pile. (Except: last played card.)
-			returnDiscardsToDrawPile();
-			redrawUnderDrawPile();
-			redrawUnderDiscardPile();
-		}
-		// ERROR!
-		else{
+		// Return discarded cards to the Draw Pile. (Except: last played card.)
+		returnDiscardsToDrawPile();
+
+		// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
+		redrawMainInfoRegion();
+
+		// Count the draw pile again.
+		inDrawPile    = countDrawPile();
+
+		// ERROR? - Fatal error.
+		// if( inDrawPile < howMany ) {
 			// Print the warning.
-			errorHandler(NOTENOUGHCARDS);
-		}
-	}
-
-	do{
-	// Loop until all required cards have been assigned.
-		// Assign a card if some remain to be assigned.
-		if(cardsToAssign){
-			// Generate random number (index into cards array.)
-			cardIndex2 = getRandomNumber(0, totalCardsInDeck-1);
-			// cardIndex2 = getRandomNumber(8, 20-1);
-			// cardIndex2 = getRandomNumber(0, 8-1);
-
-			// Is the card available?
-			if( cards[cardIndex2].location==CARD_LOCATION_DRAW ) {
-				// Assign the card to the player.
-				cards[cardIndex2].location=location;
-
-				// Decrement the remaining cards to assign.
-				cardsToAssign--;
-			}
-		}
-		// else{
-		// 	// End the loop.
-		// 	break;
+			// errorHandler(NOTENOUGHCARDS);
 		// }
+
+		// ERROR? - Just don't allow the card to be provided.
+		//
 	}
-	while( cardsToAssign != 0 );
+
+	u8 specifedCardsAssigned=false;
+	while( cardsToAssign != 0 && countDrawPile() >=1 ){
+	// Loop until all required cards have been assigned.
+
+		// Generate random number (index into cards array.)
+		cardIndex2 = getRandomNumber(0, totalCardsInDeck-1); // Normal range.
+		// cardIndex2 = getRandomNumber(8, 20-1);               // Yellows
+		// cardIndex2 = getRandomNumber(0, 8-1);                // Wilds
+
+		// Is the card available?
+		if( cards[cardIndex2].location==CARD_LOCATION_DRAW ) {
+			// Assign the card to the player.
+			cards[cardIndex2].location=location;
+
+			// Decrement the remaining cards to assign.
+			cardsToAssign--;
+
+			if(cardsToAssign==0){ specifedCardsAssigned=true; }
+		}
+	}
+
+	// Were all specified cards assigned?
+	if(specifedCardsAssigned==false){
+		msgHandler(COULDNOTASSIGNALL);
+
+		// Clear the message. (The message at the lower half of the game board.)
+		clearbgmessage();
+	}
 
 	// Return the value of the last cardIndex2.
 	return cardIndex2;
@@ -1707,11 +1815,6 @@ void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay
 	return;
 }
 
-// void test05(){
-// 	while(1){
-// 		WaitVsync(1);
-// 	}
-// }
 void newGameSetup(){
 	u8 playerWithHighestCard(u8 *p_cards){
 		// Reset the deck.
@@ -1847,9 +1950,6 @@ void newGameSetup(){
 	// Draw the game board.
 	DrawMap2(0, 0, board_28x28);
 
-	// Draw Pile.
-	// DrawMap2(pgm_read_byte(&(draw_pos[0])), pgm_read_byte(&(draw_pos[1])), card_back_lg);
-	// redrawUnderDrawPile();
 	redrawMainInfoRegion();
 
 	u8 p_cards[4] = { 255 } ;
@@ -1863,7 +1963,6 @@ void newGameSetup(){
 
 		// Valid response?
 		if( game.activePlayer != 255 ){
-
 			WaitVsync(20);
 
 			// dealSpecifiecCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay);
@@ -1875,9 +1974,7 @@ void newGameSetup(){
 			debug_showDebugData();
 
 			// Display who plays first!
-			N782_print   (10, 18, S_PLAYER, 0);
-			N782_print_u8(17, 18, game.activePlayer);
-			N782_print   (8 , 19, S_PLAYSFIRST, 0);
+			msgHandler(GAMESTART_FIRST);
 			break;
 		}
 
@@ -1886,7 +1983,6 @@ void newGameSetup(){
 
 	// Wait a moment to allow the user to read the displayed message.
 	WaitVsync(125);
-	// WaitVsync(5);
 
 	// Clear the message. (The message at the lower half of the game board.)
 	clearbgmessage();
@@ -1903,23 +1999,23 @@ void newGameSetup(){
 	// Assign cards to each player. (Does not display the cards.)
 	for(u8 i=0; i<7; i+=1){
 		// Assign a card to player 1.
-		dealSpecifiedCard_anim(1, 255, pos, 10+10, CARDS_FACEDOWN);
+		dealSpecifiedCard_anim(1, 255, pos, 10+5, CARDS_FACEDOWN);
 
 		// Assign a card to player 2.
-		dealSpecifiedCard_anim(2, 255, pos, 10+10, CARDS_FACEDOWN);
+		dealSpecifiedCard_anim(2, 255, pos, 10+5, CARDS_FACEDOWN);
 
 		// Assign a card to player 3.
-		dealSpecifiedCard_anim(3, 255, pos, 10+10, CARDS_FACEDOWN);
+		dealSpecifiedCard_anim(3, 255, pos, 10+5, CARDS_FACEDOWN);
 
 		// Assign a card to player 4.
-		dealSpecifiedCard_anim(4, 255, pos, 14+10, CARDS_FACEDOWN);
+		dealSpecifiedCard_anim(4, 255, pos, 15+5, CARDS_FACEDOWN);
 
 		updatePlayerDisplayedData();
 
-		if(i==4) { pos=0; }
+		if(i%5==0) { pos=0; }
 		else{ pos++; }
 
-		WaitVsync(5);
+		// WaitVsync(5);
 	}
 
 	// Place an initial discard card and then redraw the stack under the Discard Pile.
@@ -1936,6 +2032,8 @@ void newGameSetup(){
 }
 void redrawMainInfoRegion(){
 	u8 * colorTile;
+
+	Fill(9,10, 10, 7, pgm_read_byte(&(wood_color1 [2])));
 
 	// Redraw the Draw Pile.
 	DrawMap2(pgm_read_byte(&(draw_pos[0])), pgm_read_byte(&(draw_pos[1])), card_back_lg);
@@ -1960,50 +2058,55 @@ void redrawMainInfoRegion(){
 
 	// Play direction.
 	if     (game.direction==FORWARD ) {
-		DrawMap2(6 ,19,b_l_corner_fwd);
-		DrawMap2(6 ,6 ,t_l_corner_fwd);
-		DrawMap2(19,6 ,t_r_corner_fwd);
-		DrawMap2(19,19,b_r_corner_fwd);
+		DrawMap2(5 ,20,b_l_corner_fwd);
+		DrawMap2(5 ,5 ,t_l_corner_fwd);
+		DrawMap2(20,5 ,t_r_corner_fwd);
+		DrawMap2(20,20,b_r_corner_fwd);
 	}
 	else if(game.direction==BACKWARD) {
-		DrawMap2(6 ,19,b_l_corner_bkd);
-		DrawMap2(6 ,6 ,t_l_corner_bkd);
-		DrawMap2(19,6 ,t_r_corner_bkd);
-		DrawMap2(19,19,b_r_corner_bkw);
+		DrawMap2(5 ,20,b_l_corner_bkd);
+		DrawMap2(5 ,5 ,t_l_corner_bkd);
+		DrawMap2(20,5 ,t_r_corner_bkd);
+		DrawMap2(20,20,b_r_corner_bkw);
 	}
-	_emu_whisper(0,game.direction==FORWARD);
-	_emu_whisper(1,game.direction==BACKWARD);
+	// if     (game.direction==FORWARD ) {
+	// 	DrawMap2(6 ,19,b_l_corner_fwd);
+	// 	DrawMap2(6 ,6 ,t_l_corner_fwd);
+	// 	DrawMap2(19,6 ,t_r_corner_fwd);
+	// 	DrawMap2(19,19,b_r_corner_fwd);
+	// }
+	// else if(game.direction==BACKWARD) {
+	// 	DrawMap2(6 ,19,b_l_corner_bkd);
+	// 	DrawMap2(6 ,6 ,t_l_corner_bkd);
+	// 	DrawMap2(19,6 ,t_r_corner_bkd);
+	// 	DrawMap2(19,19,b_r_corner_bkw);
+	// }
 
 	// Active color
 	if     (cards[game.lastCardPlayed].color==CARD_YELLOW){ colorTile=pgm_read_byte(&(border_yellow[2])) ; }
 	else if(cards[game.lastCardPlayed].color==CARD_BLUE  ){ colorTile=pgm_read_byte(&(border_blue  [2])) ; }
 	else if(cards[game.lastCardPlayed].color==CARD_RED   ){ colorTile=pgm_read_byte(&(border_red   [2])) ; }
 	else if(cards[game.lastCardPlayed].color==CARD_GREEN ){ colorTile=pgm_read_byte(&(border_green [2])) ; }
-	else if(cards[game.lastCardPlayed].color==CARD_BLACK ){ colorTile=pgm_read_byte(&(border_black [2])) ; }
+	// else if(cards[game.lastCardPlayed].color==CARD_BLACK ){ colorTile=pgm_read_byte(&(border_black [2])) ; }
+	else if(cards[game.lastCardPlayed].color==CARD_BLACK ){ colorTile=pgm_read_byte(&(wood_color2 [2])) ; }
 
 	void clearBorderColor(){
 		const u8 replacementTile = pgm_read_byte(&(wood_color2 [2]));
-		// Fill bottom. (Player 1 side.)
-		Fill(6,22,16,1,replacementTile);
-
-		// Fill left. (Player 2 side.)
-		Fill(5,6,1,16,replacementTile);
-
-		// Fill top. (Player 3 side.)
-		Fill(6,5,16,1,replacementTile);
-
-		// Fill right. (Player 4 side.)
-		Fill(22,6,1,16,replacementTile);
+		Fill(8 ,22,12,1 ,replacementTile); // Player 1 side.
+		Fill(5 ,8 ,1 ,12,replacementTile); // Player 2 side.
+		Fill(8 ,5 ,12,1 ,replacementTile); // Player 3 side.
+		Fill(22,8 ,1 ,12,replacementTile); // Player 4 side.
 	}
 
 	// Clear the borders.
 	clearBorderColor();
 
 	// Draw the colored border only for the active player.
-	if     (game.activePlayer==1){ Fill(6 ,22,16,1 ,colorTile); }
-	else if(game.activePlayer==2){ Fill(5 ,6 ,1 ,16,colorTile); }
-	else if(game.activePlayer==3){ Fill(6 ,5 ,16,1 ,colorTile); }
-	else if(game.activePlayer==4){ Fill(22,6 ,1 ,16,colorTile); }
+
+	if     (game.activePlayer==1){ Fill(8 ,22,12,1 ,colorTile); } // Player 1 side.
+	else if(game.activePlayer==2){ Fill(5 ,8 ,1 ,12,colorTile); } // Player 2 side.
+	else if(game.activePlayer==3){ Fill(8 ,5 ,12,1 ,colorTile); } // Player 3 side.
+	else if(game.activePlayer==4){ Fill(22,8 ,1 ,12,colorTile); } // Player 4 side.
 
 	debug_showDebugData();
 }
@@ -2035,30 +2138,39 @@ void get_cardDims_byPlayerAndCardPosition(u8 playerNum, u8 position, u8 *x, u8 *
 
 }
 void updatePlayerDisplayedData(){
+	// Count all player cards.
 	u8 cardCount_p1 = countPlayerCards(1);
 	u8 cardCount_p2 = countPlayerCards(2);
 	u8 cardCount_p3 = countPlayerCards(3);
 	u8 cardCount_p4 = countPlayerCards(4);
 
-	N782_print( 26 , VRAM_TILES_V-1, S_P1   , 0 ) ; DrawMap2 (25 , VRAM_TILES_V-1, arrow_yellow);
-	N782_print( 23  , VRAM_TILES_V-3, S_CARDS, 0 ) ; PrintByte(26 , VRAM_TILES_V-2, cardCount_p1, 0) ;
+	// Show player designations, arrows, and card counts.
 
+	// P1
+	N782_print( 26 , VRAM_TILES_V-1, S_P1   , 0 ) ; DrawMap2 (25 , VRAM_TILES_V-1, arrow_yellow);
+	N782_print( 23,  VRAM_TILES_V-3, S_CARDS, 0 ) ; PrintByte(26 , VRAM_TILES_V-2, cardCount_p1, 0) ;
+
+	// P2
 	N782_print( 1 , VRAM_TILES_V-1, S_P2   , 0 ) ; DrawMap2 (0, VRAM_TILES_V-1, arrow_blue  );
 	N782_print( 0 , VRAM_TILES_V-3, S_CARDS, 0 ) ; PrintByte(3, VRAM_TILES_V-2, cardCount_p2, 0) ;
 
-	N782_print(0 , 0 , S_P3   ,0 ) ; DrawMap2 (2 , 0, arrow_red   );
-	N782_print(0 , 1 , S_CARDS,0)  ; PrintByte(3 , 2, cardCount_p3, 0) ;
+	// P3
+	N782_print( 0 , 0 , S_P3   ,0 ) ; DrawMap2 (2 , 0, arrow_red   );
+	N782_print( 0 , 1 , S_CARDS,0)  ; PrintByte(3 , 2, cardCount_p3, 0) ;
 
+	// P4
 	N782_print( 25, 0, S_P4   ,0 ) ; DrawMap2 (27 , 0, arrow_green );
 	N782_print( 23, 1, S_CARDS,0 ) ; PrintByte(26 , 2, cardCount_p4, 0) ;
 
 	// UNO? Display for all players.
 
+	// Clear the UNO indicator.
 	Fill(24 , VRAM_TILES_V-4, 4,1, 0x01);
 	Fill(1  , VRAM_TILES_V-4, 4,1, 0x01);
 	Fill(1  , 3             , 4,1, 0x01);
 	Fill(24 , 3             , 4,1, 0x01);
 
+	// Set the UNO indicator where applicable.
 	if( cardCount_p1==1 ) { N782_print( 24 , VRAM_TILES_V-4, S_UNO , 0 ) ; }
 	if( cardCount_p2==1 ) { N782_print( 1  , VRAM_TILES_V-4, S_UNO , 0 ) ; }
 	if( cardCount_p3==1 ) { N782_print( 1  , 3             , S_UNO , 0 ) ; }
@@ -2067,13 +2179,29 @@ void updatePlayerDisplayedData(){
 }
 
 // Draw card test.
-// TESTS
 
 void gstate_title1(){
+	// nicksen782 lense flare graphic.
 	ClearVram();
+	SetTileTable( bg_tiles2 );
+	DrawMap2(11,9,N782_F1);WaitVsync(10);
+	DrawMap2(11,9,N782_F2);WaitVsync(10);
+	DrawMap2(11,9,N782_F3);WaitVsync(10);
+	DrawMap2(11,9,N782_F4);WaitVsync(10);
+	DrawMap2(11,9,N782_F5);WaitVsync(10);
+	DrawMap2(11,9,N782_F4);WaitVsync(8);
+	DrawMap2(11,9,N782_F3);WaitVsync(8);
+	DrawMap2(11,9,N782_F2);WaitVsync(8);
+	DrawMap2(11,9,N782_F1);WaitVsync(8);
+	ClearVram();
+	SetTileTable( bg_tiles );
+
 	N782_print(0, 0, PSTR("0 title1"), 0);
 	game.gamestate1=GSTATE_TITLE2;
 	WaitVsync(15);
+
+	// Uzebox flash logo.
+	//
 
 	while(game.gamestate1==GSTATE_TITLE1){
 		WaitVsync(1);
@@ -2081,10 +2209,15 @@ void gstate_title1(){
 
 }
 void gstate_title2(){
+	// Quick credits screen.
+	//
+
 	ClearVram();
 	N782_print(0, 1, PSTR("1 title2"), 0);
 	game.gamestate1=GSTATE_TITLE_MAIN;
 	WaitVsync(15);
+
+	// UNO logo.
 
 	while(game.gamestate1==GSTATE_TITLE2){
 		WaitVsync(1);
@@ -2092,10 +2225,12 @@ void gstate_title2(){
 }
 void gstate_title_main(){
 	ClearVram();
-	N782_print(0, 2, PSTR("2 title_main"), 0);
+	Fill(0,0,28,28, 1);
+	N782_print(0, 0, PSTR("2 title_main"), 0);
 	game.gamestate1=GSTATE_PLAYING;
 
-	DrawMap2(0, 10, map_unoLogo1);
+	DrawMap2(3, 1, map_unoLogo1);
+	// while(1){}
 	WaitVsync(20);
 	// DrawMap2(0, 0, board_22x22);
 	// WaitVsync(20);
@@ -2156,14 +2291,42 @@ void gstate_playing(){
 
 		DrawMap2(x, y, card);
 	}
+
+
+	// Only works with the cards of the specified player.
+	void displayCards_byPlayer(u8 playerNum, u8 option){
+		// Get the count of this player's cards.
+		u8 numCards = countPlayerCards(playerNum) ;
+
+		if( option==CARDS_FACEDOWN ){
+			for(u8 pos=0; pos<5; pos+=1){
+				// Remove the existing card.
+				removeCard_sm(playerNum, pos);
+
+				// Draw the card face down.
+				if(numCards>pos){ drawFaceDownCard(playerNum, pos); }
+
+				// Remove and hide the card.
+				else            { removeCard_sm(playerNum, pos); }
+			}
+		}
+
+		if( option==CARDS_ACTIVEPLAYERFACEUP || option==CARDS_FACEUP ){
+			// This does remove the existing card before drawing the new card.
+			displayCardsForPlayer(game.activePlayer, game.handRow*5, 1);
+		}
+
+	}
+
+	// Draws the cards for ALL PLAYERS.
 	void displayCards(u8 option){
 		// option should have the values from the enum cardFaceShown.
 
 		// First, remove the ramiles and hide the cards for each player.
-		removePlayerCards(1); // Card remains possessed by the player.
-		removePlayerCards(2); // Card remains possessed by the player.
-		removePlayerCards(3); // Card remains possessed by the player.
-		removePlayerCards(4); // Card remains possessed by the player.
+		// removePlayerCards(1); // Card remains possessed by the player.
+		// removePlayerCards(2); // Card remains possessed by the player.
+		// removePlayerCards(3); // Card remains possessed by the player.
+		// removePlayerCards(4); // Card remains possessed by the player.
 
 		// Display cards face-down for the inactive players.
 		for(u8 i=1; i<4+1; i+=1){
@@ -2178,11 +2341,14 @@ void gstate_playing(){
 			u8 numCards = countPlayerCards(i) ;
 
 			for(u8 pos=0; pos<5; pos+=1){
+				// Remove the existing card.
+				removeCard_sm(i, pos);
+
 				// Draw the card face down.
 				if(numCards>pos){ drawFaceDownCard(i, pos); }
+
 				// Remove and hide the card.
 				else            { removeCard_sm(i, pos); }
-				// WaitVsync(1);
 			}
 		}
 
@@ -2191,6 +2357,7 @@ void gstate_playing(){
 			displayCardsForPlayer(game.activePlayer, 0*5, 1);
 		}
 	}
+
 	void getCursorPos(u8 playerNum, u8 cursorIndex, u8 *x, u8 *y){
 		if     (playerNum==1){
 			*x = pgm_read_byte(&(p1_pos_cursor[cursorIndex][0]));
@@ -2424,34 +2591,6 @@ void gstate_playing(){
 		//
 		newGameSetup();
 
-		// NEW
-		// NEW
-		// void drawAllCardsFaceDown(u8 playerNum){
-		// 	// First, remove the ramiles and hide the cards for each player.
-		// 	removePlayerCards(playerNum); // Card remains possessed by the player.
-
-		// 	// Get the count of this player's cards.
-		// 	u8 numCards = countPlayerCards(playerNum) ;
-
-		// 	// Display cards face-down for the player.
-		// 	for(u8 pos=0; pos<5; pos+=1){
-		// 		// Draw the card face down.
-		// 		if(numCards>pos){ drawFaceDownCard(playerNum, pos); }
-		// 		// Remove and hide the card.
-		// 		else            { removeCard_sm(playerNum, pos); }
-		// 	}
-
-		// }
-		// void drawAllCardsFaceUp(u8 playerNum){
-		// 	// First, remove the ramiles and hide the cards for each player.
-		// 	removePlayerCards(playerNum); // Card remains possessed by the player.
-
-		// 	// Display these cards normally (face-up.)
-		// 	displayCardsForPlayer(game.activePlayer, 0*5, 1);
-		// }
-		// NEW
-		// NEW
-
 		// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
 		redrawMainInfoRegion();
 
@@ -2518,18 +2657,32 @@ void gstate_playing(){
 
 		u8 initialIteration=1;
 
+		// Display all cards face-down.
+		displayCards_byPlayer(1, CARDS_FACEDOWN);
+		displayCards_byPlayer(2, CARDS_FACEDOWN);
+		displayCards_byPlayer(3, CARDS_FACEDOWN);
+		displayCards_byPlayer(4, CARDS_FACEDOWN);
+
+		u8 thisPlayer;
+
+		u8 maxHandRows;
+		u8 playerCards;
+
 		// Main game loop.
 		while(game.gamestate1==GSTATE_PLAYING){
 			// Clear the endOfTurnFlag.
 			endOfTurnFlag=0;
+
+			//
+			thisPlayer=game.activePlayer;
 
 			// Hide the cursor.
 			MapSprite2(0, cursor1map, SPRITE_OFF );
 			// MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
 			WaitVsync(1);
 
-			// Flip over all player cards. (Clear ramtile usages.)
-			displayCards(CARDS_FACEDOWN);
+			// Flip down all player cards. (Clear ramtile usages.)
+			// displayCards(CARDS_FACEDOWN);
 
 			// Handle initial iteration. (Initial discard.)
 			if(initialIteration==1){
@@ -2540,34 +2693,21 @@ void gstate_playing(){
 				if(cards[game.lastCardPlayed].value==CARD_REV       ) { playerReverse=1; }
 				if(cards[game.lastCardPlayed].value==CARD_WILD_DRAW4) { playerDraws4 =1; }
 			}
-			initialIteration=0;
 
 			// Were some flags set at the end of the last turn?
 			if(playerDraws2 || playerSkipped || playerDraws4 || playerReverse){
-				N782_print( 9 , 18, S_PLAYER   , 0 ) ;
-				switch(game.activePlayer){
-					case 1 : { N782_print( 16 , 18, S_1   , 0 ); break; }
-					case 2 : { N782_print( 16 , 18, S_2   , 0 ); break; }
-					case 3 : { N782_print( 16 , 18, S_3   , 0 ); break; }
-					case 4 : { N782_print( 16 , 18, S_4   , 0 ); break; }
-					default : { break; }
-				};
-
 				if( playerDraws2  ){
-					N782_print(9,19,S_DRAW2,0);
-					N782_print(9,20,S_LOSETURN,0);
+					msgHandler(DRAW2_PLAYER);
 					endOfTurnFlag=1;
 					// Draw 2
 					for(u8 i=0; i<2; i+=1){ dealSpecifiedCard_anim(game.activePlayer, 255, 2, 4, CARDS_FACEDOWN); }
 				}
 				else if( playerSkipped ){
-					N782_print(9,19,S_LOSETURN,0);
-					// Skip
+					msgHandler(SKIP_PLAYER);
 					endOfTurnFlag=1;
 				}
 				else if( playerDraws4  ){
-					N782_print(9,19,S_DRAW4,0);
-					N782_print(9,20,S_LOSETURN,0);
+					msgHandler(DRAW4_PLAYER);
 					endOfTurnFlag=1;
 					// Draw 4
 					for(u8 i=0; i<4; i+=1){ dealSpecifiedCard_anim(game.activePlayer, 255, 2, 4, CARDS_FACEDOWN); }
@@ -2575,13 +2715,15 @@ void gstate_playing(){
 				else if( playerReverse  ){
 					endOfTurnFlag=1;
 					game.direction = !game.direction;
-					// getNextPlayerNumber();
-					N782_print(9,19,S_REVERSE,0);
-					N782_print(9,20,S_LOSETURN,0);
+					if(initialIteration==0){
+						getNextPlayerNumber();	// Sets up the next player.
+					}
+					msgHandler(REVERSE_PLAYER);
 				}
 			}
 
 			// Reset those flags.
+			initialIteration=0;
 			playerDraws2 =0;
 			playerSkipped=0;
 			playerDraws4 =0;
@@ -2596,6 +2738,10 @@ void gstate_playing(){
 			// If the end of turn flag is set then end this iteration. (Also, set the value for next player.)
 			if( endOfTurnFlag==1 ) {
 				WaitVsync(100);
+
+				// Flip down this player's cards. (Clear ramtile usages.)
+				displayCards_byPlayer(thisPlayer, CARDS_FACEDOWN);
+
 				clearbgmessage();
 				getNextPlayerNumber();
 				clearbgmessage();
@@ -2639,7 +2785,16 @@ void gstate_playing(){
 			SetSpriteVisibility(true);
 
 			// Display the cards for the current player face-up.
-			displayCards(CARDS_ACTIVEPLAYERFACEUP);
+			// displayCards(CARDS_ACTIVEPLAYERFACEUP);
+
+			game.handRow=0;
+
+			// Flip up this player's cards. (Uses ramtiles.)
+			displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
+
+			// maxHandRows = countPlayerCards(thisPlayer)/5;
+			// if(playerCards/5 >= game.handRow){}
+			// maxHandRows
 
 			// Loop until the player's turn ends.
 			while(endOfTurnFlag==0){
@@ -2653,8 +2808,8 @@ void gstate_playing(){
 				// CARD NOT YET SELECTED: Allow cursor movement and for the user to choose a card or pass their turn.
 				if(!cardSelected){
 					// Move cursor left or right. Perform bounds check.
-
 					if     (game.activePlayer==1 || game.activePlayer==3){
+						// Adjust the cursor position over card.
 						if( (game.btnHeld1 & BTN_LEFT) ||  (game.btnHeld1 & BTN_RIGHT) ) {
 							if( game.btnHeld1 & (BTN_LEFT ) ){
 								cursorIndex=cursorIndex !=0 ? cursorIndex-1 : cursorIndex;
@@ -2667,10 +2822,26 @@ void gstate_playing(){
 							// Redraw the sprite.
 							MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
 						}
+
+						// Adjust the handRow value and then redisplay cards.
+						if( (game.btnHeld1 & BTN_UP) ||  (game.btnHeld1 & BTN_DOWN) ) {
+							if( game.btnHeld1 & (BTN_UP )  ) {
+								game.handRow = game.handRow <= (countPlayerCards(game.activePlayer)/5)-1 ? game.handRow+1 : game.handRow;
+
+							}
+							if( game.btnHeld1 & (BTN_DOWN) ) {
+								game.handRow = game.handRow == 0 ? game.handRow : game.handRow-1;
+							}
+
+							// Flip up this player's cards. (Uses ramtiles.)
+							displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
+							debug_showDebugData();
+						}
 					}
 					else if(game.activePlayer==2 || game.activePlayer==4){
+						// Adjust the cursor position over card.
 						if( (game.btnHeld1 & BTN_UP) ||  (game.btnHeld1 & BTN_DOWN) ) {
-							if( game.btnHeld1 & (BTN_UP ) ){
+							if( game.btnHeld1 & (BTN_UP )  ){
 								cursorIndex=cursorIndex !=0 ? cursorIndex-1 : cursorIndex;
 							}
 							if( game.btnHeld1 & (BTN_DOWN) ){
@@ -2681,8 +2852,22 @@ void gstate_playing(){
 							// Redraw the sprite.
 							MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
 						}
-					}
 
+						// Adjust the handRow value and then redisplay cards.
+						if( (game.btnHeld1 & BTN_LEFT) ||  (game.btnHeld1 & BTN_RIGHT) ) {
+							if( game.btnHeld1 & (BTN_LEFT )  ) {
+								game.handRow = game.handRow <= (countPlayerCards(game.activePlayer)/5)-1 ? game.handRow+1 : game.handRow;
+
+							}
+							if( game.btnHeld1 & (BTN_RIGHT) ) {
+								game.handRow = game.handRow == 0 ? game.handRow : game.handRow-1;
+							}
+
+							// Flip up this player's cards. (Uses ramtiles.)
+							displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
+							debug_showDebugData();
+						}
+					}
 
 					// Draw another row of cards?
 					if( game.btnHeld1 & (BTN_UP   ) ){
@@ -2709,8 +2894,9 @@ void gstate_playing(){
 							)
 						){
 							// Change the color if the card was a different color that the discard but had a matching value.
-							N782_print( 7 , 17, S_INCORRECTYCARD  , 0 ) ;
-							N782_print( 7 , 18, S_CHOSEANOTHER    , 0 ) ;
+							// N782_print( 7 , 17, S_INCORRECTYCARD  , 0 ) ;
+							// N782_print( 7 , 18, S_CHOSEANOTHER    , 0 ) ;
+							msgHandler(INCORRECTCARD);
 							msgDisplayed=1;
 							*msgTimer=0;
 							continue;
@@ -2756,15 +2942,13 @@ void gstate_playing(){
 						//
 						clearbgmessage();
 
-						N782_print( 9 , 17, S_A_TO_PLAY  , 0 ) ;
-						N782_print( 9 , 18, S_B_TO_CANCEL, 0 ) ;
+						msgHandler(PLAYORPASS);
 					}
 
 					// Give up turn.
 					if( game.btnHeld1 & (BTN_B   )  ){
 						clearbgmessage();
-						N782_print( 9 , 17, S_A_TO_PASS   , 0 ) ;
-						N782_print( 9 , 18, S_B_TO_CANCEL , 0 ) ;
+						msgHandler(PASSORCANCEL);
 
 						// Wait for the user to release the button.
 						while ( game.btnHeld1 ){
@@ -2807,7 +2991,12 @@ void gstate_playing(){
 
 					// If a button was pressed then wait for the button to be released.
 					if( game.btnHeld1 ){
-						while ( game.btnHeld1 ){ getInputs(); WaitVsync(1); }
+						while ( game.btnHeld1 ){
+							getInputs();
+							// Do a soft-reset if both L and R shoulder buttons are pressed.
+							if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+							WaitVsync(1);
+						}
 					}
 
 				}
@@ -2983,19 +3172,15 @@ void gstate_playing(){
 			// Yes: Win! End round, count points, start new round.
 			else if(countPlayerCards(game.activePlayer)==0){
 				// WIN ROUND!!!
-				N782_print( 12 , 18, S_PLAYER   , 0 ) ;
-				switch(game.activePlayer){
-					case 1 : { N782_print( 18 , 18, S_1   , 0 ); break; }
-					case 2 : { N782_print( 18 , 18, S_2   , 0 ); break; }
-					case 3 : { N782_print( 18 , 18, S_3   , 0 ); break; }
-					case 4 : { N782_print( 18 , 18, S_4   , 0 ); break; }
-					default : { break; }
-				};
-				N782_print( 9 , 19, S_WINSROUND   , 0 ) ;
+
+				msgHandler(GAMEWIN_PLAYER);
 
 				WaitVsync(200);
 				SoftReset();
 			}
+
+			// Flip down this player's cards. (Clear ramtile usages.)
+			displayCards_byPlayer(thisPlayer, CARDS_FACEDOWN);
 
 			// Is the the next player an active player? If not, then skip to the next player until an active player is found.
 			getNextPlayerNumber();

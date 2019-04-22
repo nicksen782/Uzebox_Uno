@@ -14,6 +14,7 @@
 // USER CODE INCLUDES
 // #include "../assets/defineSR.def"             //
 #include "../assets/bg_tiles_progmem.inc"     //
+#include "../assets/bg_tiles2_progmem.inc"     //
 #include "../assets/sprite_tiles_progmem.inc" //
 #include "../assets/patches.inc" // SOUND PATCHES
 // USER CODE INCLUDES
@@ -25,61 +26,40 @@ const char S_MSG2[]           PROGMEM = _MSG2     ; // STRING AT PROGRAM START
 const char S_MSG3[]           PROGMEM = ""        ; // STRING AT PROGRAM START
 
 const char S_PRESSSTART[]     PROGMEM = "PRESS START!"; // STRING AT GAME START
+
 const char S_P1[]             PROGMEM = "P1"          ;
 const char S_P2[]             PROGMEM = "P2"          ;
 const char S_P3[]             PROGMEM = "P3"          ;
 const char S_P4[]             PROGMEM = "P4"          ;
-const char S_PLAYER[]         PROGMEM = "PLAYER"      ;
-const char S_1[]              PROGMEM = "1"           ;
-const char S_2[]              PROGMEM = "2"           ;
-const char S_3[]              PROGMEM = "3"           ;
-const char S_4[]              PROGMEM = "4"           ;
-
-const char S_PLAYSFIRST[]     PROGMEM = "PLAYS FIRST!"; //
-
-const char S_DIRECTION[]      PROGMEM = "DIR"       ; //
-const char S_FORWARD[]        PROGMEM = "FORWARD"   ; //
-const char S_BACKWARD[]       PROGMEM = "BACKWARD"  ; //
-
-const char S_COLOR[]          PROGMEM = "COL"       ; //
-const char S_YELLOW[]         PROGMEM = "YELLOW"    ; //
-const char S_BLUE[]           PROGMEM = "BLUE"      ; //
-const char S_RED[]            PROGMEM = "RED"       ; //
-const char S_GREEN[]          PROGMEM = "GREEN"     ; //
-const char S_BLACK[]          PROGMEM = "BLACK"     ; //
-
 const char S_UNO[]            PROGMEM = "UNO!"      ; //
 const char S_WIN[]            PROGMEM = "WIN!"      ; //
 const char S_LOSE[]           PROGMEM = "LOSE"      ; //
 const char S_CARDS[]          PROGMEM = "CARDS"     ; //
 
-const char S_A_TO_PLAY[]      PROGMEM = "A:  PLAY"  ; // STRING FOR SELECTING A CARD
-const char S_A_TO_PASS[]      PROGMEM = "A:  PASS"  ; //
-const char S_B_TO_CANCEL[]    PROGMEM = "B:  CANCEL"; // STRING FOR SELECTING A CARD
+const char S_DBLSPACE[]           PROGMEM = "  "                          ; // ERROR STRING
+const char S_DBLEXCLAMATION[]     PROGMEM = "!!"                          ; // ERROR STRING
+const char S_RAMTILEUSAGE[]       PROGMEM = "NOT ENOUGH RESERVED RAMTILES"; // ERROR STRING
+const char S_NOTENOUGHCARDS[]     PROGMEM = "NOT ENOUGH CARDS"            ; // ERROR STRING
 
-const char S_INCORRECTYCARD[] PROGMEM = "INCORRECT CARD" ; //
-const char S_CHOSEANOTHER[]   PROGMEM = "CHOSE ANOTHER" ; //
-
-const char S_WINSROUND[]      PROGMEM = "WINS ROUND!" ; //
-
-const char S_DRAW2[]          PROGMEM = "DRAW TWO!"  ; // CARD INFO
-const char S_DRAW4[]          PROGMEM = "DRAW FOUR!" ; // CARD INFO
-const char S_LOSETURN[]       PROGMEM = "LOSE TURN!" ; // CARD INFO
-const char S_REVERSE[]        PROGMEM = "REVERSED!" ; // CARD INFO
-
-const char S_CHOOSECOLOR[]    PROGMEM = "CHOOSE COLOR" ; //
-const char S_PRESSA[]         PROGMEM = "PRESS A" ;        //
-
-// const char S_NEXT_PLAYER[]    PROGMEM = "NEXT PLAYER:"   ; // CARD INFO
-// const char S_DRAW2[]          PROGMEM = " DRAWS 2 CARDS"  ; // CARD INFO
-// const char S_DRAW4[]          PROGMEM = " DRAWS 4 CARDS"  ; // CARD INFO
-// const char S_LOSESTURN[]      PROGMEM = " LOSES TURN"     ; // CARD INFO
-// const char S_REVERSE[]        PROGMEM = "REVERSES ORDER" ; // CARD INFO
-
-const char S_DBLSPACE[]       PROGMEM = "  "                          ; // ERROR STRING
-const char S_DBLEXCLAMATION[] PROGMEM = "!!"                          ; // ERROR STRING
-const char S_RAMTILEUSAGE[]   PROGMEM = "BAD RESERVED RAMTILES COUNT" ; // ERROR STRING
-const char S_NOTENOUGHCARDS[] PROGMEM = "BAD DRAW PILE COUNT"         ; // ERROR STRING
+const char S_COULDNOTASSIGNALL1[] PROGMEM = "SOME CARDS"  ; // MESSAGE STRING
+const char S_COULDNOTASSIGNALL2[] PROGMEM = "COULD NOT BE"; // MESSAGE STRING
+const char S_COULDNOTASSIGNALL3[] PROGMEM = "ASSIGNED"    ; // MESSAGE STRING
+const char S_A_TO_PLAY[]          PROGMEM = "A:  PLAY"    ; // MESSAGE STRING
+const char S_A_TO_PASS[]          PROGMEM = "A:  PASS"    ; // MESSAGE STRING
+const char S_B_TO_CANCEL[]        PROGMEM = "B:  CANCEL"  ; // MESSAGE STRING
+const char S_INCORRECTYCARD[]     PROGMEM = "WRONG CARD"  ; // MESSAGE STRING
+const char S_CHOSEANOTHER[]       PROGMEM = "PICK ANOTHER"; // MESSAGE STRING
+const char S_PLAYSFIRST[]         PROGMEM = "PLAYS 1ST!"  ; // MESSAGE STRING
+const char S_PLAYER[]             PROGMEM = "PLAYER"      ; // MESSAGE STRING
+const char S_WINSROUND1[]         PROGMEM = "WINS THE"    ; // MESSAGE STRING
+const char S_WINSROUND2[]         PROGMEM = "ROUND!"      ; // MESSAGE STRING
+const char S_DRAW2[]              PROGMEM = "DRAW TWO!"   ; // MESSAGE STRING
+const char S_DRAW4[]              PROGMEM = "DRAW FOUR!"  ; // MESSAGE STRING
+const char S_LOSETURN[]           PROGMEM = "LOSE TURN!"  ; // MESSAGE STRING
+const char S_REVERSE1[]           PROGMEM = "PLAY ORDER"  ; // MESSAGE STRING
+const char S_REVERSE2[]           PROGMEM = "REVERSED!"   ; // MESSAGE STRING
+const char S_CHOOSECOLOR[]        PROGMEM = "CHOOSE COLOR"; // MESSAGE STRING
+const char S_PRESSA[]             PROGMEM = "PRESS A"     ; // MESSAGE STRING
 // STRINGS (PROGMEM)
 
 // HOLDS THE CURRENT START POSITION FOR THE SCROLLABLE VIEW.
@@ -95,19 +75,19 @@ const u8 p2_pos[][2]          PROGMEM = { { 1    , 7    }, { 1    , 10   }, { 1 
 const u8 p3_pos[][2]          PROGMEM = { { 7    , 1    }, { 10   , 1    }, { 13   , 1    }, { 16   , 1    }, { 19   , 1    } };
 const u8 p4_pos[][2]          PROGMEM = { { 24   , 7    }, { 24   , 10   }, { 24   , 13   }, { 24   , 16   }, { 24   , 19   } };
 
-const u8 p1_pos_cursor[][2]   PROGMEM = { { 7    , 24-2 }, { 10   , 24-2 }, { 13   , 24-2 }, { 16   , 24-2 }, { 19   , 24-2 } };
-const u8 p2_pos_cursor[][2]   PROGMEM = { { 1+4  , 7    }, { 1+4  , 10   }, { 1+4  , 13   }, { 1+4  , 16   }, { 1+4  , 19   } };
-const u8 p3_pos_cursor[][2]   PROGMEM = { { 7    , 1+4  }, { 10   , 1+4  }, { 13   , 1+4  }, { 16   , 1+4  }, { 19   , 1+4  } };
-const u8 p4_pos_cursor[][2]   PROGMEM = { { 24-2 , 7    }, { 24-2 , 10   }, { 24-2 , 13   }, { 24-2 , 16   }, { 24-2 , 19   } };
+const u8 p1_pos_cursor[][2]   PROGMEM = { { 7    , 24-1 }, { 10   , 24-1 }, { 13   , 24-1 }, { 16   , 24-1 }, { 19   , 24-1 } };
+const u8 p2_pos_cursor[][2]   PROGMEM = { { 1+3  , 7    }, { 1+3  , 10   }, { 1+3  , 13   }, { 1+3  , 16   }, { 1+3  , 19   } };
+const u8 p3_pos_cursor[][2]   PROGMEM = { { 7    , 1+3  }, { 10   , 1+3  }, { 13   , 1+3  }, { 16   , 1+3  }, { 19   , 1+3  } };
+const u8 p4_pos_cursor[][2]   PROGMEM = { { 24-1 , 7    }, { 24-1 , 10   }, { 24-1 , 13   }, { 24-1 , 16   }, { 24-1 , 19   } };
 
 //
 const u8 wild_pos_cursor[][2] PROGMEM = { { 9    , 16 }, { 12   , 16 }, { 15   , 16 }, { 18   , 16 }, };
 //
 
-const u8 draw_pos[2]          PROGMEM =   { 9 , 12 };
-const u8 discard_pos[2]       PROGMEM =   { 16, 12 };
-const u8 draw_pos_below[2]    PROGMEM =   { 9 , 16 };
-const u8 discard_pos_below[2] PROGMEM =   { 16, 16 };
+const u8 draw_pos[2]          PROGMEM =   { 9+1 , 12-1 };
+const u8 discard_pos[2]       PROGMEM =   { 16-1, 12-1 };
+const u8 draw_pos_below[2]    PROGMEM =   { 9+1 , 16-1 };
+const u8 discard_pos_below[2] PROGMEM =   { 16-1, 16-1 };
 // POSITIONS (PROGMEM)
 
 // EXTERNAL GLOBALS VARIABLES
@@ -137,8 +117,21 @@ u8 counter8b_gen1         = 0;
 
 // ENUMS
 enum errorTypes {
-	RAMTILEUSAGE  ,
-	NOTENOUGHCARDS ,
+	RAMTILEUSAGE      ,
+	NOTENOUGHCARDS    ,
+};
+enum msgTypes {
+	COULDNOTASSIGNALL ,
+	GAMESTART_FIRST   ,
+	DRAW2_PLAYER      ,
+	DRAW4_PLAYER      ,
+	SKIP_PLAYER       ,
+	REVERSE_PLAYER    ,
+	INCORRECTCARD     ,
+	PLAYORPASS        ,
+	PASSORCANCEL      ,
+	GAMEWIN_PLAYER    ,
+
 };
 enum ramtileColors   {
 	// CLEAREDRAMTILECOLOR0 = 0B00000110 , // INITIAL COLOR. A color that looks like RED.
@@ -159,6 +152,11 @@ enum gamestates1   {
 	GSTATE_UZENET_SETUP1 ,
 	GSTATE_UZENET_SETUP2 ,
 	GSTATE_LOCAL_PREGAME ,
+};
+enum gamestates2   {
+	GSTATE_PLAYING_GAMESTART ,
+	GSTATE_PLAYING_PLAYING   ,
+	GSTATE_PLAYING_PAUSE     ,
 };
 enum playDirection   {
 	FORWARD  ,
@@ -218,38 +216,39 @@ struct __attribute__ ((__packed__)) cards_ {
 };
 struct __attribute__ ((__packed__)) game_ {
 	enum gamestates1 gamestate1           ; //
-	u8 gamestate2                         ; // Secondary game state. Coin room, normal game.
+	enum gamestates2 gamestate2           ; //
 
 	u8 numPlayers                         ; // 1, 2, 3, 4
 	u8 activePlayers[4]                   ; // FLAGS: index 0 is player 1, index 1 is player 2, etc.
 	u8 activePlayer                       ; // Currently active player.
 
-	// enum card_values   discardColor       ; // :4 ;
-	// enum card_colors   discardValue       ; // :3 ;
+	u8 handRow ;
+
 	enum playDirection direction          ;
 
-	u8 ramtile_ids_used[reservedRamtiles] ;
+	u8 ramtile_ids_used[reservedRamtiles] ; // Array containing ramtile id reservations. (1 or 0 for availability.)
 	u8 playerVisibleHand[5]               ; // Active player's hand. (Indexes into cards array struct.)
 	u8 lastCardPlayed                     ; // Card at the top of the Discard Pile. (Index into cards array struct.)
 
-	u16 points_p1                         ; // A win is reached when points get to 500.
-	u16 points_p2                         ; // A win is reached when points get to 500.
-	u16 points_p3                         ; // A win is reached when points get to 500.
-	u16 points_p4                         ; // A win is reached when points get to 500.
+	u16 pointsForWin                      ; // Points required to win the game. (Default is 500.)
+	u16 points_p1                         ; // A win is reached when points get to pointsForWin.
+	u16 points_p2                         ; // A win is reached when points get to pointsForWin.
+	u16 points_p3                         ; // A win is reached when points get to pointsForWin.
+	u16 points_p4                         ; // A win is reached when points get to pointsForWin.
 
 	// Stores the game pad state: player 1
-	u16 btnHeld1                          ;
-	u16 btnPressed1                       ;
-	u16 btnPrev1                          ;
-	u16 btnReleased1                      ;
+	u16 btnHeld1                          ; // Buttons held     on the last gamepad read.
+	u16 btnPressed1                       ; // Buttons pressed  on the last gamepad read.
+	u16 btnPrev1                          ; // Buttons held     on the previous to last gamepad read.
+	u16 btnReleased1                      ; // Buttons released on the last gamepad read.
 
 	// Stores the game pad state: player 2
-	u16 btnHeld2                          ;
-	u16 btnPressed2                       ;
-	u16 btnPrev2                          ;
-	u16 btnReleased2                      ;
+	// u16 btnHeld2                          ; // Buttons held     on the last gamepad read.
+	// u16 btnPressed2                       ; // Buttons pressed  on the last gamepad read.
+	// u16 btnPrev2                          ; // Buttons held     on the previous to last gamepad read.
+	// u16 btnReleased2                      ; // Buttons released on the last gamepad read.
 
-	u16 randomSeed                        ;
+	u16 randomSeed                        ; // Stores the randomly generated number used for the random seed.
 };
 struct game_ game ;
 
