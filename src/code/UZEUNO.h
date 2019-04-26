@@ -36,11 +36,20 @@ const char S_WIN[]            PROGMEM = "WIN!"      ; //
 const char S_LOSE[]           PROGMEM = "LOSE"      ; //
 const char S_CARDS[]          PROGMEM = "CARDS"     ; //
 
+const char S_HUMAN[]          PROGMEM = "HUMAN"     ; //
+const char S_CPU[]            PROGMEM = "  CPU"     ; //
+const char S_NONE[]           PROGMEM = " NONE"     ; //
+
+const char S_GAMEREADY[]      PROGMEM = "GAME READY!!"     ; //
+
 const char S_DBLSPACE[]           PROGMEM = "  "                          ; // ERROR STRING
 const char S_DBLEXCLAMATION[]     PROGMEM = "!!"                          ; // ERROR STRING
 const char S_RAMTILEUSAGE[]       PROGMEM = "NOT ENOUGH RESERVED RAMTILES"; // ERROR STRING
 const char S_NOTENOUGHCARDS[]     PROGMEM = "NOT ENOUGH CARDS"            ; // ERROR STRING
+const char S_INVALIDGAMESTATE1[]  PROGMEM = "INVALID GAMESTATE1 "         ; // ERROR STRING
+const char S_INVALIDGAMESTATE2[]  PROGMEM = "INVALID GAMESTATE2 "         ; // ERROR STRING
 
+const char S_PLAYER[]             PROGMEM = "PLAYER"      ; // MESSAGE STRING
 const char S_COULDNOTASSIGNALL1[] PROGMEM = "SOME CARDS"  ; // MESSAGE STRING
 const char S_COULDNOTASSIGNALL2[] PROGMEM = "COULD NOT BE"; // MESSAGE STRING
 const char S_COULDNOTASSIGNALL3[] PROGMEM = "ASSIGNED"    ; // MESSAGE STRING
@@ -50,7 +59,6 @@ const char S_B_TO_CANCEL[]        PROGMEM = "B:  CANCEL"  ; // MESSAGE STRING
 const char S_INCORRECTYCARD[]     PROGMEM = "WRONG CARD"  ; // MESSAGE STRING
 const char S_CHOSEANOTHER[]       PROGMEM = "PICK ANOTHER"; // MESSAGE STRING
 const char S_PLAYSFIRST[]         PROGMEM = "PLAYS 1ST!"  ; // MESSAGE STRING
-const char S_PLAYER[]             PROGMEM = "PLAYER"      ; // MESSAGE STRING
 const char S_WINSROUND1[]         PROGMEM = "WINS THE"    ; // MESSAGE STRING
 const char S_WINSROUND2[]         PROGMEM = "ROUND!"      ; // MESSAGE STRING
 const char S_DRAW2[]              PROGMEM = "DRAW TWO!"   ; // MESSAGE STRING
@@ -60,6 +68,9 @@ const char S_REVERSE1[]           PROGMEM = "PLAY ORDER"  ; // MESSAGE STRING
 const char S_REVERSE2[]           PROGMEM = "REVERSED!"   ; // MESSAGE STRING
 const char S_CHOOSECOLOR[]        PROGMEM = "CHOOSE COLOR"; // MESSAGE STRING
 const char S_PRESSA[]             PROGMEM = "PRESS A"     ; // MESSAGE STRING
+
+const char S_PAUSEMENU[]          PROGMEM = "PAUSE MENU"; // MESSAGE STRING
+const char S_ASET_BCANCEL[]       PROGMEM = "B:CANCEL-A:SET"; // MESSAGE STRING
 // STRINGS (PROGMEM)
 
 // HOLDS THE CURRENT START POSITION FOR THE SCROLLABLE VIEW.
@@ -70,24 +81,31 @@ const char S_PRESSA[]             PROGMEM = "PRESS A"     ; // MESSAGE STRING
 // HOLDS THE CURRENT START POSITION FOR THE SCROLLABLE VIEW.
 
 // POSITIONS (PROGMEM)
-const u8 p1_pos[][2]          PROGMEM = { { 7    , 24   }, { 10   , 24   }, { 13   , 24   }, { 16   , 24   }, { 19   , 24   } };
-const u8 p2_pos[][2]          PROGMEM = { { 1    , 7    }, { 1    , 10   }, { 1    , 13   }, { 1    , 16   }, { 1    , 19   } };
-const u8 p3_pos[][2]          PROGMEM = { { 7    , 1    }, { 10   , 1    }, { 13   , 1    }, { 16   , 1    }, { 19   , 1    } };
-const u8 p4_pos[][2]          PROGMEM = { { 24   , 7    }, { 24   , 10   }, { 24   , 13   }, { 24   , 16   }, { 24   , 19   } };
+const u8 p1_pos[][2]           PROGMEM = { { 7    , 24   }, { 10   , 24   }, { 13   , 24   }, { 16   , 24   }, { 19   , 24   } };
+const u8 p2_pos[][2]           PROGMEM = { { 1    , 7    }, { 1    , 10   }, { 1    , 13   }, { 1    , 16   }, { 1    , 19   } };
+const u8 p3_pos[][2]           PROGMEM = { { 7    , 1    }, { 10   , 1    }, { 13   , 1    }, { 16   , 1    }, { 19   , 1    } };
+const u8 p4_pos[][2]           PROGMEM = { { 24   , 7    }, { 24   , 10   }, { 24   , 13   }, { 24   , 16   }, { 24   , 19   } };
 
-const u8 p1_pos_cursor[][2]   PROGMEM = { { 7    , 24-1 }, { 10   , 24-1 }, { 13   , 24-1 }, { 16   , 24-1 }, { 19   , 24-1 } };
-const u8 p2_pos_cursor[][2]   PROGMEM = { { 1+3  , 7    }, { 1+3  , 10   }, { 1+3  , 13   }, { 1+3  , 16   }, { 1+3  , 19   } };
-const u8 p3_pos_cursor[][2]   PROGMEM = { { 7    , 1+3  }, { 10   , 1+3  }, { 13   , 1+3  }, { 16   , 1+3  }, { 19   , 1+3  } };
-const u8 p4_pos_cursor[][2]   PROGMEM = { { 24-1 , 7    }, { 24-1 , 10   }, { 24-1 , 13   }, { 24-1 , 16   }, { 24-1 , 19   } };
+const u8 p1_pos_cursor[][2]    PROGMEM = { { 7    , 24-1 }, { 10   , 24-1 }, { 13   , 24-1 }, { 16   , 24-1 }, { 19   , 24-1 } };
+const u8 p2_pos_cursor[][2]    PROGMEM = { { 1+3  , 7    }, { 1+3  , 10   }, { 1+3  , 13   }, { 1+3  , 16   }, { 1+3  , 19   } };
+const u8 p3_pos_cursor[][2]    PROGMEM = { { 7    , 1+3  }, { 10   , 1+3  }, { 13   , 1+3  }, { 16   , 1+3  }, { 19   , 1+3  } };
+const u8 p4_pos_cursor[][2]    PROGMEM = { { 24-1 , 7    }, { 24-1 , 10   }, { 24-1 , 13   }, { 24-1 , 16   }, { 24-1 , 19   } };
 
 //
-const u8 wild_pos_cursor[][2] PROGMEM = { { 9    , 16 }, { 12   , 16 }, { 15   , 16 }, { 18   , 16 }, };
+const u8 wild_pos_cursor[][2]  PROGMEM = { { 9    , 16 }, { 12   , 16 }, { 15   , 16 }, { 18   , 16 }, };
+//
+const u8 pause_pos_cursor[][2] PROGMEM = {
+	{ 8 , 12 },
+	{ 8 , 13 },
+	{ 8 , 14 },
+	{ 8 , 15 },
+};
 //
 
-const u8 draw_pos[2]          PROGMEM =   { 9+1 , 12-1 };
-const u8 discard_pos[2]       PROGMEM =   { 16-1, 12-1 };
-const u8 draw_pos_below[2]    PROGMEM =   { 9+1 , 16-1 };
-const u8 discard_pos_below[2] PROGMEM =   { 16-1, 16-1 };
+const u8 draw_pos[2]           PROGMEM =   { 9+1 , 12-1 };
+const u8 discard_pos[2]        PROGMEM =   { 16-1, 12-1 };
+const u8 draw_pos_below[2]     PROGMEM =   { 9+1 , 16-1 };
+const u8 discard_pos_below[2]  PROGMEM =   { 16-1, 16-1 };
 // POSITIONS (PROGMEM)
 
 // EXTERNAL GLOBALS VARIABLES
@@ -103,24 +121,46 @@ extern u8                    free_tile_index      ; // Kernel: Next available ra
 // DEFINES
 #define totalCardsInDeck 108
 #define reservedRamtiles 16
+#define defaultHandSize 7
 // DEFINES
 
 // GLOBAL VARIABLES
 // GLOBAL VARIABLES
 
 // COUNTERS/TIMERS
-u16 vsynccounter16b_1 = 0;
-u8 vsynccounter8b_gen1    = 0;
-u8 vsynccounter8b_gen2    = 0;
-u8 counter8b_gen1         = 0;
+u16 vsynccounter16b_1   = 0;
+u16 vsynccounter16b_2   = 0;
+u8  vsynccounter8b_gen1 = 0;
+u8  vsynccounter8b_gen2 = 0;
+u8  counter8b_gen1      = 0;
 // COUNTERS/TIMERS
 
 // ENUMS
-enum errorTypes {
+enum playerTypes    {
+	NONE  ,
+	HUMAN ,
+	CPU   ,
+};
+enum AI_Types    {
+	SIMPLE ,
+	HARDER ,
+	EXPERT ,
+};
+enum winTypes    {
+	FIRSTTO500POINTS ,
+	FIRSTTO0CARDS    ,
+};
+enum drawTypes    {
+	DRAW1          ,
+	DRAWREPEATEDLY ,
+};
+enum errorTypes    {
 	RAMTILEUSAGE      ,
 	NOTENOUGHCARDS    ,
+	INVALIDGAMESTATE1 ,
+	INVALIDGAMESTATE2 ,
 };
-enum msgTypes {
+enum msgTypes      {
 	COULDNOTASSIGNALL ,
 	GAMESTART_FIRST   ,
 	DRAW2_PLAYER      ,
@@ -128,12 +168,12 @@ enum msgTypes {
 	SKIP_PLAYER       ,
 	REVERSE_PLAYER    ,
 	INCORRECTCARD     ,
-	PLAYORPASS        ,
+	PLAYORCANCEL      ,
 	PASSORCANCEL      ,
 	GAMEWIN_PLAYER    ,
 
 };
-enum ramtileColors   {
+enum ramtileColors {
 	// CLEAREDRAMTILECOLOR0 = 0B00000110 , // INITIAL COLOR. A color that looks like RED.
 	// CLEAREDRAMTILECOLOR1 = 0B01011001 , // UNUSED.        A color that looks like slate gray.
 	// CLEAREDRAMTILECOLOR2 = 0B11011011 , // ERASED COLOR.  A color that looks like violet.
@@ -145,24 +185,39 @@ enum ramtileColors   {
 
 };
 enum gamestates1   {
-	GSTATE_TITLE1        ,
-	GSTATE_TITLE2        ,
-	GSTATE_TITLE_MAIN    ,
-	GSTATE_PLAYING       ,
-	GSTATE_UZENET_SETUP1 ,
-	GSTATE_UZENET_SETUP2 ,
-	GSTATE_LOCAL_PREGAME ,
+	GSTATE_TITLE   ,
+
+	GSTATE_OPTIONS ,
+
+	GSTATE_RULES   ,
+
+	GSTATE_CREDITS ,
+
+	GSTATE_PLAYING ,
+
+	GSTATE_UZENET  ,
 };
 enum gamestates2   {
-	GSTATE_PLAYING_GAMESTART ,
-	GSTATE_PLAYING_PLAYING   ,
-	GSTATE_PLAYING_PAUSE     ,
+	GSTATE_TITLE_N782        , // Nicksen782 logo.
+	GSTATE_TITLE_UZEBOX      , // Uzebox logo.
+	GSTATE_TITLE_MAINMENU    , // Main title screen.
+
+	GSTATE_OPTIONS_1         , // Network setup.
+	GSTATE_OPTIONS_2         , // Normal setup.
+
+	GSTATE_RULES_1           , // Rules page 1
+	GSTATE_RULES_2           , // Rules page 2
+
+	GSTATE_CREDITS_1         , // Credits page 1
+	GSTATE_CREDITS_2         , // Credits page 2
+
+	GSTATE_PLAYING_GAMESTART , // New round initialization.
+	GSTATE_PLAYING_PLAYING   , // Main game play state.
 };
-enum playDirection   {
+enum playDirection {
 	FORWARD  ,
 	BACKWARD ,
 };
-
 enum cardFaceShown {
 	CARDS_FACEDOWN ,
 	CARDS_FACEUP   ,
@@ -173,12 +228,12 @@ enum card_sizes    {
 	LARGE_CARD ,
 };
 enum card_location {
-	CARD_LOCATION_DRAW    ,
-	CARD_LOCATION_DISCARD ,
-	CARD_LOCATION_PLAYER1 ,
-	CARD_LOCATION_PLAYER2 ,
-	CARD_LOCATION_PLAYER3 ,
-	CARD_LOCATION_PLAYER4 ,
+	CARD_LOCATION_PLAYER1 = 0,
+	CARD_LOCATION_PLAYER2 = 1,
+	CARD_LOCATION_PLAYER3 = 2,
+	CARD_LOCATION_PLAYER4 = 3,
+	CARD_LOCATION_DRAW    = 4,
+	CARD_LOCATION_DISCARD = 5,
 };
 enum card_values   {
 	CARD_0          = 0  ,
@@ -205,6 +260,22 @@ enum card_colors   {
 	CARD_BLACK  = 4,
 	CARD_ORANGE = 5,
 };
+enum soundSFXs     {
+	SELECTCURSOR1 , //
+	SELECTCARD    , //
+	CANCELCARD    , //
+	DRAWCARD      , //
+	CARDPLAYED    , //
+};
+enum NPN_nextPlayerNumber {
+	NPN_GET  ,
+	NPN_SET  ,
+	NPN_NEXT ,
+};
+// enum SP_showPoints   {
+// 	ONLYWINNER ,
+// 	ALLPLAYERS ,
+// }
 // ENUMS
 
 // NOTE: Using bitfields saves ram!
@@ -249,6 +320,11 @@ struct __attribute__ ((__packed__)) game_ {
 	// u16 btnReleased2                      ; // Buttons released on the last gamepad read.
 
 	u16 randomSeed                        ; // Stores the randomly generated number used for the random seed.
+
+	enum playerTypes player_types[4];
+	enum playerTypes ai_type;
+	enum winTypes    winStyle;
+	enum drawTypes   drawStyle;
 };
 struct game_ game ;
 

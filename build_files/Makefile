@@ -29,6 +29,7 @@ KERNEL_OPTIONS += -DVIDEO_MODE=3             # Use video mode 3
 KERNEL_OPTIONS += -DSCROLLING=0              # Scrolling
 KERNEL_OPTIONS += -DRESOLUTION_EXT=1         # Use the new timing to allow for more square tiles?
 KERNEL_OPTIONS += -DVRAM_TILES_H=32          # VRAM width.
+# KERNEL_OPTIONS += -DVRAM_TILES_H=28          # VRAM width.
 KERNEL_OPTIONS += -DVRAM_TILES_V=28          # VRAM height. (Must match DSCREEN_TILES_V.)
 KERNEL_OPTIONS += -DSCREEN_TILES_V=28        # VRAM height. (Must match DVRAM_TILES_V.)
 KERNEL_OPTIONS += -DFIRST_RENDER_LINE=20     # First render line.
@@ -38,7 +39,7 @@ KERNEL_OPTIONS += -DTILE_WIDTH=8             # Tile width in pixels.
 # Sprite/Ram tile options.
 KERNEL_OPTIONS += -DTRANSLUCENT_COLOR=0x09  # Color used for the transparent pixel in sprites.
 KERNEL_OPTIONS += -DRAM_TILES_COUNT=29      # 16+1 required for cards and compare, 6+6 for sprites and cursor (shared.) Number of ram tiles available.
-KERNEL_OPTIONS += -DMAX_SPRITES=7           # Number of sprites available.
+KERNEL_OPTIONS += -DMAX_SPRITES=12          # Number of sprites available.
 KERNEL_OPTIONS += -DSPRITE_RAM_ENABLE=1     # Enables the usage of ramtile sprites.
 
 # Gamepad options.

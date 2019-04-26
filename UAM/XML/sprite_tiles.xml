@@ -6,10 +6,10 @@
  <maps pointers-size="8">
   <map var-name="offBlackTile" left="1" top="0" width="1" height="1" mapOutputTo="SKIPMAP" /> 
   <map var-name="blackTile" left="2" top="1" width="1" height="1" mapOutputTo="SKIPMAP" /> 
-  <map var-name="main_menu_cursor1_f1" left="1" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="main_menu_cursor1_f2" left="1" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="main_menu_cursor2_f1" left="1" top="3" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="main_menu_cursor2_f2" left="1" top="4" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="main_menu_cursor1_f1" left="1" top="1" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="main_menu_cursor1_f2" left="1" top="2" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="main_menu_cursor2_f1" left="1" top="3" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="main_menu_cursor2_f2" left="1" top="4" width="1" height="1" mapOutputTo="SKIPMAP" /> 
   <map var-name="cursor_f1_d" left="3" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="cursor_f2_d" left="3" top="2" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="cursor_f1_l" left="4" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 

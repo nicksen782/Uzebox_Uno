@@ -4,8 +4,9 @@
  <output file="UAM/PROGMEM/bg_tiles2_progmem.inc">
  <tiles var-name="bg_tiles2" tilesetOutputTo="PROGMEM" removeDupeTiles="1" />
  <maps pointers-size="8">
-  <map var-name="offBlackTile" left="1" top="0" width="1" height="1" mapOutputTo="NOWHERE" /> 
   <map var-name="blackTile" left="0" top="0" width="1" height="1" mapOutputTo="NOWHERE" /> 
+  <map var-name="offBlackTile" left="1" top="0" width="1" height="1" mapOutputTo="NOWHERE" /> 
+
   <map var-name="N782_F1" left="2" top="2" width="7" height="8" mapOutputTo="PROGMEM" /> 
   <map var-name="N782_F2" left="12" top="2" width="7" height="8" mapOutputTo="PROGMEM" /> 
   <map var-name="N782_F3" left="22" top="2" width="7" height="8" mapOutputTo="PROGMEM" /> 

@@ -4,314 +4,339 @@ Symbols from UZEUNO.elf:
 
 Name                  Value   Class        Type         Size     Line  Section
 
-S_MSG3              |00000655|   T  |            OBJECT|00000001|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:26
-counter8b_gen1      |08392068|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:115
-currFadeFrame       |08392208|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:278
-fadeActive          |08392207|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:280
-fadeDir             |08392206|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:279
-fadeSpeed           |08392205|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:278
-fadeStep            |08392209|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:278
-joypadsConnectionStatus|08392073|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:61
-lastStatus          |08392195|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:56
-masterVolume        |08392196|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:57
+S_MSG3              |00000945|   T  |            OBJECT|00000001|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:26
+counter8b_gen1      |08392068|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:135
+currFadeFrame       |08392210|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:278
+fadeActive          |08392209|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:280
+fadeDir             |08392208|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:279
+fadeSpeed           |08392207|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:278
+fadeStep            |08392211|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:278
+joypadsConnectionStatus|08392075|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:61
+lastStatus          |08392197|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:56
+masterVolume        |08392198|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:57
 playSong            |08392032|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:55
-songSpeed           |08392199|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:58
+songSpeed           |08392201|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:58
 sprites_on          |08388864|   d  |            OBJECT|00000001|     |.data	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:54
-step                |08392204|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:59
-vsynccounter8b_gen1 |08392070|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:113
-vsynccounter8b_gen2 |08392069|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:114
-DisplayLogo         |00027746|   T  |              FUNC|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:372
-currDeltaTime       |08392191|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:70
-discard_pos         |00000271|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:88
-discard_pos_below   |00000267|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:90
-draw_pos            |00000273|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:87
-draw_pos_below      |00000269|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:89
-loopStart           |08392202|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:67
-nextDeltaTime       |08392197|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:69
-patch02             |00000865|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:54
-patch03             |00000863|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:61
-patch04             |00000861|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:67
-patchPointers       |08392193|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:291
-pre_VsyncCallBack   |00028188|   T  |              FUNC|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:133
-songPos             |08392200|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:65
-songStart           |08392074|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:66
-vsynccounter16b_1   |08392071|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:112
-S_DBLEXCLAMATION    |00000603|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:40
-S_DBLSPACE          |00000606|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:39
-S_P1                |00000639|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:30
-S_P2                |00000636|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:31
-S_P3                |00000633|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:32
-S_P4                |00000630|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:33
-arrow_blue          |00005969|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:665
-arrow_green         |00005963|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:677
-arrow_red           |00005966|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:671
-arrow_yellow        |00005972|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:659
-blackTile           |00006354|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:231
-blue_color          |00006345|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:249
-border_black        |00006318|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:303
-border_blue         |00006327|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:285
-border_green        |00006321|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:297
-border_red          |00006324|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:291
-border_yellow       |00006330|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:279
-cursor2_f1_d        |00000910|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:115
-cursor2_f1_l        |00000904|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:127
-cursor2_f1_r        |00000892|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:151
-cursor2_f1_u        |00000898|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:139
-cursor2_f2_d        |00000907|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:121
-cursor2_f2_l        |00000901|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:133
-cursor2_f2_r        |00000889|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:157
-cursor2_f2_u        |00000895|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:145
-cursor_f1_d         |00000934|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:67
-cursor_f1_l         |00000928|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:79
-cursor_f1_r         |00000916|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:103
-cursor_f1_u         |00000922|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:91
-cursor_f2_d         |00000931|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:73
-cursor_f2_l         |00000925|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:85
-cursor_f2_r         |00000913|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:109
-cursor_f2_u         |00000919|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:97
-green_color         |00006339|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:261
-main_menu_cursor1_f1|00000946|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:43
-main_menu_cursor1_f2|00000943|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:49
-main_menu_cursor2_f1|00000940|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:55
-main_menu_cursor2_f2|00000937|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:61
-map_sm_draw2        |00006116|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:527
-map_sm_reverse      |00006100|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:551
-map_sm_skip         |00006108|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:539
-offBlackTile        |00006357|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:225
-orange_color        |00006351|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:237
-red_color           |00006342|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:255
-tile_0              |00006146|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:467
-tile_1              |00006143|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:473
-tile_2              |00006140|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:479
-tile_3              |00006137|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:485
-tile_4              |00006134|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:491
-tile_5              |00006131|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:497
-tile_6              |00006128|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:503
-tile_7              |00006125|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:509
-tile_8              |00006122|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:515
-tile_9              |00006119|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:521
-wood_color1         |00006336|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:267
-wood_color2         |00006333|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:273
-yellow_color        |00006348|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:243
-cardsBelow_lg_0     |00006266|   T  |            OBJECT|00000004|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:351
-cardsBelow_lg_lt12  |00006258|   T  |            OBJECT|00000004|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:363
-cardsBelow_lg_lt17  |00006254|   T  |            OBJECT|00000004|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:369
-cardsBelow_lg_lt7   |00006262|   T  |            OBJECT|00000004|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:357
+step                |08392206|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:59
+vsynccounter8b_gen1 |08392070|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:133
+vsynccounter8b_gen2 |08392069|   B  |            OBJECT|00000001|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:134
+DisplayLogo         |00033378|   T  |              FUNC|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:372
+currDeltaTime       |08392193|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:70
+discard_pos         |00000456|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:106
+discard_pos_below   |00000452|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:108
+draw_pos            |00000458|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:105
+draw_pos_below      |00000454|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:107
+loopStart           |08392204|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:67
+nextDeltaTime       |08392199|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:69
+patch02             |00001155|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:54
+patch03             |00001153|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:61
+patch04             |00001151|   T  |            OBJECT|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:67
+patchPointers       |08392195|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:291
+pre_VsyncCallBack   |00033720|   t  |              FUNC|00000002|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:168
+songPos             |08392202|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:65
+songStart           |08392076|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:66
+vsynccounter16b_1   |08392073|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:131
+vsynccounter16b_2   |08392071|   B  |            OBJECT|00000002|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:132
+S_DBLEXCLAMATION    |00000862|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:46
+S_DBLSPACE          |00000865|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:45
+S_P1                |00000929|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:30
+S_P2                |00000926|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:31
+S_P3                |00000923|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:32
+S_P4                |00000920|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:33
+__c.3147            |00000434|   t  |            OBJECT|00000003|     |.text
+__c.3149            |00000431|   t  |            OBJECT|00000003|     |.text
+arrow_blue          |00012241|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:633
+arrow_green         |00012235|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:645
+arrow_red           |00012238|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:639
+arrow_yellow        |00012244|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:627
+blackTile           |00012607|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:210
+blue_color          |00012595|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:234
+border_black        |00012568|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:288
+border_blue         |00012577|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:270
+border_green        |00012571|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:282
+border_red          |00012574|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:276
+border_yellow       |00012580|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:264
+cursor2_f1_d        |00001200|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:87
+cursor2_f1_l        |00001194|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:99
+cursor2_f1_r        |00001182|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:123
+cursor2_f1_u        |00001188|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:111
+cursor2_f2_d        |00001197|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:93
+cursor2_f2_l        |00001191|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:105
+cursor2_f2_r        |00001179|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:129
+cursor2_f2_u        |00001185|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:117
+cursor_f1_d         |00001224|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:39
+cursor_f1_l         |00001218|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:51
+cursor_f1_r         |00001206|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:75
+cursor_f1_u         |00001212|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:63
+cursor_f2_d         |00001221|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:45
+cursor_f2_l         |00001215|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:57
+cursor_f2_r         |00001203|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:81
+cursor_f2_u         |00001209|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:69
+green_color         |00012589|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:246
+map_sm_draw2        |00012388|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:495
+map_sm_reverse      |00012372|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:519
+map_sm_skip         |00012380|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:507
+offBlackTile        |00012604|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:216
+orange_color        |00012601|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:222
+red_color           |00012592|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:240
+tile_0              |00012418|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:435
+tile_1              |00012415|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:441
+tile_2              |00012412|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:447
+tile_3              |00012409|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:453
+tile_4              |00012406|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:459
+tile_5              |00012403|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:465
+tile_6              |00012400|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:471
+tile_7              |00012397|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:477
+tile_8              |00012394|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:483
+tile_9              |00012391|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:489
+wood_color1         |00012586|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:252
+wood_color2         |00012583|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:258
+yellow_color        |00012598|   T  |            OBJECT|00000003|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:228
+cardsBelow_lg_0     |00012530|   T  |            OBJECT|00000004|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:327
+cardsBelow_lg_lt12  |00012522|   T  |            OBJECT|00000004|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:339
+cardsBelow_lg_lt17  |00012518|   T  |            OBJECT|00000004|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:345
+cardsBelow_lg_lt7   |00012526|   T  |            OBJECT|00000004|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:333
 next                |08389081|   d  |            OBJECT|00000004|     |.data	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-S_LOSE              |00000615|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:36
-S_UNO               |00000625|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:34
-S_WIN               |00000620|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:35
-cardsBelow_lg_lt108 |00006270|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:345
-cardsBelow_lg_lt27  |00006285|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:327
-cardsBelow_lg_lt54  |00006280|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:333
-cardsBelow_lg_lt81  |00006275|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:339
-map_lg_draw2        |00006111|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:533
-map_lg_reverse      |00006095|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:557
-map_lg_skip         |00006103|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:545
-map_lg_wild_draw4_flipped|00006221|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:393
-PatchCommand00      |00022340|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:119
-PatchCommand07      |00022384|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:179
-PatchCommand09      |00022390|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:199
-PatchCommand10      |00022396|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:207
-PatchCommand12      |00022522|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:238
-PatchCommand13      |00022528|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:247
-S_CARDS             |00000609|   T  |            OBJECT|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:37
-S_MSG1              |00000673|   T  |            OBJECT|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:24
-SetMasterVolume     |00024192|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1259
-SetSpriteVisibility |00027142|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:64
-SetUserRamTilesCount|00027136|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:56
-__mulshisi3         |00041184|   T  |            NOTYPE|00000006|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-post_VsyncCallBack  |00028450|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:146
-rand_r              |00041070|   T  |              FUNC|00000006|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:83
-S_PLAYER            |00000453|   T  |            OBJECT|00000007|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:53
-S_WINSROUND2        |00000437|   T  |            OBJECT|00000007|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:55
-S_PRESSA            |00000363|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:62
-card_back_sm_0deg   |00006173|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:437
-card_back_sm_360deg |00006149|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:459
-card_back_sm_90deg  |00006165|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:445
-card_back_sm_neg90deg|00006157|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:452
-card_front_blue_sm  |00006079|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:571
-card_front_blue_sm_90deg|00006047|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:602
-card_front_green_sm |00006063|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:587
-card_front_green_sm_90deg|00006031|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:616
-card_front_red_sm   |00006071|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:579
-card_front_red_sm_90deg|00006039|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:609
-card_front_sm       |00006213|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:399
-card_front_yellow_sm|00006087|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:563
-card_front_yellow_sm_90deg|00006055|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:595
-card_wild_d4front_sm|00006197|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:415
-card_wild_d4front_sm_90neg|00006181|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:430
-card_wild_front_sm  |00006205|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:407
-card_wild_front_sm_90neg|00006189|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:423
-patch05             |00000853|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:73
-wild_pos_cursor     |00000275|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:84
-S_A_TO_PASS         |00000506|   T  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:48
-S_A_TO_PLAY         |00000515|   T  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:47
-S_COULDNOTASSIGNALL3|00000524|   T  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:46
-S_WINSROUND1        |00000444|   T  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:54
-__c.3973            |00000258|   t  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/sdBase.S:909
-__c.3980            |00000249|   t  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/sdBase.S:901
-PatchCommand02      |00022534|   T  |              FUNC|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:137
-PatchCommand05      |00022364|   T  |              FUNC|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:160
-PatchCommand06      |00022374|   T  |              FUNC|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:169
-S_DRAW2             |00000427|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:56
-S_REVERSE2          |00000384|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:60
-VideoModeVsync      |00028178|   T  |              FUNC|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:437
-__mulohisi3         |00041190|   T  |            NOTYPE|00000010|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-p1_pos              |00000353|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:73
-p1_pos_cursor       |00000313|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:78
-p2_pos              |00000343|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:74
-p2_pos_cursor       |00000303|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:79
-p3_pos              |00000333|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:75
-p3_pos_cursor       |00000293|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:80
-p4_pos              |00000323|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:76
-p4_pos_cursor       |00000283|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:81
-rand                |00041076|   T  |              FUNC|00000010|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:93
-S_B_TO_CANCEL       |00000495|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:49
-S_COULDNOTASSIGNALL1|00000546|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:44
-S_DRAW4             |00000416|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:57
-S_INCORRECTYCARD    |00000484|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:50
-S_LOSETURN          |00000405|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:58
-S_PLAYSFIRST        |00000460|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:52
-S_REVERSE1          |00000394|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:59
-b_l_corner_bkd      |00005908|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:715
-b_l_corner_fwd      |00005952|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:683
-b_r_corner_bkw      |00005875|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:739
-b_r_corner_fwd      |00005919|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:707
-patch00             |00000878|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:37
-patch01             |00000867|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:45
-t_l_corner_bkd      |00005897|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:723
-t_l_corner_fwd      |00005941|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:691
-t_r_corner_bkd      |00005886|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:731
-t_r_corner_fwd      |00005930|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:699
+S_LOSE              |00000905|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:36
+S_UNO               |00000915|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:34
+S_WIN               |00000910|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:35
+__c.3141            |00000447|   t  |            OBJECT|00000005|     |.text
+__c.3143            |00000442|   t  |            OBJECT|00000005|     |.text
+__c.3145            |00000437|   t  |            OBJECT|00000005|     |.text
+__c.3151            |00000426|   t  |            OBJECT|00000005|     |.text
+cardsBelow_lg_lt108 |00012534|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:321
+cardsBelow_lg_lt27  |00012549|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:303
+cardsBelow_lg_lt54  |00012544|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:309
+cardsBelow_lg_lt81  |00012539|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:315
+map_lg_draw2        |00012383|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:501
+map_lg_reverse      |00012367|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:525
+map_lg_skip         |00012375|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:513
+map_lg_wild_draw4_flipped|00012485|   T  |            OBJECT|00000005|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:369
+PatchCommand00      |00027622|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:119
+PatchCommand07      |00027666|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:179
+PatchCommand09      |00027672|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:199
+PatchCommand10      |00027678|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:207
+PatchCommand12      |00027804|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:238
+PatchCommand13      |00027810|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:247
+S_CARDS             |00000899|   T  |            OBJECT|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:37
+S_CPU               |00000887|   T  |            OBJECT|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:40
+S_HUMAN             |00000893|   T  |            OBJECT|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:39
+S_MSG1              |00000963|   T  |            OBJECT|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:24
+S_NONE              |00000881|   T  |            OBJECT|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:41
+SetMasterVolume     |00029618|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1259
+SetSpriteVisibility |00032774|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:64
+SetUserRamTilesCount|00032768|   T  |              FUNC|00000006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:56
+__mulshisi3         |00052074|   T  |            NOTYPE|00000006|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+rand_r              |00051960|   T  |              FUNC|00000006|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:83
+S_PLAYER            |00000769|   T  |            OBJECT|00000007|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:52
+S_WINSROUND2        |00000656|   T  |            OBJECT|00000007|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:63
+__c.4051            |00000419|   t  |            OBJECT|00000007|     |.text
+__c.4524            |00000236|   t  |            OBJECT|00000007|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/sdBase.S:887
+S_PRESSA            |00000582|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:70
+card_back_sm_0deg   |00012445|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:405
+card_back_sm_360deg |00012421|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:427
+card_back_sm_90deg  |00012437|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:413
+card_back_sm_neg90deg|00012429|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:420
+card_front_blue_sm  |00012351|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:539
+card_front_blue_sm_90deg|00012319|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:570
+card_front_green_sm |00012335|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:555
+card_front_green_sm_90deg|00012303|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:584
+card_front_red_sm   |00012343|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:547
+card_front_red_sm_90deg|00012311|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:577
+card_front_yellow_sm|00012359|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:531
+card_front_yellow_sm_90deg|00012327|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:563
+card_wild_d4front_sm|00012469|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:383
+card_wild_d4front_sm_90neg|00012453|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:398
+card_wild_front_sm  |00012477|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:375
+card_wild_front_sm_90neg|00012461|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:391
+patch05             |00001143|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:73
+pause_pos_cursor    |00000460|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:97
+wild_pos_cursor     |00000468|   T  |            OBJECT|00000008|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:95
+S_A_TO_PASS         |00000718|   T  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:57
+S_A_TO_PLAY         |00000727|   T  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:56
+S_COULDNOTASSIGNALL3|00000736|   T  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:55
+S_WINSROUND1        |00000663|   T  |            OBJECT|00000009|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:62
+PatchCommand02      |00027816|   T  |              FUNC|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:137
+PatchCommand05      |00027646|   T  |              FUNC|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:160
+PatchCommand06      |00027656|   T  |              FUNC|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:169
+S_DRAW2             |00000646|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:64
+S_REVERSE2          |00000603|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:68
+VideoModeVsync      |00033710|   T  |              FUNC|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:437
+__c.4508            |00000253|   t  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/sdBase.S:903
+__c.4516            |00000243|   t  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/sdBase.S:897
+__mulohisi3         |00052080|   T  |            NOTYPE|00000010|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+p1_pos              |00000546|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:84
+p1_pos_cursor       |00000506|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:89
+p2_pos              |00000536|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:85
+p2_pos_cursor       |00000496|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:90
+p3_pos              |00000526|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:86
+p3_pos_cursor       |00000486|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:91
+p4_pos              |00000516|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:87
+p4_pos_cursor       |00000476|   T  |            OBJECT|00000010|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:92
+rand                |00051966|   T  |              FUNC|00000010|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:93
+S_B_TO_CANCEL       |00000707|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:58
+S_COULDNOTASSIGNALL1|00000758|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:53
+S_DRAW4             |00000635|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:65
+S_INCORRECTYCARD    |00000696|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:59
+S_LOSETURN          |00000624|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:66
+S_PAUSEMENU         |00000571|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:72
+S_PLAYSFIRST        |00000672|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:61
+S_REVERSE1          |00000613|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:67
+b_l_corner_bkd      |00012180|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:683
+b_l_corner_fwd      |00012224|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:651
+b_r_corner_bkw      |00012147|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:707
+b_r_corner_fwd      |00012191|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:675
+patch00             |00001168|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:37
+patch01             |00001157|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:45
+t_l_corner_bkd      |00012169|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:691
+t_l_corner_fwd      |00012213|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:659
+t_r_corner_bkd      |00012158|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:699
+t_r_corner_fwd      |00012202|   T  |            OBJECT|00000011|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:667
+__c.4162            |00000407|   t  |            OBJECT|00000012|     |.text
+__c.4164            |00000395|   t  |            OBJECT|00000012|     |.text
+__c.4166            |00000383|   t  |            OBJECT|00000012|     |.text
+__c.4168            |00000371|   t  |            OBJECT|00000012|     |.text
+__c.4170            |00000359|   t  |            OBJECT|00000012|     |.text
+__c.4172            |00000347|   t  |            OBJECT|00000012|     |.text
+__c.4174            |00000335|   t  |            OBJECT|00000012|     |.text
+__c.4176            |00000323|   t  |            OBJECT|00000012|     |.text
+__c.4178            |00000311|   t  |            OBJECT|00000012|     |.text
+__c.4180            |00000299|   t  |            OBJECT|00000012|     |.text
+__c.4182            |00000287|   t  |            OBJECT|00000012|     |.text
+__c.4184            |00000275|   t  |            OBJECT|00000012|     |.text
+__c.4500            |00000263|   t  |            OBJECT|00000012|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/sdBase.S:915
 fader               |00000224|   T  |            OBJECT|00000012|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:261
-S_CHOOSECOLOR       |00000371|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:61
-S_CHOSEANOTHER      |00000471|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:51
-S_COULDNOTASSIGNALL2|00000533|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:45
-S_GAMENAME          |00000679|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:23
-S_PRESSSTART        |00000642|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:28
-__c.3987            |00000236|   t  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/sdBase.S:887
-card_back_lg        |00006304|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:309
-card_front_blue_lg  |00006003|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:632
-card_front_green_lg |00005975|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:650
-card_front_lg       |00006290|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:318
-card_front_red_lg   |00005989|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:641
-card_front_yellow_lg|00006017|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:623
-card_wild_draw4_front_lg|00006240|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:375
-card_wild_front_lg  |00006226|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:384
-patch08             |00000796|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:105
-patch09             |00000782|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:114
-PatchCommand03      |00022544|   T  |              FUNC|00000016|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:144
-__do_clear_bss      |00019322|   T  |            NOTYPE|00000016|     |.text
-__negsi2            |00041246|   T  |            NOTYPE|00000016|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-S_MSG2              |00000656|   T  |            OBJECT|00000017|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:25
-S_NOTENOUGHCARDS    |00000557|   T  |            OBJECT|00000017|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:42
-patch06             |00000836|   T  |            OBJECT|00000017|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:81
-PatchCommand01      |00022346|   T  |              FUNC|00000018|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:126
-PatchCommand04      |00022560|   T  |              FUNC|00000018|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:152
-memcpy              |00041144|   T  |              FUNC|00000018|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-__do_copy_data      |00019300|   T  |            NOTYPE|00000022|     |.text
-__muluhisi3         |00041162|   T  |            NOTYPE|00000022|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-srand               |00041086|   T  |              FUNC|00000022|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-wdt_init            |00019338|   T  |              FUNC|00000022|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:87
-__udivmodqi4        |00040638|   T  |            NOTYPE|00000024|     |.text	../../../../crt1/gcrt1.S:195
-countAvailableRamtile_ids|00032800|   T  |              FUNC|00000024|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1326
-patch07             |00000810|   T  |            OBJECT|00000026|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:91
-S_RAMTILEUSAGE      |00000574|   T  |            OBJECT|00000029|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:41
-__umulhisi3         |00041262|   T  |            NOTYPE|00000030|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+playSFX.part.2      |00034552|   t  |              FUNC|00000012|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:663
+S_CHOOSECOLOR       |00000590|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:69
+S_CHOSEANOTHER      |00000683|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:60
+S_COULDNOTASSIGNALL2|00000745|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:54
+S_GAMENAME          |00000969|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:23
+S_GAMEREADY         |00000868|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:43
+S_PRESSSTART        |00000932|   T  |            OBJECT|00000013|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:28
+card_back_lg        |00012554|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:294
+card_front_blue_lg  |00012275|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:600
+card_front_green_lg |00012247|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:618
+card_front_red_lg   |00012261|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:609
+card_front_yellow_lg|00012289|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:591
+card_wild_draw4_front_lg|00012504|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:351
+card_wild_front_lg  |00012490|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:360
+patch08             |00001086|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:105
+patch09             |00001072|   T  |            OBJECT|00000014|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:114
+S_ASET_BCANCEL      |00000556|   T  |            OBJECT|00000015|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:73
+PatchCommand03      |00027826|   T  |              FUNC|00000016|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:144
+__do_clear_bss      |00024612|   T  |            NOTYPE|00000016|     |.text
+__negsi2            |00052136|   T  |            NOTYPE|00000016|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+S_MSG2              |00000946|   T  |            OBJECT|00000017|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:25
+S_NOTENOUGHCARDS    |00000816|   T  |            OBJECT|00000017|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:48
+patch06             |00001126|   T  |            OBJECT|00000017|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:81
+PatchCommand01      |00027628|   T  |              FUNC|00000018|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:126
+PatchCommand04      |00027842|   T  |              FUNC|00000018|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:152
+memcpy              |00052034|   T  |              FUNC|00000018|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+S_INVALIDGAMESTATE1 |00000796|   T  |            OBJECT|00000020|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:49
+S_INVALIDGAMESTATE2 |00000776|   T  |            OBJECT|00000020|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:50
+clearAllRamtiles    |00036256|   t  |              FUNC|00000020|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:685
+__do_copy_data      |00024590|   T  |            NOTYPE|00000022|     |.text
+__muluhisi3         |00052052|   T  |            NOTYPE|00000022|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+srand               |00051976|   T  |              FUNC|00000022|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+wdt_init            |00024628|   T  |              FUNC|00000022|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:87
+__udivmodqi4        |00051528|   T  |            NOTYPE|00000024|     |.text	../../../../crt1/gcrt1.S:195
+countAvailableRamtile_ids|00038754|   T  |              FUNC|00000024|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1411
+patch07             |00001100|   T  |            OBJECT|00000026|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:91
+S_RAMTILEUSAGE      |00000833|   T  |            OBJECT|00000029|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:47
+__umulhisi3         |00052152|   T  |            NOTYPE|00000030|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
 patchCommands       |00000194|   T  |            OBJECT|00000030|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:289
-resetTheDeck        |00030918|   T  |              FUNC|00000030|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:877
-PatchCommand08      |00022578|   T  |              FUNC|00000032|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:188
+PatchCommand08      |00027860|   T  |              FUNC|00000032|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:188
 eeprom_format_table |00000162|   T  |            OBJECT|00000032|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:64
-InitializeVideoMode |00027748|   T  |              FUNC|00000034|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:410
-ReadControllers     |00022192|   T  |              FUNC|00000034|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:327
-clear_debug_showDebugData|00028376|   T  |              FUNC|00000034|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:10
-countDrawPile       |00031412|   T  |              FUNC|00000036|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1302
-memmove             |00041108|   T  |              FUNC|00000036|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-clearbgmessage      |00035506|   T  |              FUNC|00000038|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1495
-countDiscardPile    |00031448|   T  |              FUNC|00000038|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1310
-__divmodhi4         |00040702|   T  |            NOTYPE|00000040|     |.text	../../../../crt1/gcrt1.S:195
-__udivmodhi4        |00040662|   T  |            NOTYPE|00000040|     |.text	../../../../crt1/gcrt1.S:195
-clearRamtile        |00030254|   T  |              FUNC|00000040|     |.text
-updateIndividualTimers|00028410|   T  |              FUNC|00000040|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:136
-WaitVsync           |00028058|   T  |              FUNC|00000046|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:249
-__divmodsi4         |00041200|   T  |            NOTYPE|00000046|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
-isEepromFormatted   |00022294|   T  |              FUNC|00000046|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:646
-removePlayerCards   |00035460|   T  |              FUNC|00000046|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1484
-MoveSprite          |00027696|   T  |              FUNC|00000050|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:347
+InitializeVideoMode |00033380|   T  |              FUNC|00000034|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:410
+ReadControllers     |00027474|   T  |              FUNC|00000034|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:327
+memmove             |00051998|   T  |              FUNC|00000036|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+clearRamtile.part.0.constprop.12|00035340|   t  |              FUNC|00000038|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:783
+clear_debug_showDebugData|00034268|   t  |              FUNC|00000038|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:10
+clearbgmessage      |00034306|   t  |              FUNC|00000038|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1580
+countDiscardPile    |00037198|   T  |              FUNC|00000038|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1395
+countDrawPile       |00037098|   T  |              FUNC|00000038|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1387
+__divmodhi4         |00051592|   T  |            NOTYPE|00000040|     |.text	../../../../crt1/gcrt1.S:195
+__udivmodhi4        |00051552|   T  |            NOTYPE|00000040|     |.text	../../../../crt1/gcrt1.S:195
+clearAllReservedRamtiles|00036276|   t  |              FUNC|00000040|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:677
+WaitVsync           |00033590|   T  |              FUNC|00000046|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:249
+__divmodsi4         |00052090|   T  |            NOTYPE|00000046|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:100
+isEepromFormatted   |00027576|   T  |              FUNC|00000046|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:646
+removePlayerCards   |00038030|   t  |              FUNC|00000046|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1569
+MoveSprite          |00033328|   T  |              FUNC|00000050|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:347
 io_table            |00000112|   T  |            OBJECT|00000050|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:118
-game                |08392210|   B  |            OBJECT|00000052|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:253
-gstate_title2       |00038302|   T  |              FUNC|00000052|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2209
-__epilogue_restores__|00040866|   T  |            NOTYPE|00000054|     |.text	../../../../crt1/gcrt1.S:195
-__prologue_saves__  |00040810|   T  |            NOTYPE|00000056|     |.text	../../../../crt1/gcrt1.S:195
-main                |00040582|   T  |              FUNC|00000056|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:3193
-N782_F1             |00002461|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:59
-N782_F2             |00002403|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:72
-N782_F3             |00002345|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:85
-N782_F4             |00002287|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:98
-N782_F5             |00002229|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:111
-getNextPlayerNumber.4083|00028190|   t  |              FUNC|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2389
-redrawUnderDiscardPile|00034560|   T  |              FUNC|00000062|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1347
-redrawUnderDrawPile |00034498|   T  |              FUNC|00000062|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1336
-FormatEeprom        |00022226|   T  |              FUNC|00000068|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:604
-__udivmodsi4        |00040742|   T  |            NOTYPE|00000068|     |.text	../../../../crt1/gcrt1.S:195
-ReadVarLen          |00022780|   T  |              FUNC|00000070|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1044
-ProcessFading       |00028104|   T  |              FUNC|00000074|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:318
-TriggerNote         |00023112|   T  |              FUNC|00000074|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1231
-Fill                |00027980|   T  |              FUNC|00000078|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:227
-InitMusicPlayer     |00022702|   T  |              FUNC|00000078|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:293
-countPlayerCards    |00031332|   T  |              FUNC|00000080|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1275
-getInputs           |00028456|   T  |              FUNC|00000080|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:150
-returnDiscardsToDrawPile|00034622|   T  |              FUNC|00000080|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:854
-tileIsDuplicateOf   |00030836|   T  |              FUNC|00000082|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:705
-removeCard_lg       |00032712|   T  |              FUNC|00000088|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:779
-patches             |00000692|   T  |            OBJECT|00000090|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:135
-PatchCommand14      |00022610|   T  |              FUNC|00000092|     |.text
-draw1tile_forCards.3416|00032970|   t  |              FUNC|00000096|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:934
-DrawMap             |00027782|   T  |              FUNC|00000098|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:41
-DrawMap2            |00027782|   T  |              FUNC|00000098|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:41
-gstate_title_main   |00038354|   T  |              FUNC|00000098|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2224
-PrintByte           |00027880|   T  |              FUNC|00000100|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:92
-N782_print_u8       |00029594|   T  |              FUNC|00000104|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:294
-errorHandler        |00031746|   T  |              FUNC|00000104|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:85
-DrawMap_vramtiles   |00031060|   T  |              FUNC|00000106|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:906
-ReadButtons         |00022084|   T  |              FUNC|00000108|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:244
-setVramTilemap      |00030948|   T  |              FUNC|00000112|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:887
-tracks              |08392076|   B  |            OBJECT|00000115|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:52
-N782_print_u16      |00029698|   T  |              FUNC|00000120|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:339
-PatchCommand11      |00022402|   T  |              FUNC|00000120|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:217
-removeUnusedRamtilesInTilemap|00032340|   T  |              FUNC|00000120|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:798
-getCursorPos.4057   |00028248|   t  |              FUNC|00000128|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2359
-Initialize          |00019360|   T  |              FUNC|00000130|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:172
-get_cardDims_byPlayerAndCardPosition|00036236|   T  |              FUNC|00000132|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2112
-draw1tile_forCards.3416.part.2|00032824|   t  |              FUNC|00000146|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:934
-do_rand             |00040920|   t  |              FUNC|00000150|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:45
-MapSprite2          |00027538|   T  |              FUNC|00000158|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:312
-getCardFromDrawPile |00036072|   T  |              FUNC|00000164|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1501
-MapSprite2_nra      |00031166|   T  |              FUNC|00000166|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1197
-rotateRamTile_n90   |00029818|   T  |              FUNC|00000180|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:609
-N782_print          |00028536|   T  |              FUNC|00000192|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:202
-cards               |08388865|   D  |            OBJECT|00000216|     |.data	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:256
-displayCards_byPlayer.4033|00035240|   t  |              FUNC|00000220|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2295
-gstate_title1       |00038050|   T  |              FUNC|00000252|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2181
-removeCard_sm       |00032460|   T  |              FUNC|00000252|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:750
-swapColors_ramtile  |00029998|   T  |              FUNC|00000256|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:640
-debug_showDebugData |00031486|   T  |              FUNC|00000260|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:18
-TriggerCommon       |00022850|   T  |              FUNC|00000262|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1100
-map_unoLogo1        |00004823|   T  |            OBJECT|00000266|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:780
-ProcessSprites      |00027148|   T  |              FUNC|00000390|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:219
-updatePlayerDisplayedData|00036368|   T  |              FUNC|00000486|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2138
-msgHandler          |00031850|   T  |              FUNC|00000490|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:387
-redrawMainInfoRegion|00035544|   T  |              FUNC|00000528|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2031
-displayCardsForPlayer|00034702|   T  |              FUNC|00000538|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1381
-gameInit            |00030294|   T  |              FUNC|00000542|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:469
-dealSpecifiedCard_anim|00036854|   T  |              FUNC|00000556|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1647
-newGameSetup        |00037410|   T  |              FUNC|00000640|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1816
-board_28x28         |00005089|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:747
-askUserToSetNewColor.4087|00028728|   t  |              FUNC|00000866|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2411
-ProcessMusic        |00023186|   T  |              FUNC|00001006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:462
-sprite_tiles        |00000949|   T  |            OBJECT|00001280|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:12
-drawCard            |00033066|   T  |              FUNC|00001432|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:929
-gstate_playing      |00038452|   T  |              FUNC|00002130|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:2249
-bg_tiles2           |00002519|   T  |            OBJECT|00002304|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:12
-bg_tiles            |00006360|   T  |            OBJECT|00012928|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:12
+__epilogue_restores__|00051756|   T  |            NOTYPE|00000054|     |.text	../../../../crt1/gcrt1.S:195
+__prologue_saves__  |00051700|   T  |            NOTYPE|00000056|     |.text	../../../../crt1/gcrt1.S:195
+N782_F1             |00002483|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:59
+N782_F2             |00002425|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:72
+N782_F3             |00002367|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:85
+N782_F4             |00002309|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:98
+N782_F5             |00002251|   T  |            OBJECT|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:111
+nextPlayerNumber.4370.constprop.5|00034564|   t  |              FUNC|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:3068
+post_VsyncCallBack  |00033722|   t  |              FUNC|00000058|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:182
+game                |08392212|   B  |            OBJECT|00000059|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:329
+redrawUnderDiscardPile|00038692|   t  |              FUNC|00000062|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1432
+redrawUnderDrawPile |00037136|   t  |              FUNC|00000062|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1421
+FormatEeprom        |00027508|   T  |              FUNC|00000068|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:604
+__udivmodsi4        |00051632|   T  |            NOTYPE|00000068|     |.text	../../../../crt1/gcrt1.S:195
+ReadVarLen          |00028062|   T  |              FUNC|00000070|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1044
+ProcessFading       |00033636|   T  |              FUNC|00000074|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:318
+TriggerNote         |00028538|   T  |              FUNC|00000074|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1231
+Fill                |00033512|   T  |              FUNC|00000078|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:227
+InitMusicPlayer     |00027984|   T  |              FUNC|00000078|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:293
+countPlayerCards    |00036398|   T  |              FUNC|00000080|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1360
+getInputs           |00034344|   t  |              FUNC|00000080|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:186
+tileIsDuplicateOf   |00036316|   T  |              FUNC|00000082|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:790
+removeCard_lg       |00037690|   t  |              FUNC|00000088|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:864
+patches             |00000982|   T  |            OBJECT|00000090|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/patches.inc:135
+PatchCommand14      |00027892|   T  |              FUNC|00000092|     |.text
+draw1tile_forCards.3532|00039110|   t  |              FUNC|00000092|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1019
+DrawMap             |00033414|   T  |              FUNC|00000098|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:41
+DrawMap2            |00033414|   T  |              FUNC|00000098|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxVideoEngine.c:41
+N782_print_u8       |00034164|   t  |              FUNC|00000104|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:334
+DrawMap_vramtiles   |00033892|   t  |              FUNC|00000106|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:991
+ReadButtons         |00027366|   T  |              FUNC|00000108|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:244
+setVramTilemap      |00033780|   t  |              FUNC|00000112|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:972
+N782_print_u16.constprop.6|00034622|   t  |              FUNC|00000114|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:365
+tracks              |08392078|   B  |            OBJECT|00000115|     |.bss	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:52
+PatchCommand11      |00027684|   T  |              FUNC|00000120|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:217
+removeUnusedRamtilesInTilemap|00037566|   t  |              FUNC|00000124|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:883
+errorHandler        |00038076|   t  |              FUNC|00000126|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:109
+getCursorPos.4342   |00034424|   t  |              FUNC|00000128|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:3036
+Initialize          |00024650|   T  |              FUNC|00000130|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxCore.c:172
+TriggerFx           |00028394|   T  |              FUNC|00000144|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1197
+do_rand             |00051810|   t  |              FUNC|00000150|     |.text	/build/buildd/avr-libc-1.8.0/avr/lib/avr5/../../../libc/stdlib/rand.c:45
+MapSprite2          |00033170|   T  |              FUNC|00000158|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:312
+MapSprite2_nra      |00033998|   t  |              FUNC|00000166|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1282
+swapColors_ramtile.constprop.8|00034736|   t  |              FUNC|00000190|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:726
+N782_print.constprop.10|00034926|   t  |              FUNC|00000196|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:238
+cards               |08388865|   D  |            OBJECT|00000216|     |.data	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.h:332
+showPoints.4553     |00035122|   t  |              FUNC|00000218|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:3500
+getCardFromDrawPile |00041868|   T  |              FUNC|00000236|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1586
+removeCard_sm       |00037778|   t  |              FUNC|00000252|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:835
+TriggerCommon       |00028132|   T  |              FUNC|00000262|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:1100
+debug_showDebugData |00037236|   t  |              FUNC|00000330|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:30
+draw1tile_forCards.3532.part.3|00038778|   t  |              FUNC|00000332|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1019
+map_unoLogo1        |00010347|   T  |            OBJECT|00000338|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:784
+titlescreen_logo    |00011023|   T  |            OBJECT|00000338|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:748
+titlescreen_options |00010685|   T  |            OBJECT|00000338|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:765
+ProcessSprites      |00032780|   T  |              FUNC|00000390|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/videoMode3/videoMode3.c:219
+msgHandler          |00038202|   t  |              FUNC|00000490|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:400
+redrawMainInfoRegion|00040624|   t  |              FUNC|00000524|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1901
+dealSpecifiedCard_anim|00042104|   t  |              FUNC|00000556|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1732
+updatePlayerDisplayedData|00036478|   t  |              FUNC|00000620|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1996
+displayCards_byPlayer.4331|00041148|   t  |              FUNC|00000720|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:3012
+board_28x28         |00011361|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:715
+credits1_28x28      |00005631|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:966
+credits2_28x28      |00004845|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:999
+options1_28x28      |00008775|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:834
+options2_28x28      |00007989|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:867
+rules1_28x28        |00007203|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:900
+rules2_28x28        |00006417|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:933
+titlescreen_28x28   |00009561|   T  |            OBJECT|00000786|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:801
+askUserToSetNewColor.4374|00035378|   t  |              FUNC|00000878|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:3108
+ProcessMusic        |00028612|   T  |              FUNC|00001006|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../kernel/uzebox/kernel/uzeboxSoundEngine.c:462
+sprite_tiles        |00001227|   T  |            OBJECT|00001024|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/sprite_tiles_progmem.inc:12
+drawCard            |00039202|   t  |              FUNC|00001422|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:1014
+bg_tiles2           |00002541|   T  |            OBJECT|00002304|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles2_progmem.inc:12
+main                |00042660|   T  |              FUNC|00008868|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/UZEUNO.c:4595
+bg_tiles            |00012610|   T  |            OBJECT|00011968|     |.text	/home/ubuntu/workspace/non-web/Uzebox/UZEUNO/build_files/../src/code/../assets/bg_tiles_progmem.inc:12

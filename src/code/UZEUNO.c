@@ -7,21 +7,33 @@ static void _emu_whisper(int port, u8 val) {
 	if(port==0x3A || port == 1){ u8 volatile * const _whisper_pointer2 = (u8 *) 0x3A; *_whisper_pointer2 = val; }
 }
 // Clears the debug data (on the right side.)
-void clear_debug_showDebugData(){
+static void clear_debug_showDebugData(){
+#if VRAM_TILES_H == 32
 	// Clear the debug section.
-	// return;
+
 	u8 xx_start=28;
-	u8 inrow=2*1;
-	Fill(xx_start-0,0, inrow+2, VRAM_TILES_V, 1);
+	u8 inrow=4;
+
+	// u8 yellow_border = pgm_read_byte(&(border_yellow[2]));
+	// u8 blue_border   = pgm_read_byte(&(border_blue  [2]));
+	// u8 red_border    = pgm_read_byte(&(border_red   [2]));
+	// u8 green_border  = pgm_read_byte(&(border_green [2]));
+	// u8 black_border  = pgm_read_byte(&(border_black [2]));
+
+	// u8 color_orange  = pgm_read_byte(&(orange_color [2]));
+	u8 color_blue  = pgm_read_byte(&(blue_color [2]));
+
+	Fill(xx_start,0, inrow, VRAM_TILES_V, color_blue);
+#endif
 }
 // Shows debug data (on the right side.)
-void debug_showDebugData(){
-	// return;
+static void debug_showDebugData(){
+#if VRAM_TILES_H == 32
 
-	u8 xx_start=29;
-	u8 inrow=2;
+	u8 xx_start=28;
+	u8 inrow=4;
 
-	u8 xx=xx_start+1;
+	u8 xx=xx_start;
 	u8 yy=0;
 
 	clear_debug_showDebugData();
@@ -30,15 +42,15 @@ void debug_showDebugData(){
 	for(u8 i=0; i<reservedRamtiles-0; i+=1){
 		// Go down to the next row?
 		if(!(i%inrow) && i!=0) {
-			xx=xx_start+1;
+			xx=xx_start;
 			yy++;
 			// yy++;
 		}
 
-		// Is this ram tile in use in the queue?
-		if(game.ramtile_ids_used[i] ==1) { N782_print(xx-2, yy, "1", 1); }
-		// No?
-		else                             { N782_print(xx-2, yy, "0", 1); }
+		// // Is this ram tile in use in the queue?
+		// if(game.ramtile_ids_used[i] ==1) { N782_print(xx-2, yy, PSTR("1"), 0); }
+		// // No?
+		// else                             { N782_print(xx-2, yy, PSTR("0"), 0); }
 
 		// Draw the ram tile. (One more than "i" since 0 is the ram tile for the cursor.)
 		SetRamTile( xx+0,yy+0,1+i );
@@ -48,58 +60,79 @@ void debug_showDebugData(){
 	}
 
 	// Card counts.
-	yy+=2;
-
+	yy+=1;
+	yy+=1;
+	xx_start+=1;
+	// Count of the cards in the Draw Pile.
+	N782_print(xx_start-1,yy, PSTR("DRAW"), 0);yy++;
 	N782_print_u8(xx_start-1,yy, countDrawPile()    ) ; yy++;
-	N782_print_u8(xx_start-1,yy, countDiscardPile() ) ; yy++;
-	yy++;
 
+	// Count of the cards in the Discard Pile.
+	N782_print(xx_start-1,yy, PSTR("DISC"), 0);yy++;
+	N782_print_u8(xx_start-1,yy, countDiscardPile() ) ; yy++;
+
+	// Indicates which players are active.
+	N782_print(xx_start-1,yy, PSTR("ACTV"), 0);yy++;
 	N782_print_u8(xx_start-3, yy  , game.activePlayers[0]);
 	N782_print_u8(xx_start-2, yy  , game.activePlayers[1]);
 	N782_print_u8(xx_start-1, yy  , game.activePlayers[2]);
 	N782_print_u8(xx_start+0, yy  , game.activePlayers[3]);
 	yy++;
-	yy++;
-	// N782_print_u8(xx_start-2, yy  , game.activePlayer);
-	N782_print_u8(xx_start-0, yy  , game.handRow);
 
-	yy++;
+	// Number of players.
+	N782_print(xx_start-1,yy, PSTR("NP"), 0);
+	N782_print_u8(xx_start+0, yy  , game.numPlayers); yy++;
 
-	/*
-	yy++;
-	N782_print_u8(xx_start-1,yy, game.playerVisibleHand[0] ) ; yy++;
-	N782_print_u8(xx_start-1,yy, game.playerVisibleHand[1] ) ; yy++;
-	N782_print_u8(xx_start-1,yy, game.playerVisibleHand[2] ) ; yy++;
-	N782_print_u8(xx_start-1,yy, game.playerVisibleHand[3] ) ; yy++;
-	N782_print_u8(xx_start-1,yy, game.playerVisibleHand[4] ) ; yy++;
-	*/
+	// Current hand row for the active player.
+	N782_print(xx_start-1,yy, PSTR("HR"), 0);
+	N782_print_u8(xx_start, yy  , game.handRow); yy++;
 
-	yy++;
-	N782_print_u8(xx_start-1,yy, game.lastCardPlayed       ) ; yy++;
+	// Card indexes for the active player's displayed cards.
+	// N782_print(xx_start-1,yy, PSTR("A"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[0] ) ; yy++;
+	// N782_print(xx_start-1,yy, PSTR("B"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[1] ) ; yy++;
+	// N782_print(xx_start-1,yy, PSTR("C"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[2] ) ; yy++;
+	// N782_print(xx_start-1,yy, PSTR("D"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[3] ) ; yy++;
+	// N782_print(xx_start-1,yy, PSTR("E"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[4] ) ; yy++;
 
-	// N782_print_u8(xx_start-2,27, game.randomSeed       ) ; yy++;
+	// Card index for last discarded card.
+	N782_print(xx_start-1,yy, PSTR("LAST"), 0);yy++;
+	N782_print_u8(xx_start-0,yy, game.lastCardPlayed       ) ; yy++;
+
+	// Random seed in use.
+	// N782_print(xx_start-1,yy, PSTR("SEED"), 0);yy++;
+	// N782_print_u16(xx_start-0,yy, game.randomSeed       ) ; yy++;
 
 	//
+#endif
 }
 // Error handler - Called upon reaching fatal errors.
-void errorHandler(enum errorTypes error){
+static void errorHandler(enum errorTypes error){
 	// EXAMPLE USAGE: errorHandler(RAMTILEUSAGE);
 	// Intended for fatal errors.
-	// u8 fatalError;
 
 	// Display the error text.
 	switch(error){
 		// If there are no more free reserved ramtiles.
 		case RAMTILEUSAGE      : {
 			N782_print( 0 , VRAM_TILES_V-1, S_RAMTILEUSAGE  , 0 ) ;
-			// fatalError=true; 
 			break;
 		}
 
 		// If not enough cards are available.
 		case NOTENOUGHCARDS    : {
 			N782_print( 0 , VRAM_TILES_V-1, S_NOTENOUGHCARDS, 0 ) ;
-			// fatalError=true; 
+			break;
+		}
+
+		// INVALID GAMESTATE 1.
+		case INVALIDGAMESTATE1    : {
+			N782_print( 0 , VRAM_TILES_V-1, S_INVALIDGAMESTATE1, 0 ) ;
+			break;
+		}
+
+		// INVALID GAMESTATE 2.
+		case INVALIDGAMESTATE2    : {
+			N782_print( 0 , VRAM_TILES_V-1, S_INVALIDGAMESTATE2, 0 ) ;
 			break;
 		}
 
@@ -110,33 +143,34 @@ void errorHandler(enum errorTypes error){
 	debug_showDebugData();
 
 	// Blink the "!!" and do not let the program continue.
-	// if(fatalError==true){
-		while(1){
+	while(1){
+		for(u8 i=0; i<5; i+=1){
 			N782_print( 0 , VRAM_TILES_V-2, S_DBLSPACE, 0 ) ;
 			WaitVsync(20);
 			N782_print( 0 , VRAM_TILES_V-2, S_DBLEXCLAMATION, 0 ) ;
 			WaitVsync(20);
-
-			// WaitVsync(300); // 5 seconds
-			WaitVsync(240); // 4 seconds
-			// WaitVsync(180); // 3 seconds
-			// WaitVsync(120); // 2 seconds
-			// WaitVsync(60);  // 1 second
-
-			SoftReset();
-			// WaitVsync(1);
 		}
-	// }
+
+		// WaitVsync(300); // 5 seconds
+		WaitVsync(240); // 4 seconds
+		// WaitVsync(180); // 3 seconds
+		// WaitVsync(120); // 2 seconds
+		// WaitVsync(60);  // 1 second
+
+		SoftReset();
+		// WaitVsync(1);
+	}
 }
 // DEBUG
 
 // LOW LEVEL - VSYNC COUNTERS
 // Code that is run right before vsync.
-void pre_VsyncCallBack(){
+static void pre_VsyncCallBack(){
 }
 // Increments timers (run from post vsync.)
-void updateIndividualTimers(){
+static void updateIndividualTimers(){
 	vsynccounter16b_1   ++ ;
+	vsynccounter16b_2   ++ ;
 	vsynccounter8b_gen1 ++ ;
 	vsynccounter8b_gen2 ++ ;
 
@@ -145,11 +179,11 @@ void updateIndividualTimers(){
 	// counter8b_gen1      ++ ;
 }
 // Code that is run right after vsync.
-void post_VsyncCallBack(){
+static void post_VsyncCallBack(){
 	updateIndividualTimers();
 }
 // Get gamepad inputs and store them in the game struct.
-void getInputs(){
+static void getInputs(){
 	// Reads input as a combining ( 'OR' ) of gamepad 1 and 2.
 	// Either gamepad can be used to control the game.
 
@@ -201,7 +235,7 @@ void getInputs(){
 
 // TEXT DISPLAY
 // Displays text (allows for a limited fontset.)
-void N782_print(int x,int y,const char *string, u8 fromRam){
+static void N782_print(int x,int y,const char *string, u8 fromRam){
 	// This works like the kernel print function but does not require a complete fontset.
 	// Can save flash space by not requiring punctuation font tiles.
 	// Punctuation characters can be added as needed.
@@ -230,24 +264,22 @@ void N782_print(int x,int y,const char *string, u8 fromRam){
 	// u8 unknownFont = pgm_read_byte(&(offBlackTile[2]));
 
 	// Start indexes for letters, numbers.
-	// u8 letters_start_index=18; // letters_start_index is the tile index of A. 65 is the ASCII value of A. 97 is the ASCII value of a.
-	// u8 numbers_start_index=5;  // numbers_start_index is the tile index of 0. 48 is the ASCII value of 0.
-	u8 letters_start_index=34; // letters_start_index is the tile index of A. 65 is the ASCII value of A. 97 is the ASCII value of a.
-	u8 numbers_start_index=17;  // numbers_start_index is the tile index of 0. 48 is the ASCII value of 0.
+	u8 letters_start_index=22;    // letters_start_index is the tile index of A. 65 is the ASCII value of A. 97 is the ASCII value of a.
+	u8 numbers_start_index=9 ;    // numbers_start_index is the tile index of 0. 48 is the ASCII value of 0.
 
 	// Start indexes for punctuation tiles.
-	// u8 space_start_index       = 1  ; // ' '
-	// u8 exclamation_start_index = 2  ; // '!'
-	// u8 plus_start_index        = 3  ; // '+'
-	// u8 period_start_index      = 4  ; // '.'
-	// u8 colon_start_index       = 15 ; // ':'
-	// u8 question_start_index    = 16 ; // '?'
-	u8 space_start_index       = 1  ; // ' '
-	u8 exclamation_start_index = 2  ; // '!'
-	u8 plus_start_index        = 12  ; // '+'
-	u8 period_start_index      = 15  ; // '.'
-	u8 colon_start_index       = 27 ; // ':'
-	u8 question_start_index    = 32 ; // '?'
+	u8 space_start_index        = 0 ;
+	u8 exclamation_start_index  = 2 ;
+	u8 doubleQuote_start_index  = 3 ;
+	u8 rightParen_start_index   = 4 ;
+	u8 leftParen_start_index    = 5 ;
+	u8 plus_start_index         = 6 ;
+	u8 comma_start_index        = 7 ;
+	u8 period_start_index       = 8 ;
+	u8 colon_start_index        = 19;
+	u8 question_start_index     = 20;
+	u8 at_start_index           = 21;
+	u8 underscore_start_index   = 48;
 
 	// Keep printing the string until the string terminator (NULL) is found.
 	while(1){
@@ -276,12 +308,18 @@ void N782_print(int x,int y,const char *string, u8 fromRam){
 			else if(thischar >= '0' && thischar <= '9') { charAsTileNum = numbers_start_index + thischar-'0'; }
 
 			// Punctuation.
+			else if( thischar==' ' ) { charAsTileNum = space_start_index       ; }
 			else if( thischar=='!' ) { charAsTileNum = exclamation_start_index ; }
+			else if( thischar==')' ) { charAsTileNum = doubleQuote_start_index ; }
+			else if( thischar=='"' ) { charAsTileNum = rightParen_start_index  ; }
+			else if( thischar=='(' ) { charAsTileNum = leftParen_start_index   ; }
+			else if( thischar=='+' ) { charAsTileNum = plus_start_index        ; }
+			else if( thischar==',' ) { charAsTileNum = comma_start_index       ; }
 			else if( thischar=='.' ) { charAsTileNum = period_start_index      ; }
 			else if( thischar==':' ) { charAsTileNum = colon_start_index       ; }
-			else if( thischar=='+' ) { charAsTileNum = plus_start_index        ; }
 			else if( thischar=='?' ) { charAsTileNum = question_start_index    ; }
-			else if( thischar==' ' ) { charAsTileNum = space_start_index       ; }
+			else if( thischar=='@' ) { charAsTileNum = at_start_index          ; }
+			else if( thischar=='_' ) { charAsTileNum = underscore_start_index  ; }
 
 			// Unmatched characters. Use the unknownFont tile.
 			else                     { charAsTileNum = unknownFont_index ;  }
@@ -293,7 +331,7 @@ void N782_print(int x,int y,const char *string, u8 fromRam){
 
 }
 // Displays u8 number display (allows for a limited fontset.)
-void N782_print_u8(int x,int y, u8 num){
+static void N782_print_u8(int x,int y, u8 num){
 	// Can print one number, 0-9.
 	// u8 thischar;
 	// u8 charAsTileNum;
@@ -304,7 +342,7 @@ void N782_print_u8(int x,int y, u8 num){
 	// u8 numbers_start_index=5;  // numbers_start_index is the tile index of 0.
 	u8 start_i=0;
 
-	u8 numbers_start_index=17;  // numbers_start_index is the tile index of 0.
+	u8 numbers_start_index=9;  // numbers_start_index is the tile index of 0.
 
 	u8 cols[3] = {0};
 	cols[0] = ( (num/100) + 0 ) ; num %= 100;
@@ -323,22 +361,8 @@ void N782_print_u8(int x,int y, u8 num){
 			cols[i]+numbers_start_index
 		);
 	}
-
-	// Read the character.
-	// thischar=num;
-
-	// Get the tile for the character.
-
-	// Numbers.
-	// if(thischar >= 0 && thischar <= 9) { charAsTileNum = numbers_start_index + thischar; }
-
-	// // Unmatched characters. Use the unknownFont tile.
-	// else                     { charAsTileNum = unknownFont_index ;  }
-
-	// // Print the character to the screen.
-	// SetTile(x++,y+0 , charAsTileNum);
 }
-void N782_print_u16(int x,int y, u16 num){
+static void N782_print_u16(int x,int y, u16 num){
 	// Can print one number, 0-9.
 	// u8 thischar;
 	// u8 charAsTileNum;
@@ -349,7 +373,7 @@ void N782_print_u16(int x,int y, u16 num){
 	// u8 numbers_start_index=5;  // numbers_start_index is the tile index of 0.
 	u8 start_i=0;
 
-	u8 numbers_start_index=17;  // numbers_start_index is the tile index of 0.
+	u8 numbers_start_index=9;  // numbers_start_index is the tile index of 0.
 
 	u8 cols[5] = {0};
 	cols[0] = ( (num/10000) + 0 ) ; num %= 10000;
@@ -371,90 +395,78 @@ void N782_print_u16(int x,int y, u16 num){
 		);
 	}
 
-	// Read the character.
-	// thischar=num;
-
-	// Get the tile for the character.
-
-	// Numbers.
-	// if(thischar >= 0 && thischar <= 9) { charAsTileNum = numbers_start_index + thischar; }
-
-	// // Unmatched characters. Use the unknownFont tile.
-	// else                     { charAsTileNum = unknownFont_index ;  }
-
-	// // Print the character to the screen.
-	// SetTile(x++,y+0 , charAsTileNum);
 }
 // Message handler - Central place for drawing game messages.
-void msgHandler(enum msgTypes msg){
+static void msgHandler(enum msgTypes msg){
 	// EXAMPLE USAGE: msgHandler(COULDNOTASSIGNALL);
 	// EXAMPLE USAGE: msgHandler(GAMESTART_FIRST);
 	// Intended for non-fatal errors.
-	u8 fatalError;
 
 	// clearbgmessage : Fill(8,17, 12,5, replacementTile);
 	// Region starts at 8,17, has width of 12 and height of 5.
+
+	Fill(8,17, 12,5, pgm_read_byte(&(blackTile[2]   )));
 
 	// Display the msg text.
 	switch(msg){
 		// If not enough cards are available.
 		case COULDNOTASSIGNALL : {
-			N782_print(9,18, S_COULDNOTASSIGNALL1, 0);
-			N782_print(8,19, S_COULDNOTASSIGNALL2, 0);
+			N782_print(9 ,18, S_COULDNOTASSIGNALL1, 0);
+			N782_print(8 ,19, S_COULDNOTASSIGNALL2, 0);
 			N782_print(10,20, S_COULDNOTASSIGNALL3, 0);
 			WaitVsync(100);
 		}
-		case GAMESTART_FIRST : {
+		case GAMESTART_FIRST   : {
 			N782_print   ( 9  , 18, S_PLAYER, 0);
 			N782_print_u8( 14 , 18, game.activePlayer );
 			N782_print   ( 9  , 19, S_PLAYSFIRST, 0);
 			break;
 		}
-		case DRAW2_PLAYER : {
+		case DRAW2_PLAYER      : {
 			N782_print   ( 9  , 18, S_PLAYER   , 0 ) ;
 			N782_print_u8( 14 , 18, game.activePlayer );
 			N782_print   ( 9  , 19, S_DRAW2,0);
 			N782_print   ( 9  , 20, S_LOSETURN,0);
 			break;
 		}
-		case DRAW4_PLAYER : {
+		case DRAW4_PLAYER      : {
 			N782_print   ( 9  , 18, S_PLAYER   , 0 ) ;
 			N782_print_u8( 14 , 18, game.activePlayer );
 			N782_print   ( 9  , 19, S_DRAW4,0);
 			N782_print   ( 9  , 20, S_LOSETURN,0);
 			break;
 		}
-		case SKIP_PLAYER : {
+		case SKIP_PLAYER       : {
 			N782_print   ( 9  , 18, S_PLAYER   , 0 ) ;
 			N782_print_u8( 14 , 18, game.activePlayer );
 			N782_print   ( 9  , 19, S_LOSETURN,0);
 			break;
 		}
-		case REVERSE_PLAYER : {
+		case REVERSE_PLAYER    : {
 			N782_print   ( 9  , 19, S_REVERSE1,0);
 			N782_print   ( 9  , 20, S_REVERSE2,0);
 			break;
 		}
-		case INCORRECTCARD : {
-			N782_print( 8 , 17, S_INCORRECTYCARD  , 0 ) ;
-			N782_print( 8 , 18, S_CHOSEANOTHER    , 0 ) ;
+		case INCORRECTCARD     : {
+			N782_print( 9 , 18, S_INCORRECTYCARD  , 0 ) ;
+			N782_print( 8 , 19, S_CHOSEANOTHER    , 0 ) ;
 			break;
 		}
-		case PLAYORPASS : {
-			N782_print( 9 , 17, S_A_TO_PLAY  , 0 ) ;
-			N782_print( 9 , 18, S_B_TO_CANCEL, 0 ) ;
+		case PLAYORCANCEL      : {
+			N782_print( 9 , 18, S_A_TO_PLAY  , 0 ) ;
+			N782_print( 9 , 19, S_B_TO_CANCEL, 0 ) ;
 			break;
 		}
-		case PASSORCANCEL : {
-			N782_print( 9 , 17, S_A_TO_PASS   , 0 ) ;
-			N782_print( 9 , 18, S_B_TO_CANCEL , 0 ) ;
+		case PASSORCANCEL      : {
+			N782_print( 9 , 18, S_A_TO_PASS   , 0 ) ;
+			N782_print( 9 , 19, S_B_TO_CANCEL , 0 ) ;
 			break;
 		}
-		case GAMEWIN_PLAYER : {
-			N782_print   ( 9  , 18, S_PLAYER, 0);
-			N782_print_u8( 14 , 18, game.activePlayer );
-			N782_print   ( 9  , 19, S_WINSROUND1 , 0);
-			N782_print   ( 9  , 20, S_WINSROUND2 , 0);
+		case GAMEWIN_PLAYER    : {
+			N782_print   ( 10  , 18, S_PLAYER, 0);
+			N782_print_u8( 15  , 18, game.activePlayer );
+			N782_print   ( 10  , 19, S_WINSROUND1 , 0);
+			N782_print   ( 11  , 20, S_WINSROUND2 , 0);
 			break;
 		}
 
@@ -467,8 +479,58 @@ void msgHandler(enum msgTypes msg){
 // TEXT DISPLAY
 
 // INIT
+static void getRandomSeedViaUserInput(){
+	// Get a random source: Use the time it takes for the user to press and then release the button.
+	vsynccounter8b_gen1=0;
+	u8 frame=0;
+	u8 x=(VRAM_TILES_H/2) - (12/2); // (12 is the length of the string.
+	u8 y=(VRAM_TILES_V/2) - 1;
+	ClearVram();
+
+	N782_print( x, y, S_GAMEREADY , 0 ) ;
+
+	// while(0)
+	while(1)
+	{
+		getInputs();
+
+		if     (vsynccounter8b_gen1<30){ frame=1; }
+		else if(vsynccounter8b_gen1<40){ frame=2; }
+		else                           { frame=1; vsynccounter8b_gen1=0; }
+
+		// Tell the user to press START (blink this text.)
+		if     (frame==1){ N782_print( x, y+2, S_PRESSSTART , 0 ) ; }
+		else if(frame==2){ Fill(x,y+2, 12,1, 0x00); }
+
+		// Did the user hold start?
+		if( game.btnPressed1 ){
+			// Reset the 8bit counter.
+			vsynccounter8b_gen1=0;
+
+			// Wait for the user to release all buttons.
+			while(game.btnHeld1){ getInputs(); }
+
+			// Generate a random number that uses the timer values.
+			game.randomSeed = ( (vsynccounter16b_1 * vsynccounter8b_gen1) );
+
+#if VRAM_TILES_H == 32
+			// N782_print_u16(x,y+4, game.randomSeed);
+			// N782_print_u16(x,y+5, vsynccounter16b_1);
+			// N782_print_u16(x,y+6, vsynccounter8b_gen1);
+
+			// // While no button is held...
+			// while ( game.btnHeld1==0 ){ getInputs(); }
+#endif
+			// End the loop.
+			break;
+		}
+
+		// Keep in sync while waiting for the user to hold a button then release it.
+		WaitVsync(1);
+	}
+}
 // Run once at program start. (SETUP.)
-void gameInit(){
+static void gameInit(){
 	// System init.
 	SetTileTable( bg_tiles );
 	// for(u8 i=0;i<MAX_SPRITES; i++){sprites[i].x = OFF_SCREEN; }
@@ -495,31 +557,44 @@ void gameInit(){
 	SetUserRamTilesCount(reservedRamtiles+1); // Reserved ramtiles plus the compare.
 
 	// Init the inital game settings.
-	game.numPlayers = 4 ; //
+	game.numPlayers    =  2                         ;
+	game.activePlayers == game.numPlayers>0 ? 1 : 0 ;
+	game.activePlayers == game.numPlayers>1 ? 1 : 0 ;
+	game.activePlayers == game.numPlayers>2 ? 1 : 0 ;
+	game.activePlayers == game.numPlayers>3 ? 1 : 0 ;
+	game.activePlayer   = 255                       ;
+	game.points_p1      = 0                         ;
+	game.points_p2      = 0                         ;
+	game.points_p3      = 0                         ;
+	game.points_p4      = 0                         ;
+	game.lastCardPlayed = 255                       ;
+	game.direction      = FORWARD                   ;
 
-	// Set active players.
-	if(game.numPlayers>0){ game.activePlayers[0]=1; }
-	if(game.numPlayers>1){ game.activePlayers[1]=1; }
-	if(game.numPlayers>2){ game.activePlayers[2]=1; }
-	if(game.numPlayers>3){ game.activePlayers[3]=1; }
+	game.player_types[0]= HUMAN                     ;
+	game.player_types[1]= CPU                       ;
+	game.player_types[2]= NONE                      ;
+	game.player_types[3]= NONE                      ;
 
-	game.activePlayer   = 255;
-	game.points_p1      = 0 ; //
-	game.points_p2      = 0 ; //
-	game.points_p3      = 0 ; //
-	game.points_p4      = 0 ; //
-	game.lastCardPlayed = 255;
-	game.direction      = FORWARD;
+	game.ai_type        = SIMPLE                    ;
+	game.winStyle       = FIRSTTO500POINTS          ;
+	game.drawStyle      = DRAW1                     ;
 
-	// game.gamestate1   = GSTATE_TITLE ;   // Game state. Title, playing, game over.
-	// game.gamestate2   = GSTATE2_NORMAL ; // Secondary game state. Coin room, normal game.
+	// Normal starting gamestates.
+	game.gamestate1   = GSTATE_TITLE      ;
+	// game.gamestate2   = GSTATE_TITLE_N782 ;
+	game.gamestate2   = GSTATE_TITLE_UZEBOX ;
+	// game.gamestate2   = GSTATE_TITLE_MAINMENU ;
+
+	// DEBUG starting gamestates.
+	// game.gamestate1   = GSTATE_PLAYING      ;
+	// game.gamestate2   = GSTATE_PLAYING_GAMESTART ;
 
 	// while(true){
-	// 	_emu_whisper(0,5 ); PrintByte(2, 5, 5, 0); for(u8 ii=0; ii<5;ii+=1) { TriggerFx(5 ,  255, true); WaitVsync(25); } WaitVsync(50);
-	// 	_emu_whisper(0,6 ); PrintByte(2, 5, 6, 0); for(u8 ii=0; ii<5;ii+=1) { TriggerFx(6 ,  255, true); WaitVsync(25); } WaitVsync(50);
-	// 	_emu_whisper(0,7 ); PrintByte(2, 5, 7, 0); for(u8 ii=0; ii<5;ii+=1) { TriggerFx(7 ,  255, true); WaitVsync(25); } WaitVsync(50);
-	// 	_emu_whisper(0,8 ); PrintByte(2, 5, 8, 0); for(u8 ii=0; ii<5;ii+=1) { TriggerFx(8 ,  255, true); WaitVsync(25); } WaitVsync(50);
-	// 	_emu_whisper(0,9 ); PrintByte(2, 5, 9, 0); for(u8 ii=0; ii<5;ii+=1) { TriggerFx(9 ,  255, true); WaitVsync(25); } WaitVsync(50);
+	// 	WaitVsync(1); _emu_whisper(0,5 ); WaitVsync(1); for(u8 ii=0; ii<1;ii+=1) { TriggerFx(5 , 255, true); } WaitVsync(100);
+	// 	WaitVsync(1); _emu_whisper(0,6 ); WaitVsync(1); for(u8 ii=0; ii<1;ii+=1) { TriggerFx(6 , 255, true); } WaitVsync(100);
+	// 	WaitVsync(1); _emu_whisper(0,7 ); WaitVsync(1); for(u8 ii=0; ii<1;ii+=1) { TriggerFx(7 , 255, true); } WaitVsync(100);
+	// 	WaitVsync(1); _emu_whisper(0,8 ); WaitVsync(1); for(u8 ii=0; ii<1;ii+=1) { TriggerFx(8 , 255, true); } WaitVsync(100);
+	// 	WaitVsync(1); _emu_whisper(0,9 ); WaitVsync(1); for(u8 ii=0; ii<1;ii+=1) { TriggerFx(9 , 255, true); } WaitVsync(100);
 	// }
 
 	// Init the rest of the game settings.
@@ -529,59 +604,18 @@ void gameInit(){
 	SetUserPreVsyncCallback ( &pre_VsyncCallBack  ); //
 	SetUserPostVsyncCallback( &post_VsyncCallBack ); //
 
-	// Clear the ramtiles.
-	clearRamtile(0, CLEAREDRAMTILECOLOR4);
-	for(u8 i=0; i<reservedRamtiles; i+=1){
-		clearRamtile(i+1, CLEAREDRAMTILECOLOR4);
-		game.ramtile_ids_used[i]=0;
-	}
+clearAllReservedRamtiles();
 	for(u8 i=0; i<5; i+=1){
 		game.playerVisibleHand[i]=255;
 	}
 
 	ClearVram();
 
-	// Get a random source: Use the time it takes for the user to press and then release the button.
-	vsynccounter8b_gen1=0;
-	u8 frame=0;
-	u8 x=(VRAM_TILES_H/2) - (12/2); // (12 is the length of the string.
-	u8 y=(VRAM_TILES_V/2) - 1;
-	ClearVram();
-	// while(0)
-	while(1)
-	{
-		getInputs();
+	game.randomSeed=0;
 
-		if     (vsynccounter8b_gen1<30){ frame=1; }
-		else if(vsynccounter8b_gen1<40){ frame=2; }
-		else                           { frame=1; vsynccounter8b_gen1=0; }
+	// getRandomSeedViaUserInput();
+	// N782_print_u16(VRAM_TILES_H-5,27, game.randomSeed ) ;
 
-		// Tell the user to press START (blink this text.)
-		if     (frame==1){ N782_print( x, y, S_PRESSSTART , 0 ) ; }
-		else if(frame==2){ Fill(x,y, 12,1, 0x00); }
-
-		// Did the user hold start?
-		if( game.btnHeld1 ){
-			//
-
-			// Reset the 8bit counter.
-			vsynccounter8b_gen1=0;
-			// Wait for the user to release all buttons.
-			while(game.btnHeld1){ getInputs(); }
-
-			//
-			game.randomSeed = ( 254 * (vsynccounter16b_1 * vsynccounter8b_gen1) );
-			N782_print_u16(29-2,27, game.randomSeed ) ;
-			N782_print_u16(29-2,25, RAND_MAX ) ;
-			WaitVsync(50);
-
-			// End the loop.
-			break;
-		}
-
-		// Keep in sync while waiting for the user to hold a button then release it.
-		WaitVsync(1);
-	}
 	// Seed the random number generator using the values of the two timers multiplied together.
 	srand(game.randomSeed);
 	// srand(GetTrueRandomSeed());
@@ -591,7 +625,7 @@ void gameInit(){
 	vsynccounter8b_gen1 = 0;
 }
 // --------------------------
-void drawGameBoard(){
+static void drawGameBoard(){
 	// How many players?
 	game.numPlayers;
 
@@ -606,9 +640,57 @@ void drawGameBoard(){
 }
 // INIT
 
+// SOUND UTILITIES
+static void playSFX(u8 patch){
+	u8 volume   = 128  ;
+	// bool retrig = true ;
+	bool retrig = false ;
+
+	// playSFX (SELECTCURSOR1);
+	// playSFX (DRAWCARD);
+	// playSFX (SELECTCARD);
+	// playSFX (CANCELCARD);
+	// playSFX (CARDPLAYED);
+
+	switch(patch){
+		// When a card is played.
+		case CARDPLAYED          : { TriggerFx(5,  volume, retrig); break ; }
+		// When a card is selected.
+		case SELECTCARD          : { TriggerFx(6,  volume, retrig); break ; }
+		// When a selected card is cancelled.
+		case CANCELCARD          : { TriggerFx(7,  volume, retrig); break ; }
+		// When the card/color select cursor is moved.
+		case SELECTCURSOR1       : { TriggerFx(8,  volume, retrig); break ; }
+		// When a card is drawn.
+		case DRAWCARD            : { TriggerFx(9,  volume, retrig); break ; }
+		//
+		default                  : { break ; }
+	};
+
+	// TriggerFx(unsigned char patch,unsigned char volume, bool retrig);
+	// TriggerFx(patch,  volume, retrig);
+}
+// SOUND UTILITIES
+
 // RAMTILE UTILITIES
+// Clears all reserved ramtiles (indexes and data.)
+static void clearAllReservedRamtiles(){
+	// Clear the ramtiles.
+	clearRamtile(0, CLEAREDRAMTILECOLOR4);
+	for(u8 i=0; i<reservedRamtiles; i+=1){
+		clearRamtile(i+1, CLEAREDRAMTILECOLOR4);
+		game.ramtile_ids_used[i]=0;
+	}
+}
+static void clearAllRamtiles(){
+	// Clear ALL ramtiles.
+	for(u8 i=0; i<RAM_TILES_COUNT; i+=1){
+		clearRamtile(i, CLEAREDRAMTILECOLOR4);
+	}
+}
+
 // Rotates a ramtile in place negative 90 degrees.
-void rotateRamTile_n90(u8 mat[8][8]){
+static void rotateRamTile_n90(u8 mat[8][8]){
 	// Based on: https://www.geeksforgeeks.org/inplace-rotate-square-matrix-by-90-degrees/
 	// Rotates anti-clockwise 90 degrees (so, -90 degrees.)
 	// Rotates in-place with no additional ramtile needed.
@@ -639,7 +721,7 @@ void rotateRamTile_n90(u8 mat[8][8]){
 	}
 }
 // Replaces all pixel values of the specified color to the new specified color.
-void swapColors_ramtile(u8 srcColor, u8 dstColor, u8 ramtile_id){
+static void swapColors_ramtile(u8 srcColor, u8 dstColor, u8 ramtile_id){
 	// Use these colors - from a PROGMEM tile.
 	u8 yellow_value = pgm_read_byte( &( &bg_tiles[ (u16) ( (TILE_WIDTH*TILE_HEIGHT) * pgm_read_byte(&(yellow_color[2])) ) ])[0] );
 	u8 blue_value   = pgm_read_byte( &( &bg_tiles[ (u16) ( (TILE_WIDTH*TILE_HEIGHT) * pgm_read_byte(&(blue_color[2]  )) ) ])[0] );
@@ -685,7 +767,7 @@ void swapColors_ramtile(u8 srcColor, u8 dstColor, u8 ramtile_id){
 	}
 }
 // Clears the pixel data from a ramtile (erases the ramtile data.)
-void clearRamtile( u8 id, u8 newColor){
+static void clearRamtile( u8 id, u8 newColor){
 	// Clears the pixel data in the specified ramtile.
 	// NOTE: Assumes that you've already removed the ramtile from game.ramtile_ids_used.
 
@@ -693,7 +775,8 @@ void clearRamtile( u8 id, u8 newColor){
 	u8 * ramTiles_ptr ;
 
 	// Ensure that this is a ramtile before clear it.
-	if(id <= reservedRamtiles ) {
+	// if(id <= reservedRamtiles ) {
+	if(id < RAM_TILES_COUNT ) {
 		// Set each pixel of the ramtile to the new value.
 		for(u16 i=0; i<64; i+=1){
 			// Set the address of the pointer.
@@ -749,7 +832,7 @@ u8 tileIsDuplicateOf(u8 ramtile_id){
 
 // CARD UTILITIES
 // Removes the card from the specified player and card position.
-void removeCard_sm(u8 player, u8 position){
+static void removeCard_sm(u8 player, u8 position){
 	u8 x;
 	u8 y;
 	u8 w;
@@ -778,7 +861,7 @@ void removeCard_sm(u8 player, u8 position){
 	removeUnusedRamtilesInTilemap(map);
 }
 // Removes the large card (discard.)
-void removeCard_lg(){
+static void removeCard_lg(){
 	// Local variables.
 	const u8 replacementTile = pgm_read_byte(&(wood_color1[2]));
 	const u8 x = pgm_read_byte(&(discard_pos[0]));
@@ -797,7 +880,7 @@ void removeCard_lg(){
 	removeUnusedRamtilesInTilemap(map2);
 }
 // Removes and clears the ramtiles that are no longer in use by the specified map.
-void removeUnusedRamtilesInTilemap(u8 *map){
+static void removeUnusedRamtilesInTilemap(u8 *map){
 	// This function operates similar to removeCard_sm and removeCard_lg.
 	 // Requires a tilemap that uses vram ids (and is stored in RAM, not PROGMEM.)
 	// It assumes that that the tiles for the removed card have already been removed from vram.
@@ -853,7 +936,7 @@ void removeUnusedRamtilesInTilemap(u8 *map){
 
 }
 // Returns all discarded cards to the draw pile except the last played card.
-void returnDiscardsToDrawPile(){
+static void returnDiscardsToDrawPile(){
 	// Return all discards to the draw pile.
 	for(u8 i=0; i<totalCardsInDeck; i+=1){
 		if( cards[i].location==CARD_LOCATION_DISCARD ) {
@@ -876,7 +959,7 @@ void returnDiscardsToDrawPile(){
 	// debug_showDebugData();
 }
 // Returns ALL cards to the Draw Pile.
-void resetTheDeck(){
+static void resetTheDeck(){
 	// Return all cards to the draw pile.
 	for(u8 i=0; i<totalCardsInDeck; i+=1){
 		cards[i].location = CARD_LOCATION_DRAW ;
@@ -886,7 +969,7 @@ void resetTheDeck(){
 
 // CARD DRAWING
 // Populate the specified map array with vram tiles.
-void setVramTilemap(u8 x, u8 y, u8 w, u8 h, u8 *map){
+static void setVramTilemap(u8 x, u8 y, u8 w, u8 h, u8 *map){
 	// Provide the origin x and y and the width and height of the tilemap.
 	// Also apply a reference to an already defined and appropriately sized array.
 	// The passed array will be adjusted in this function.
@@ -905,7 +988,7 @@ void setVramTilemap(u8 x, u8 y, u8 w, u8 h, u8 *map){
 
 }
 // Draws a tilemap from the specified vram map.
-void DrawMap_vramtiles(u8 x,u8 y, u8 *map) {
+static void DrawMap_vramtiles(u8 x,u8 y, u8 *map) {
 	// Give x, y, and an array from ram for the tilemap to draw.
 	const u8 mapWidth  = map[0];
 	const u8 mapHeight = map[1];
@@ -928,7 +1011,7 @@ void DrawMap_vramtiles(u8 x,u8 y, u8 *map) {
 	}
 }
 // Draws small and large cards. Reserves/deduplicates ramtiles used.
-void drawCard( u8 playerNum, u8 x, u8 y, u8 size, u8 value, u8 color){
+static void drawCard( u8 playerNum, u8 x, u8 y, u8 size, u8 value, u8 color){
 	// IMPORTANT: Remove the card first BEFORE drawing the card.
 	// removeCard_sm(1, 3); // player number, card position.
 
@@ -1127,7 +1210,7 @@ void drawCard( u8 playerNum, u8 x, u8 y, u8 size, u8 value, u8 color){
 			case CARD_BLUE       : { base=card_front_blue_lg;   break; }
 			case CARD_RED        : { base=card_front_red_lg;    break; }
 			case CARD_GREEN      : { base=card_front_green_lg;  break; }
-			case CARD_ORANGE     : { base=card_front_lg;        break; }
+			// case CARD_ORANGE     : { base=card_front_lg;        break; }
 			// case CARD_BLACK      : { base=card_front_lg;       break; }
 			default : { break; }
 		}
@@ -1196,7 +1279,7 @@ void drawCard( u8 playerNum, u8 x, u8 y, u8 size, u8 value, u8 color){
 	debug_showDebugData();
 }
 // Map a spritemap to sprites. Uses vram ids. Auto sets the SPRITE_RAM if the tile is a ramtile.
-void MapSprite2_nra( u8 startSprite, const char *map, u8 spriteFlags ) {
+static void MapSprite2_nra( u8 startSprite, const char *map, u8 spriteFlags ) {
 	// Similar syntax to MapSprite2. Supports all sprite flags such as: SPRITE_FLIP_X, SPRITE_FLIP_Y, SPRITE_OFF.
 	 // The map uses vram ids (not the normal tile ids.)
 	 // SPRITE_RAM is set automatically as determined by the value of the vram id.
@@ -1335,7 +1418,7 @@ u8 countAvailableRamtile_ids(){
 // UTILITIES
 
 // Draws the "stack" under the Draw Pile based on the count of the Draw Pile.
-void redrawUnderDrawPile(){
+static void redrawUnderDrawPile(){
 	u8 theCount = countDrawPile() ;
 	u8 x = pgm_read_byte(&(draw_pos_below[0]));
 	u8 y = pgm_read_byte(&(draw_pos_below[1]));
@@ -1346,7 +1429,7 @@ void redrawUnderDrawPile(){
 	else if(theCount <= 108) { DrawMap2(x,y, cardsBelow_lg_lt108);} // 108
 }
 // Draws the "stack" under the Discard Pile based on the count of the Discard Pile.
-void redrawUnderDiscardPile(){
+static void redrawUnderDiscardPile(){
 	u8 theCount = countDiscardPile() ;
 	u8 x = pgm_read_byte(&(discard_pos_below[0]));
 	u8 y = pgm_read_byte(&(discard_pos_below[1]));
@@ -1357,7 +1440,7 @@ void redrawUnderDiscardPile(){
 	else if(theCount <= 108) { DrawMap2(x,y, cardsBelow_lg_lt108);}
 }
 // Returns all cards for the specified player to the Draw Pile.
-void returnCardsForPlayer(u8 playerNum){
+static void returnCardsForPlayer(u8 playerNum){
 	u8 location;
 
 	// Get location by player number.
@@ -1380,7 +1463,7 @@ void returnCardsForPlayer(u8 playerNum){
 	}
 }
 // Draws up to 5 cards from the specified player's hand. Can adjust the start position and draw speed.
-void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
+static void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
 	u8 location ;
 	u8 cardsAssigned=0 ;
 	u8 x;
@@ -1483,7 +1566,7 @@ void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
 	}
 }
 // Remove all cards displayed for the specified player.
-void removePlayerCards(u8 playerNumber){
+static void removePlayerCards(u8 playerNumber){
 	// Player number must be valid! If not then nothing will happen.
 	// Player 1 is 1. (not zero-indexed.)
 	// Card positions ARE zero-indexed.
@@ -1494,7 +1577,7 @@ void removePlayerCards(u8 playerNumber){
 	removeCard_sm(playerNumber, 4);
 }
 // Clears the displayed message (seen when playing cards.)
-void clearbgmessage(){
+static void clearbgmessage(){
 	// const u8 replacementTile = pgm_read_byte(&(wood_color1[2])) ;
 	const u8 replacementTile = pgm_read_byte(&(wood_color2[2])) ;
 	Fill(8,17, 12,5, replacementTile);
@@ -1575,7 +1658,7 @@ u8 getCardFromDrawPile(u8 playerNum, u8 howMany){
 }
 
 // TEST GAME.
-void test_testgame(){
+static void test_testgame(){
 	/*
 	Determine first player:
 	 Assign one card to each player.
@@ -1646,11 +1729,10 @@ void test_testgame(){
 }
 // TEST GAME.
 
-void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay, u8 option){
+static void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay, u8 option){
 	// Draw one card from the Draw Pile and assign to the specified player.
 	// Get the last card assigned's index into the cards array.
 	// NOTE: This function assumes that the cards have been removed first.
-
 	const char * card ;
 	u8 location;
 
@@ -1730,6 +1812,7 @@ void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay
 	if(cardIndex==255){
 		cardIndex = getCardFromDrawPile(playerNum, 1);
 	}
+
 
 	// Draw card face down.
 	if     (option==CARDS_FACEDOWN){
@@ -1815,16 +1898,864 @@ void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay
 	return;
 }
 
-void newGameSetup(){
+static void redrawMainInfoRegion(){
+	u8 * colorTile;
+
+	Fill(9,10, 10, 7, pgm_read_byte(&(wood_color1 [2])));
+
+	// Redraw the Draw Pile.
+	DrawMap2(pgm_read_byte(&(draw_pos[0])), pgm_read_byte(&(draw_pos[1])), card_back_lg);
+
+	// Redraw the Draw pile stack.
+	redrawUnderDrawPile();
+
+	// Redraw the last discard if it was a valid card.
+	if(game.lastCardPlayed != 255){
+		// Remove the discard card. (Always do this first.)
+		removeCard_lg();
+		// Redraw the Discard Card.
+		drawCard(
+			255                              ,
+			pgm_read_byte(&(discard_pos[0])) ,
+			pgm_read_byte(&(discard_pos[1])) ,
+			LARGE_CARD                       ,
+			cards[game.lastCardPlayed].value ,
+			cards[game.lastCardPlayed].color
+		);
+		// Redraw the Discard pile stack.
+		redrawUnderDiscardPile();
+	}
+
+	// Play direction.
+	if     (game.direction==FORWARD ) {
+		DrawMap2(5 ,20,b_l_corner_fwd);
+		DrawMap2(5 ,5 ,t_l_corner_fwd);
+		DrawMap2(20,5 ,t_r_corner_fwd);
+		DrawMap2(20,20,b_r_corner_fwd);
+	}
+	else if(game.direction==BACKWARD) {
+		DrawMap2(5 ,20,b_l_corner_bkd);
+		DrawMap2(5 ,5 ,t_l_corner_bkd);
+		DrawMap2(20,5 ,t_r_corner_bkd);
+		DrawMap2(20,20,b_r_corner_bkw);
+	}
+
+	// Active color
+	if     (cards[game.lastCardPlayed].color==CARD_YELLOW){ colorTile=pgm_read_byte(&(border_yellow[2])) ; }
+	else if(cards[game.lastCardPlayed].color==CARD_BLUE  ){ colorTile=pgm_read_byte(&(border_blue  [2])) ; }
+	else if(cards[game.lastCardPlayed].color==CARD_RED   ){ colorTile=pgm_read_byte(&(border_red   [2])) ; }
+	else if(cards[game.lastCardPlayed].color==CARD_GREEN ){ colorTile=pgm_read_byte(&(border_green [2])) ; }
+	else                                                  { colorTile=pgm_read_byte(&(wood_color2 [2])) ; }
+
+	void clearBorderColor(){
+		const u8 replacementTile = pgm_read_byte(&(wood_color2 [2]));
+		Fill(8 ,22,12,1 ,replacementTile); // Player 1 side.
+		Fill(5 ,8 ,1 ,12,replacementTile); // Player 2 side.
+		Fill(8 ,5 ,12,1 ,replacementTile); // Player 3 side.
+		Fill(22,8 ,1 ,12,replacementTile); // Player 4 side.
+	}
+
+	// Clear the borders.
+	clearBorderColor();
+
+	// Draw the colored border only for the active player.
+	if     (game.activePlayer==1){ Fill(8 ,22,12,1 ,colorTile); } // Player 1 side.
+	else if(game.activePlayer==2){ Fill(5 ,8 ,1 ,12,colorTile); } // Player 2 side.
+	else if(game.activePlayer==3){ Fill(8 ,5 ,12,1 ,colorTile); } // Player 3 side.
+	else if(game.activePlayer==4){ Fill(22,8 ,1 ,12,colorTile); } // Player 4 side.
+
+	debug_showDebugData();
+}
+
+static void get_cardDims_byPlayerAndCardPosition(u8 playerNum, u8 position, u8 *x, u8 *y){
+	switch(playerNum){
+		case 1 : {
+			*x=pgm_read_byte(&(p1_pos[position][0]));
+			*y=pgm_read_byte(&(p1_pos[position][1]));
+			break;
+		}
+		case 2 : {
+			*x=pgm_read_byte(&(p2_pos[position][0]));
+			*y=pgm_read_byte(&(p2_pos[position][1]));
+			break;
+		}
+		case 3 : {
+			*x=pgm_read_byte(&(p3_pos[position][0]));
+			*y=pgm_read_byte(&(p3_pos[position][1]));
+			break;
+		}
+		case 4 : {
+			*x=pgm_read_byte(&(p4_pos[position][0]));
+			*y=pgm_read_byte(&(p4_pos[position][1]));
+			break;
+		}
+		default : { return; break; }
+	};
+
+}
+static void updatePlayerDisplayedData(){
+	// Count all player cards.
+	u8 cardCount_p1 = countPlayerCards(1);
+	u8 cardCount_p2 = countPlayerCards(2);
+	u8 cardCount_p3 = countPlayerCards(3);
+	u8 cardCount_p4 = countPlayerCards(4);
+
+	// Show player designations, arrows, and card counts.
+
+	// P1
+	if(game.activePlayers[0]==1){
+		cardCount_p1 = countPlayerCards(1);
+		// Draw name, cards, card count.
+		DrawMap2      ( 23 , VRAM_TILES_V-3 , arrow_yellow);
+		DrawMap2      ( 24 , VRAM_TILES_V-3 , arrow_yellow);
+		N782_print    ( 26 , VRAM_TILES_V-3 , S_P1   , 0 ) ;
+		N782_print    ( 23 , VRAM_TILES_V-2 , S_CARDS, 0 ) ;
+		Fill(25 , VRAM_TILES_V-1, 3,1, 0);
+		N782_print_u8 ( 25 , VRAM_TILES_V-1 , cardCount_p1) ;
+
+		// Clear the UNO indicator.
+		Fill(24 , VRAM_TILES_V-4, 4,1, 0x00);
+
+		// Set the UNO indicator where applicable.
+		if( cardCount_p1==1 ) { N782_print( 24 , VRAM_TILES_V-4, S_UNO , 0 ) ; }
+	}
+	// P2
+	if(game.activePlayers[1]==1){
+		cardCount_p2 = countPlayerCards(2);
+		N782_print    ( 3 , VRAM_TILES_V-3 , S_P2   , 0 ) ;
+		DrawMap2      ( 0 , VRAM_TILES_V-3 , arrow_blue  );
+		DrawMap2      ( 1 , VRAM_TILES_V-3 , arrow_blue  );
+		N782_print    ( 0 , VRAM_TILES_V-2 , S_CARDS, 0 ) ;
+		Fill(2 , VRAM_TILES_V-1, 3,1, 0);
+		N782_print_u8 ( 2 , VRAM_TILES_V-1 , cardCount_p2) ;
+		Fill(1  , VRAM_TILES_V-4, 4,1, 0x00);
+		if( cardCount_p2==1 ) { N782_print( 1  , VRAM_TILES_V-4, S_UNO , 0 ) ; }
+	}
+	// P3
+	if(game.activePlayers[2]==1){
+		cardCount_p3 = countPlayerCards(3);
+		N782_print    ( 0 , 0 , S_P3   ,0 ) ;
+		DrawMap2      ( 3 , 0 , arrow_red   );
+		DrawMap2      ( 4 , 0 , arrow_red   );
+		N782_print    ( 0 , 1 , S_CARDS,0)  ;
+		Fill(2 , 2, 3,1, 0);
+		N782_print_u8 ( 2 , 2 , cardCount_p3) ;
+		Fill(1  , 3             , 4,1, 0x00);
+		if( cardCount_p3==1 ) { N782_print( 1  , 3             , S_UNO , 0 ) ; }
+	}
+	// P4
+	if(game.activePlayers[3]==1){
+		cardCount_p4 = countPlayerCards(4);
+		N782_print    ( 23 , 0 , S_P4   ,0 ) ;
+		DrawMap2      ( 26 , 0 , arrow_green );
+		DrawMap2      ( 27 , 0 , arrow_green );
+		N782_print    ( 23 , 1 , S_CARDS,0 ) ;
+		Fill(25 , 2, 3,1, 0);
+		N782_print_u8 ( 25 , 2 , cardCount_p4) ;
+		Fill(24 , 3             , 4,1, 0x00);
+		if( cardCount_p4==1 ) { N782_print( 24 , 3             , S_UNO , 0 ) ; }
+	}
+
+}
+
+// DONE
+static void gstate_title_n782(){
+	ClearVram();
+
+	// nicksen782 lense flare graphic.
+	ClearVram();
+	SetTileTable( bg_tiles2 );
+	DrawMap2(11,9,N782_F1);WaitVsync(10);
+	DrawMap2(11,9,N782_F2);WaitVsync(10);
+	DrawMap2(11,9,N782_F3);WaitVsync(10);
+	DrawMap2(11,9,N782_F4);WaitVsync(10);
+	DrawMap2(11,9,N782_F5);WaitVsync(10);
+	DrawMap2(11,9,N782_F4);WaitVsync(8);
+	DrawMap2(11,9,N782_F3);WaitVsync(8);
+	DrawMap2(11,9,N782_F2);WaitVsync(8);
+	DrawMap2(11,9,N782_F1);WaitVsync(8);
+	WaitVsync(25);
+	ClearVram();
+	SetTileTable( bg_tiles );
+
+	while(game.gamestate2==GSTATE_TITLE_N782    ){
+		break;
+	}
+
+	game.gamestate2=GSTATE_TITLE_UZEBOX;
+}
+static void gstate_title_uzebox(){
+	ClearVram();
+	SetTileTable( bg_tiles );
+
+	N782_print( (VRAM_TILES_H/2) - (6/2), (VRAM_TILES_V/2) - 1 ,PSTR("UZEBOX"), 0);
+
+	while(game.gamestate2==GSTATE_TITLE_UZEBOX  ){
+		break;
+	}
+
+	WaitVsync(50);
+	game.gamestate2=GSTATE_TITLE_MAINMENU;
+}
+static void gstate_title_mainmenu(){
+	ClearVram();
+	SetTileTable( bg_tiles );
+
+	DrawMap2(0, 0, titlescreen_28x28);
+
+	// Color flash setup.
+	u8 * colorTimer = &vsynccounter8b_gen2;
+	u8 currentTile = 1;
+	u8 color_yellow = pgm_read_byte(&(border_yellow[2]));
+	u8 color_blue   = pgm_read_byte(&(border_blue  [2]));
+	u8 color_red    = pgm_read_byte(&(border_red   [2]));
+	u8 color_green  = pgm_read_byte(&(border_green [2]));
+	u8 color_black  = pgm_read_byte(&(border_black [2]));
+	*colorTimer = 5;
+	// Copy the tile to a ramtile. Replace instances of that tile in vram with the ramtile.
+	CopyFlashTile(color_yellow, 2);
+	for(u8 y=0; y<VRAM_TILES_V; y+=1){
+		for(u8 x=0; x<VRAM_TILES_H; x+=1){
+			if(vram[(y*VRAM_TILES_H)+x]==color_yellow+RAM_TILES_COUNT){
+				vram[(y*VRAM_TILES_H)+x]=2;
+			}
+		}
+	}
+	CopyFlashTile(color_green, 2);
+
+	// Cursor config.
+	u8 * cursorTimer = &vsynccounter8b_gen1;
+	u8 currentCursor = 0;
+	u8 *cursor1map;
+	u8 *cursor2map;
+	u8 cursorIndex;
+	u8 cursor_x=4;
+	u8 cursor_y=16;
+	u8 y_rows[] = {
+		16,18,20,22
+	};
+	u8 y_rows_index = 0;
+	cursor1map=cursor_f1_r;
+	cursor2map=cursor_f2_r;
+	*cursorTimer=15;
+
+	while(game.gamestate1==GSTATE_TITLE){
+		// Read the gamepad.
+		getInputs();
+
+		// Check for softReset request.
+		if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+
+		// Move cursor.
+		if( (game.btnHeld1 & BTN_UP) ||  (game.btnHeld1 & BTN_DOWN) ) {
+			if( (game.btnHeld1 & BTN_UP  ) ){
+				if(y_rows_index !=0) { y_rows_index--; }
+				else{ y_rows_index = sizeof(y_rows)-1; }
+			}
+
+			if( (game.btnHeld1 & BTN_DOWN) ){
+				if(y_rows_index !=sizeof(y_rows)-1) { y_rows_index++; }
+				else{ y_rows_index = 0; }
+			}
+
+			cursor_y = y_rows[y_rows_index] ;
+			MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+
+			while ( game.btnHeld1 ){
+				getInputs();
+				WaitVsync(1);
+			}
+
+		}
+
+		// Make selection.
+		if( (game.btnHeld1 & BTN_A) || (game.btnHeld1 & BTN_START)){
+			// Game setup (local).
+			if     (y_rows_index==0){
+				game.gamestate1=GSTATE_OPTIONS;
+				game.gamestate2=GSTATE_OPTIONS_2;
+			}
+
+			// Game setup (Uzenet).
+			else if(y_rows_index==1){
+				game.gamestate1=GSTATE_OPTIONS;
+				game.gamestate2=GSTATE_OPTIONS_1;
+			}
+
+			// Rules
+			else if(y_rows_index==2){
+				game.gamestate1=GSTATE_RULES;
+				game.gamestate2=GSTATE_RULES_1;
+			}
+
+			// Credits
+			else if(y_rows_index==3){
+				game.gamestate1=GSTATE_CREDITS;
+				game.gamestate2=GSTATE_CREDITS_1;
+			}
+
+			// Hide the cursor.
+			MapSprite2( 0, cursor1map, SPRITE_OFF);
+
+			// Wait for the player to release the button.
+			while ( game.btnHeld1 ){ getInputs(); WaitVsync(1); }
+
+			break;
+		}
+
+		// Update the cursor.
+		if(*cursorTimer > 10 ){
+			// Change to which map?
+			if(currentCursor==0){ MapSprite2( 0, cursor1map, SPRITE_BANK0 ); }
+			else                { MapSprite2( 0, cursor2map, SPRITE_BANK0 ); }
+
+			// Redraw the sprite.
+			MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+
+			// Flip the cursor frame.
+			currentCursor = !currentCursor;
+
+			// Reset the counter.
+			*cursorTimer=0;
+		}
+
+		// Update the color flash.
+		if(*colorTimer > 10 ){
+			// Change to which map?
+			switch(currentTile){
+				case 0  : { CopyFlashTile(color_yellow, 2); currentTile++; break; }
+				case 1  : { CopyFlashTile(color_blue  , 2); currentTile++; break; }
+				case 2  : { CopyFlashTile(color_red   , 2); currentTile++; break; }
+				case 3  : { CopyFlashTile(color_green , 2); currentTile=0; break; }
+				default : { break; }
+			};
+
+			// Reset the counter.
+			*colorTimer=0;
+		}
+
+		WaitVsync(1);
+	}
+}
+static void gstate_title(){
+	while(game.gamestate1==GSTATE_TITLE){
+		if     (game.gamestate2==GSTATE_TITLE_N782    ){
+			gstate_title_n782();
+		}
+		else if(game.gamestate2==GSTATE_TITLE_UZEBOX  ){
+			gstate_title_uzebox();
+		}
+		else if(game.gamestate2==GSTATE_TITLE_MAINMENU){
+			gstate_title_mainmenu();
+		}
+		else{
+			errorHandler(INVALIDGAMESTATE2);
+		}
+	}
+}
+
+//
+static void gstate_options1(){
+	// Uzenet setup
+	DrawMap2(0,0,options1_28x28);
+	while(game.gamestate2==GSTATE_OPTIONS_1){
+		getInputs();
+		if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+		if( (game.btnHeld1) ) {
+			while ( game.btnHeld1 ){ getInputs(); WaitVsync(1); }
+			game.gamestate1=GSTATE_OPTIONS;
+			game.gamestate2=GSTATE_OPTIONS_2;
+		}
+	}
+
+}
+static void gstate_options2(){
+	DrawMap2(0,0,options2_28x28);
+
+	// Four boxes.
+		// Player setup
+			// 4 rows.
+			// Each row can be adjusted to have the value of "HUMAN", "CPU", "NONE".
+		// CPU AI Setup
+			// 3 rows.
+			// Each row can be adjusted to have the value of "SIMPLE", "HARDER", "EXPERT".
+		// Win Style
+			// 2 rows.
+			// Each row can be adjusted to have the value of "FIRST TO ZERO CARDS", "FIRST TO 500 POINTS".
+		// No Playable Card.
+			// 2 rows.
+			// Each row can be adjusted to have the value of "DRAW ONLY ONE CARD", "DRAW UNTIL PLAYABLE".
+	// DPAD changes the cursor. DPAD changes the option for the Players box.
+	// A accepts the selection(s) and moves to the next box.
+		// On the last accepted box, the game starts.
+	// B moves back to the previous box. Settings remain the same until changed.
+
+	u8 currentBox=0;
+
+	u8 box1_y_index=0;
+	u8 box2_y_index=0;
+	u8 box3_y_index=0;
+	u8 box4_y_index=0;
+
+	u8 box1_y_rows[4] = { 5 , 6  ,7, 8 };
+	u8 box2_y_rows[3] = { 5 , 6  ,7 };
+	u8 box3_y_rows[2] = { 14, 15 };
+	u8 box4_y_rows[2] = { 21, 22 };
+
+	u8 cursor_box1_x=3;
+	u8 cursor_box1_y=box1_y_rows[box1_y_index];
+
+	u8 cursor_box2_x=16;
+	u8 cursor_box2_y=box2_y_rows[box2_y_index];
+
+	u8 cursor_box3_x=3;
+	u8 cursor_box3_y=box3_y_rows[box3_y_index];
+
+	u8 cursor_box4_x=3;
+	u8 cursor_box4_y=box4_y_rows[box4_y_index];
+
+	// Cursor timer and current frame.
+	u8 * cursorTimer = &vsynccounter8b_gen1;
+	*cursorTimer=15;
+	u8 currentCursor = 0;
+
+	u8 nextX    ;
+	u8 nextY    ;
+	u8 nextType ;
+
+	// These values will be copied to the game struct.
+	u8 p1_type   = game.player_types[0] ;
+	u8 p2_type   = game.player_types[1] ;
+	u8 p3_type   = game.player_types[2] ;
+	u8 p4_type   = game.player_types[3] ;
+	u8 ai_type   = game.ai_type         ;
+	u8 winStyle  = game.winStyle        ;
+	u8 drawStyle = game.drawStyle       ;
+
+	// Game setup
+	while(game.gamestate2==GSTATE_OPTIONS_2){
+		// Change the cursor frame?
+		if(*cursorTimer > 15 ){
+			// Hide all cursors.
+			MapSprite2( 0, cursor_f1_r, SPRITE_OFF );
+			MapSprite2( 1, cursor_f1_r, SPRITE_OFF );
+			MapSprite2( 2, cursor_f1_r, SPRITE_OFF );
+			MapSprite2( 3, cursor_f1_r, SPRITE_OFF );
+
+			if     (currentBox==0){
+				if     (currentCursor==0){
+					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
+					MoveSprite( currentBox, cursor_box1_x<<3 , cursor_box1_y<<3, 1, 1);
+				}
+				else                     {
+					MapSprite2( currentBox, cursor_f2_r, SPRITE_BANK0 );
+					MoveSprite( currentBox, cursor_box1_x<<3 , cursor_box1_y<<3, 1, 1);
+				}
+			}
+			else if(currentBox==1){
+				if     (currentCursor==0){
+					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
+					MoveSprite( currentBox, cursor_box2_x<<3 , cursor_box2_y<<3, 1, 1);
+				}
+				else                     {
+					MapSprite2( currentBox, cursor_f2_r, SPRITE_BANK0 );
+					MoveSprite( currentBox, cursor_box2_x<<3 , cursor_box2_y<<3, 1, 1);
+				}
+			}
+			else if(currentBox==2){
+				if     (currentCursor==0){
+					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
+					MoveSprite( currentBox, cursor_box3_x<<3 , cursor_box3_y<<3, 1, 1);
+				}
+				else                     {
+					MapSprite2( currentBox, cursor_f2_r, SPRITE_BANK0 );
+					MoveSprite( currentBox, cursor_box3_x<<3 , cursor_box3_y<<3, 1, 1);
+				}
+			}
+			else if(currentBox==3){
+				if     (currentCursor==0){
+					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
+					MoveSprite( currentBox, cursor_box4_x<<3 , cursor_box4_y<<3, 1, 1);
+				}
+				else                     {
+					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
+					MoveSprite( currentBox, cursor_box4_x<<3 , cursor_box4_y<<3, 1, 1);
+				}
+			}
+
+			// Flip the cursor frame.
+			currentCursor = !currentCursor;
+
+			// Reset the counter.
+			*cursorTimer=0;
+		}
+
+		// Read gamepad.
+		getInputs();
+
+		// Look for the softReset command.
+		if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+
+		// If button is held...
+		if( (game.btnHeld1) ) {
+			// "PLAYERS" box.
+			if     (currentBox==0){
+				// Move the cursor up or down.
+				if( (game.btnHeld1 & BTN_UP) || (game.btnHeld1 & BTN_DOWN) ) {
+					// Move cursor UP (do bounds check.)
+					if( (game.btnHeld1 & BTN_UP   ) ) {
+						box1_y_index = box1_y_index==0                     ? sizeof(box1_y_rows)-1 : box1_y_index-1;
+					}
+					// Move cursor DOWN (do bounds check.)
+					if( (game.btnHeld1 & BTN_DOWN ) ) {
+						box1_y_index = box1_y_index==sizeof(box1_y_rows)-1 ? 0                     : box1_y_index+1;
+					}
+					// Adjust cursor y position.
+					cursor_box1_y=box1_y_rows[box1_y_index];
+					// Redraw cursor.
+					MoveSprite( 0 , cursor_box1_x<<3 , cursor_box1_y<<3, 1, 1);
+				}
+				// Change the selected option.
+				else if( (game.btnHeld1 & BTN_LEFT) || (game.btnHeld1 & BTN_RIGHT) ) {
+					if     (box1_y_index==0){
+						// Set the new player type. (Do bounds check.)
+						p1_type = p1_type==0 ? 2 : p1_type-1;
+						// Set the nextX to print from.
+						nextX=cursor_box1_x+4;
+						// Set the nextY to print from.
+						nextY=box1_y_rows[box1_y_index];
+						// Set the nextType to print.
+						nextType=p1_type;
+					}
+					else if(box1_y_index==1){
+						p2_type = p2_type==0 ? 2 : p2_type-1;
+						nextX=cursor_box1_x+4;
+						nextY=box1_y_rows[box1_y_index];
+						nextType=p2_type;
+					}
+					else if(box1_y_index==2){
+						p3_type = p3_type==0 ? 2 : p3_type-1;
+						nextX=cursor_box1_x+4;
+						nextY=box1_y_rows[box1_y_index];
+						nextType=p3_type;
+					}
+					else if(box1_y_index==3){
+						p4_type = p4_type==0 ? 2 : p4_type-1;
+						nextX=cursor_box1_x+4;
+						nextY=box1_y_rows[box1_y_index];
+						nextType=p4_type;
+					}
+
+					// Erase the area that is about to be printed to.
+					Fill(cursor_box1_x+4, box1_y_rows[box1_y_index], 5,1,0x00);
+					// Print the player type.
+					switch(nextType){
+						case HUMAN : { N782_print(nextX, nextY, S_HUMAN, 0); break; }
+						case CPU   : { N782_print(nextX, nextY, S_CPU  , 0); break; }
+						case NONE  : { N782_print(nextX, nextY, S_NONE , 0); break; }
+					};
+				}
+				// Confirm selection, move to the next box.
+				if( (game.btnHeld1 & BTN_A    ) ) {
+					currentBox++;
+				}
+				// Return to the title screen.
+				if( (game.btnHeld1 & BTN_B    ) ) {
+					// Go back to the title screen.
+					game.gamestate1=GSTATE_TITLE;
+					game.gamestate2=GSTATE_TITLE_MAINMENU;
+				}
+			}
+			// "CPU AI" box.
+			else if(currentBox==1){
+				// Move the cursor up or down.
+				if( (game.btnHeld1 & BTN_UP) || (game.btnHeld1 & BTN_DOWN) ) {
+					// Move cursor UP (do bounds check.)
+					if( (game.btnHeld1 & BTN_UP   ) ) {
+						box2_y_index = box2_y_index==0                     ? sizeof(box2_y_rows)-1 : box2_y_index-1;
+					}
+					// Move cursor DOWN (do bounds check.)
+					if( (game.btnHeld1 & BTN_DOWN ) ) {
+						box2_y_index = box2_y_index==sizeof(box2_y_rows)-1 ? 0                     : box2_y_index+1;
+					}
+					//
+					ai_type=box2_y_index;
+					// Adjust cursor y position.
+					cursor_box2_y=box2_y_rows[box2_y_index];
+					// Redraw cursor.
+					MoveSprite( 1 , cursor_box2_x<<3 , cursor_box2_y<<3, 1, 1);
+				}
+				// Confirm selection, move to the next box.
+				if( (game.btnHeld1 & BTN_A    ) ) {
+					currentBox++;
+				}
+				// Move to the previous box.
+				if( (game.btnHeld1 & BTN_B    ) ) {
+					currentBox--;
+				}
+			}
+			// "WIN STYLE" box.
+			else if(currentBox==2){
+				// winStyle
+				// Move the cursor up or down.
+				if( (game.btnHeld1 & BTN_UP) || (game.btnHeld1 & BTN_DOWN) ) {
+					// Move cursor UP (do bounds check.)
+					if( (game.btnHeld1 & BTN_UP   ) ) {
+						box3_y_index = box3_y_index==0                     ? sizeof(box3_y_rows)-1 : box3_y_index-1;
+					}
+					// Move cursor DOWN (do bounds check.)
+					if( (game.btnHeld1 & BTN_DOWN ) ) {
+						box3_y_index = box3_y_index==sizeof(box3_y_rows)-1 ? 0                     : box3_y_index+1;
+					}
+					//
+					winStyle=box3_y_index;
+					// Adjust cursor y position.
+					cursor_box3_y=box3_y_rows[box3_y_index];
+					// Redraw cursor.
+					MoveSprite( 1 , cursor_box3_x<<3 , cursor_box3_y<<3, 1, 1);
+				}
+				// Confirm selection, move to the next box.
+				if( (game.btnHeld1 & BTN_A    ) ) {
+					currentBox++;
+				}
+				// Move to the previous box.
+				if( (game.btnHeld1 & BTN_B    ) ) {
+					currentBox--;
+				}
+			}
+			// "DRAW STYLE" box.
+			else if(currentBox==3){
+				// Move the cursor up or down.
+				if( (game.btnHeld1 & BTN_UP) || (game.btnHeld1 & BTN_DOWN) ) {
+					// Move cursor UP (do bounds check.)
+					if( (game.btnHeld1 & BTN_UP   ) ) {
+						box4_y_index = box4_y_index==0                     ? sizeof(box4_y_rows)-1 : box4_y_index-1;
+					}
+					// Move cursor DOWN (do bounds check.)
+					if( (game.btnHeld1 & BTN_DOWN ) ) {
+						box4_y_index = box4_y_index==sizeof(box4_y_rows)-1 ? 0                     : box4_y_index+1;
+					}
+					//
+					drawStyle=box4_y_index;
+					// Adjust cursor y position.
+					cursor_box4_y=box4_y_rows[box4_y_index];
+					// Redraw cursor.
+					MoveSprite( 1 , cursor_box4_x<<3 , cursor_box4_y<<3, 1, 1);
+				}
+				// Confirm selection. Save settings and start the game.
+				if( (game.btnHeld1 & BTN_A    ) ) {
+					// Hide all cursors.
+					MapSprite2( 0, cursor_f1_r, SPRITE_OFF );
+					MapSprite2( 1, cursor_f1_r, SPRITE_OFF );
+					MapSprite2( 2, cursor_f1_r, SPRITE_OFF );
+					MapSprite2( 3, cursor_f1_r, SPRITE_OFF );
+
+					// Save the settings to the game struct.
+
+					// Count and set the active players. (Either HUMAN or CPU.)
+					game.numPlayers    =  0                         ;
+					if( p1_type==HUMAN || p1_type==CPU ) { game.numPlayers+=1; game.activePlayers[0]=1; } else{ game.activePlayers[0]=0 ; }
+					if( p2_type==HUMAN || p2_type==CPU ) { game.numPlayers+=1; game.activePlayers[1]=1; } else{ game.activePlayers[1]=0 ; }
+					if( p3_type==HUMAN || p3_type==CPU ) { game.numPlayers+=1; game.activePlayers[2]=1; } else{ game.activePlayers[2]=0 ; }
+					if( p4_type==HUMAN || p4_type==CPU ) { game.numPlayers+=1; game.activePlayers[3]=1; } else{ game.activePlayers[3]=0 ; }
+
+					// Set the player types.
+					game.player_types[0] = p1_type;
+					game.player_types[1] = p2_type;
+					game.player_types[2] = p3_type;
+					game.player_types[3] = p4_type;
+
+					// Set the ai_type, winStyle, drawStyle.
+					game.ai_type        = ai_type   ;
+					game.winStyle       = winStyle  ;
+					game.drawStyle      = drawStyle ;
+
+					// Reset accumulated points.
+					game.points_p1      = 0         ;
+					game.points_p2      = 0         ;
+					game.points_p3      = 0         ;
+					game.points_p4      = 0         ;
+
+					// Set active player to invalid, last card played to invalid, direction to forward.
+					game.activePlayer   = 255       ;
+					game.lastCardPlayed = 255       ;
+					game.direction      = FORWARD   ;
+
+					// Start a new game.
+					game.gamestate1=GSTATE_PLAYING;
+					game.gamestate2=GSTATE_PLAYING_GAMESTART;
+
+#if VRAM_TILES_H == 32
+					// DEBUG -
+					ClearVram();
+					u8 x=(VRAM_TILES_H/2)-13/2;
+					u8 y=(VRAM_TILES_V/2)-17/2;
+					// DEBUG -
+
+					// DEBUG - "PLAYERS" box.
+					N782_print(x,y , PSTR("p1_type:   "), 0); N782_print_u8(x+10,y,game.player_types[0]);y++;
+					N782_print(x,y , PSTR("p2_type:   "), 0); N782_print_u8(x+10,y,game.player_types[1]);y++;
+					N782_print(x,y , PSTR("p3_type:   "), 0); N782_print_u8(x+10,y,game.player_types[2]);y++;
+					N782_print(x,y , PSTR("p4_type:   "), 0); N782_print_u8(x+10,y,game.player_types[3]);y++;
+					y++;
+					// DEBUG - "PLAYERS" box.
+
+					// DEBUG - "CPU AI" box.
+					N782_print(x,y , PSTR("ai_type:   "), 0); N782_print_u8(x+10,y,ai_type);y++;
+					y++;
+					// DEBUG - "CPU AI" box.
+
+					// DEBUG - "WIN STYLE" box.
+					N782_print(x,y , PSTR("winStyle:  "), 0); N782_print_u8(x+10,y,winStyle);y++;
+					y++;
+					// DEBUG - "WIN STYLE" box.
+
+					// DEBUG - "DRAW STYLE" box.
+					N782_print(x,y , PSTR("drawStyle: "), 0); N782_print_u8(x+10,y,drawStyle);y++;
+					y++;
+					// DEBUG - "DRAW STYLE" box.
+
+					// DEBUG - Number of players.
+					N782_print(x,y , PSTR("numPlayers:"), 0); N782_print_u8(x+10,y,game.numPlayers);y++;
+					y++;
+					// DEBUG - Number of players.
+
+					// DEBUG - Active players.
+					N782_print(x,y , PSTR("p1 active: "), 0); N782_print_u8(x+10,y,game.activePlayers[0]);y++;
+					N782_print(x,y , PSTR("p2 active: "), 0); N782_print_u8(x+10,y,game.activePlayers[1]);y++;
+					N782_print(x,y , PSTR("p3 active: "), 0); N782_print_u8(x+10,y,game.activePlayers[2]);y++;
+					N782_print(x,y , PSTR("p4 active: "), 0); N782_print_u8(x+10,y,game.activePlayers[3]);y++;
+					y++;
+					// DEBUG - Active players.
+
+					// While a button is still held...
+					while ( game.btnHeld1 ){ getInputs(); }
+
+					// While no button is held...
+					while ( game.btnHeld1==0 ){ getInputs(); }
+
+					// While a button is still held...
+					while ( game.btnHeld1 ){ getInputs(); }
+#endif
+
+					// ClearVram();
+					// btnPressed1
+					getRandomSeedViaUserInput();
+					srand(game.randomSeed);
+
+					break;
+				}
+				// Move to the previous box.
+				if( (game.btnHeld1 & BTN_B    ) ) {
+					currentBox--;
+				}
+			}
+
+			// While a button is still held...
+			while ( game.btnHeld1 ){ getInputs(); }
+		}
+
+	}
+}
+
+static void gstate_options(){
+	while(game.gamestate1==GSTATE_OPTIONS){
+		if     (game.gamestate2==GSTATE_OPTIONS_1){ gstate_options1(); }
+		else if(game.gamestate2==GSTATE_OPTIONS_2){ gstate_options2(); }
+		else{
+			errorHandler(INVALIDGAMESTATE2);
+		}
+	}
+}
+
+// DONE
+static void gstate_credits1(){
+	DrawMap2(0,0,credits1_28x28);
+	while(game.gamestate2==GSTATE_CREDITS_1){
+		getInputs();
+		if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+		if( (game.btnHeld1) ) {
+			while ( game.btnHeld1 ){ getInputs(); WaitVsync(1); }
+			game.gamestate1=GSTATE_CREDITS;
+			game.gamestate2=GSTATE_CREDITS_2;
+		}
+	}
+
+}
+static void gstate_credits2(){
+	DrawMap2(0,0,credits2_28x28);
+
+	// Game setup
+	while(game.gamestate2==GSTATE_CREDITS_2){
+		getInputs();
+		if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+		if( (game.btnHeld1) ) {
+			while ( game.btnHeld1 ){ getInputs(); WaitVsync(1); }
+			game.gamestate1=GSTATE_TITLE;
+			game.gamestate2=GSTATE_TITLE_MAINMENU;
+		}
+	}
+
+}
+static void gstate_credits(){
+	while(game.gamestate1==GSTATE_CREDITS){
+		if     (game.gamestate2==GSTATE_CREDITS_1){ gstate_credits1(); }
+		else if(game.gamestate2==GSTATE_CREDITS_2){ gstate_credits2(); }
+		else{
+			errorHandler(INVALIDGAMESTATE2);
+		}
+	}
+}
+
+// DONE
+static void gstate_rules_1(){
+	DrawMap2(0,0,rules1_28x28);
+	while(game.gamestate2==GSTATE_RULES_1){
+		getInputs();
+		if     ( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+		else if( (game.btnHeld1) ) {
+			while ( game.btnHeld1 ){ getInputs(); WaitVsync(1); }
+			game.gamestate1=GSTATE_RULES;
+			game.gamestate2=GSTATE_RULES_2;
+		}
+	}
+}
+static void gstate_rules_2(){
+	DrawMap2(0,0,rules2_28x28);
+	while(game.gamestate2==GSTATE_RULES_2){
+		getInputs();
+		if     ( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+		else if( (game.btnHeld1) ) {
+			while ( game.btnHeld1 ){ getInputs(); WaitVsync(1); }
+			game.gamestate1=GSTATE_TITLE;
+			game.gamestate2=GSTATE_TITLE_MAINMENU;
+		}
+	}
+}
+static void gstate_rules(){
+	while(game.gamestate1==GSTATE_RULES){
+		if     (game.gamestate2==GSTATE_RULES_1){ gstate_rules_1(); }
+		else if(game.gamestate2==GSTATE_RULES_2){ gstate_rules_2(); }
+		else{
+			errorHandler(INVALIDGAMESTATE2);
+		}
+	}
+}
+
+// Resets the game for a new round. (Does NOT impact scores.)
+static void newGameSetup(){
+	// Clear all reserved ramtile data.
+	clearAllReservedRamtiles();
+
 	u8 playerWithHighestCard(u8 *p_cards){
 		// Reset the deck.
 		resetTheDeck();
 
 		// Assign 1 card to each player.
-		getCardFromDrawPile(1, 1);
-		getCardFromDrawPile(2, 1);
-		getCardFromDrawPile(3, 1);
-		getCardFromDrawPile(4, 1);
+		if(game.activePlayers[0]==1){ getCardFromDrawPile(1, 1); }
+		if(game.activePlayers[1]==1){ getCardFromDrawPile(2, 1); }
+		if(game.activePlayers[2]==1){ getCardFromDrawPile(3, 1); }
+		if(game.activePlayers[3]==1){ getCardFromDrawPile(4, 1); }
 
 		u8 p1_card;
 		u8 p2_card;
@@ -1844,27 +2775,28 @@ void newGameSetup(){
 				case CARD_LOCATION_PLAYER4 : { p4_card=cards[i].value; p_cards[3]=i; break; }
 				default :{ break; }
 			};
+
 		}
 
 		// Each player draws a card.
 
 		// Any card that is not a number card is to be interpreted as 0.
-		if( p1_card > CARD_9 ){ p1_card = CARD_0; }
-		if( p2_card > CARD_9 ){ p2_card = CARD_0; }
-		if( p3_card > CARD_9 ){ p3_card = CARD_0; }
-		if( p4_card > CARD_9 ){ p4_card = CARD_0; }
+		if(game.activePlayers[0]==1){ if( p1_card >= CARD_DRAW2 && p1_card <= CARD_WILD_DRAW4 ){ p1_card = CARD_0; } }
+		if(game.activePlayers[1]==1){ if( p2_card >= CARD_DRAW2 && p2_card <= CARD_WILD_DRAW4 ){ p2_card = CARD_0; } }
+		if(game.activePlayers[2]==1){ if( p3_card >= CARD_DRAW2 && p3_card <= CARD_WILD_DRAW4 ){ p3_card = CARD_0; } }
+		if(game.activePlayers[3]==1){ if( p4_card >= CARD_DRAW2 && p4_card <= CARD_WILD_DRAW4 ){ p4_card = CARD_0; } }
 
 		// Determine which card was the highest.
-		if( p1_card > highest ){ highest = p1_card; }
-		if( p2_card > highest ){ highest = p2_card; }
-		if( p3_card > highest ){ highest = p3_card; }
-		if( p4_card > highest ){ highest = p4_card; }
+		if(game.activePlayers[0]==1){ if( p1_card > highest ){ highest = p1_card; } }
+		if(game.activePlayers[1]==1){ if( p2_card > highest ){ highest = p2_card; } }
+		if(game.activePlayers[2]==1){ if( p3_card > highest ){ highest = p3_card; } }
+		if(game.activePlayers[3]==1){ if( p4_card > highest ){ highest = p4_card; } }
 
 		// How many players have the highest card?
-		if( p1_card == highest ){ winner = 1; winnerCount+=1; }
-		if( p2_card == highest ){ winner = 2; winnerCount+=1; }
-		if( p3_card == highest ){ winner = 3; winnerCount+=1; }
-		if( p4_card == highest ){ winner = 4; winnerCount+=1; }
+		if(game.activePlayers[0]==1){ if( p1_card == highest ){ winner = 1; winnerCount+=1; } }
+		if(game.activePlayers[1]==1){ if( p2_card == highest ){ winner = 2; winnerCount+=1; } }
+		if(game.activePlayers[2]==1){ if( p3_card == highest ){ winner = 3; winnerCount+=1; } }
+		if(game.activePlayers[3]==1){ if( p4_card == highest ){ winner = 4; winnerCount+=1; } }
 
 		// The player that draws the highest number is the first player.
 
@@ -1911,7 +2843,11 @@ void newGameSetup(){
 					game.lastCardPlayed                 = cardIndex2;
 
 					// DEBUG
-					// game.lastCardPlayed                 = 106; // REV - GREEN
+					// game.lastCardPlayed                 = 106; // REV   - GREEN
+					// game.lastCardPlayed                 = 27 ; // DRAW2 - YELLOW
+					// game.lastCardPlayed                 = 54 ; // SKIP  - BLUE
+					// game.lastCardPlayed                 = 0  ; // WILD
+					// game.lastCardPlayed                 = 4  ; // WILD DRAW 4
 					// DEBUG
 
 					// Update the played card's position in the cards array.
@@ -1950,10 +2886,12 @@ void newGameSetup(){
 	// Draw the game board.
 	DrawMap2(0, 0, board_28x28);
 
+	game.lastCardPlayed=255;
+
 	redrawMainInfoRegion();
 
 	u8 p_cards[4] = { 255 } ;
-	u8 pos=0;
+	u8 pos;
 
 	// Determine which player goes first. (Assign one card to each player.)
 	// Make sure that players cards cannot match.
@@ -1966,15 +2904,17 @@ void newGameSetup(){
 			WaitVsync(20);
 
 			// dealSpecifiecCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay);
-			dealSpecifiedCard_anim(1, p_cards[0], 2, 5, CARDS_FACEUP);
-			dealSpecifiedCard_anim(2, p_cards[1], 2, 5, CARDS_FACEUP);
-			dealSpecifiedCard_anim(3, p_cards[2], 2, 5, CARDS_FACEUP);
-			dealSpecifiedCard_anim(4, p_cards[3], 2, 5, CARDS_FACEUP);
+
+			if(game.activePlayers[0]==1){ dealSpecifiedCard_anim(1, p_cards[0], 2, 5, CARDS_FACEUP); }
+			if(game.activePlayers[1]==1){ dealSpecifiedCard_anim(2, p_cards[1], 2, 5, CARDS_FACEUP); }
+			if(game.activePlayers[2]==1){ dealSpecifiedCard_anim(3, p_cards[2], 2, 5, CARDS_FACEUP); }
+			if(game.activePlayers[3]==1){ dealSpecifiedCard_anim(4, p_cards[3], 2, 5, CARDS_FACEUP); }
 
 			debug_showDebugData();
 
 			// Display who plays first!
 			msgHandler(GAMESTART_FIRST);
+
 			break;
 		}
 
@@ -1988,34 +2928,31 @@ void newGameSetup(){
 	clearbgmessage();
 
 	// Remove the cards temporarily assigned to each player. (ram tiles and display only.)
-	removePlayerCards(1);
-	removePlayerCards(2);
-	removePlayerCards(3);
-	removePlayerCards(4);
+	if(game.activePlayers[0]==1){ removePlayerCards(1); }
+	if(game.activePlayers[1]==1){ removePlayerCards(2); }
+	if(game.activePlayers[2]==1){ removePlayerCards(3); }
+	if(game.activePlayers[3]==1){ removePlayerCards(4); }
 
 	// Reset the deck. (Return all cards back to the CARD_LOCATION_DRAW location.)
 	resetTheDeck();
 
 	// Assign cards to each player. (Does not display the cards.)
-	for(u8 i=0; i<7; i+=1){
+	for(u8 i=0; i<defaultHandSize; i+=1){
+		if(i%5==0) { pos=0; }
+
 		// Assign a card to player 1.
-		dealSpecifiedCard_anim(1, 255, pos, 10+5, CARDS_FACEDOWN);
-
+		if(game.activePlayers[0]==1){ dealSpecifiedCard_anim(1, 255, pos, 10, CARDS_FACEDOWN); }
 		// Assign a card to player 2.
-		dealSpecifiedCard_anim(2, 255, pos, 10+5, CARDS_FACEDOWN);
-
+		if(game.activePlayers[1]==1){ dealSpecifiedCard_anim(2, 255, pos, 10, CARDS_FACEDOWN); }
 		// Assign a card to player 3.
-		dealSpecifiedCard_anim(3, 255, pos, 10+5, CARDS_FACEDOWN);
-
+		if(game.activePlayers[2]==1){ dealSpecifiedCard_anim(3, 255, pos, 10, CARDS_FACEDOWN); }
 		// Assign a card to player 4.
-		dealSpecifiedCard_anim(4, 255, pos, 15+5, CARDS_FACEDOWN);
+		if(game.activePlayers[3]==1){ dealSpecifiedCard_anim(4, 255, pos, 15, CARDS_FACEDOWN); }
 
 		updatePlayerDisplayedData();
 
-		if(i%5==0) { pos=0; }
-		else{ pos++; }
+		pos++;
 
-		// WaitVsync(5);
 	}
 
 	// Place an initial discard card and then redraw the stack under the Discard Pile.
@@ -2028,233 +2965,13 @@ void newGameSetup(){
 	redrawMainInfoRegion();
 
 	WaitVsync(50);
-
-}
-void redrawMainInfoRegion(){
-	u8 * colorTile;
-
-	Fill(9,10, 10, 7, pgm_read_byte(&(wood_color1 [2])));
-
-	// Redraw the Draw Pile.
-	DrawMap2(pgm_read_byte(&(draw_pos[0])), pgm_read_byte(&(draw_pos[1])), card_back_lg);
-	// Redraw the Draw pile stack.
-	redrawUnderDrawPile();
-
-	if(game.lastCardPlayed != 255){
-		// Remove the discard card. (Always do this first.)
-		removeCard_lg();
-		// Redraw the Discard Card.
-		drawCard(
-			255                              ,
-			pgm_read_byte(&(discard_pos[0])) ,
-			pgm_read_byte(&(discard_pos[1])) ,
-			LARGE_CARD                       ,
-			cards[game.lastCardPlayed].value ,
-			cards[game.lastCardPlayed].color
-		);
-		// Redraw the Discard pile stack.
-		redrawUnderDiscardPile();
-	}
-
-	// Play direction.
-	if     (game.direction==FORWARD ) {
-		DrawMap2(5 ,20,b_l_corner_fwd);
-		DrawMap2(5 ,5 ,t_l_corner_fwd);
-		DrawMap2(20,5 ,t_r_corner_fwd);
-		DrawMap2(20,20,b_r_corner_fwd);
-	}
-	else if(game.direction==BACKWARD) {
-		DrawMap2(5 ,20,b_l_corner_bkd);
-		DrawMap2(5 ,5 ,t_l_corner_bkd);
-		DrawMap2(20,5 ,t_r_corner_bkd);
-		DrawMap2(20,20,b_r_corner_bkw);
-	}
-	// if     (game.direction==FORWARD ) {
-	// 	DrawMap2(6 ,19,b_l_corner_fwd);
-	// 	DrawMap2(6 ,6 ,t_l_corner_fwd);
-	// 	DrawMap2(19,6 ,t_r_corner_fwd);
-	// 	DrawMap2(19,19,b_r_corner_fwd);
-	// }
-	// else if(game.direction==BACKWARD) {
-	// 	DrawMap2(6 ,19,b_l_corner_bkd);
-	// 	DrawMap2(6 ,6 ,t_l_corner_bkd);
-	// 	DrawMap2(19,6 ,t_r_corner_bkd);
-	// 	DrawMap2(19,19,b_r_corner_bkw);
-	// }
-
-	// Active color
-	if     (cards[game.lastCardPlayed].color==CARD_YELLOW){ colorTile=pgm_read_byte(&(border_yellow[2])) ; }
-	else if(cards[game.lastCardPlayed].color==CARD_BLUE  ){ colorTile=pgm_read_byte(&(border_blue  [2])) ; }
-	else if(cards[game.lastCardPlayed].color==CARD_RED   ){ colorTile=pgm_read_byte(&(border_red   [2])) ; }
-	else if(cards[game.lastCardPlayed].color==CARD_GREEN ){ colorTile=pgm_read_byte(&(border_green [2])) ; }
-	// else if(cards[game.lastCardPlayed].color==CARD_BLACK ){ colorTile=pgm_read_byte(&(border_black [2])) ; }
-	else if(cards[game.lastCardPlayed].color==CARD_BLACK ){ colorTile=pgm_read_byte(&(wood_color2 [2])) ; }
-
-	void clearBorderColor(){
-		const u8 replacementTile = pgm_read_byte(&(wood_color2 [2]));
-		Fill(8 ,22,12,1 ,replacementTile); // Player 1 side.
-		Fill(5 ,8 ,1 ,12,replacementTile); // Player 2 side.
-		Fill(8 ,5 ,12,1 ,replacementTile); // Player 3 side.
-		Fill(22,8 ,1 ,12,replacementTile); // Player 4 side.
-	}
-
-	// Clear the borders.
-	clearBorderColor();
-
-	// Draw the colored border only for the active player.
-
-	if     (game.activePlayer==1){ Fill(8 ,22,12,1 ,colorTile); } // Player 1 side.
-	else if(game.activePlayer==2){ Fill(5 ,8 ,1 ,12,colorTile); } // Player 2 side.
-	else if(game.activePlayer==3){ Fill(8 ,5 ,12,1 ,colorTile); } // Player 3 side.
-	else if(game.activePlayer==4){ Fill(22,8 ,1 ,12,colorTile); } // Player 4 side.
-
-	debug_showDebugData();
 }
 
-void get_cardDims_byPlayerAndCardPosition(u8 playerNum, u8 position, u8 *x, u8 *y){
-	switch(playerNum){
-		case 1 : {
-			*x=pgm_read_byte(&(p1_pos[position][0]));
-			*y=pgm_read_byte(&(p1_pos[position][1]));
-			break;
-		}
-		case 2 : {
-			*x=pgm_read_byte(&(p2_pos[position][0]));
-			*y=pgm_read_byte(&(p2_pos[position][1]));
-			break;
-		}
-		case 3 : {
-			*x=pgm_read_byte(&(p3_pos[position][0]));
-			*y=pgm_read_byte(&(p3_pos[position][1]));
-			break;
-		}
-		case 4 : {
-			*x=pgm_read_byte(&(p4_pos[position][0]));
-			*y=pgm_read_byte(&(p4_pos[position][1]));
-			break;
-		}
-		default : { return; break; }
-	};
-
-}
-void updatePlayerDisplayedData(){
-	// Count all player cards.
-	u8 cardCount_p1 = countPlayerCards(1);
-	u8 cardCount_p2 = countPlayerCards(2);
-	u8 cardCount_p3 = countPlayerCards(3);
-	u8 cardCount_p4 = countPlayerCards(4);
-
-	// Show player designations, arrows, and card counts.
-
-	// P1
-	N782_print( 26 , VRAM_TILES_V-1, S_P1   , 0 ) ; DrawMap2 (25 , VRAM_TILES_V-1, arrow_yellow);
-	N782_print( 23,  VRAM_TILES_V-3, S_CARDS, 0 ) ; PrintByte(26 , VRAM_TILES_V-2, cardCount_p1, 0) ;
-
-	// P2
-	N782_print( 1 , VRAM_TILES_V-1, S_P2   , 0 ) ; DrawMap2 (0, VRAM_TILES_V-1, arrow_blue  );
-	N782_print( 0 , VRAM_TILES_V-3, S_CARDS, 0 ) ; PrintByte(3, VRAM_TILES_V-2, cardCount_p2, 0) ;
-
-	// P3
-	N782_print( 0 , 0 , S_P3   ,0 ) ; DrawMap2 (2 , 0, arrow_red   );
-	N782_print( 0 , 1 , S_CARDS,0)  ; PrintByte(3 , 2, cardCount_p3, 0) ;
-
-	// P4
-	N782_print( 25, 0, S_P4   ,0 ) ; DrawMap2 (27 , 0, arrow_green );
-	N782_print( 23, 1, S_CARDS,0 ) ; PrintByte(26 , 2, cardCount_p4, 0) ;
-
-	// UNO? Display for all players.
-
-	// Clear the UNO indicator.
-	Fill(24 , VRAM_TILES_V-4, 4,1, 0x01);
-	Fill(1  , VRAM_TILES_V-4, 4,1, 0x01);
-	Fill(1  , 3             , 4,1, 0x01);
-	Fill(24 , 3             , 4,1, 0x01);
-
-	// Set the UNO indicator where applicable.
-	if( cardCount_p1==1 ) { N782_print( 24 , VRAM_TILES_V-4, S_UNO , 0 ) ; }
-	if( cardCount_p2==1 ) { N782_print( 1  , VRAM_TILES_V-4, S_UNO , 0 ) ; }
-	if( cardCount_p3==1 ) { N782_print( 1  , 3             , S_UNO , 0 ) ; }
-	if( cardCount_p4==1 ) { N782_print( 24 , 3             , S_UNO , 0 ) ; }
-	else{}
-}
-
-// Draw card test.
-
-void gstate_title1(){
-	// nicksen782 lense flare graphic.
+static void gstate_playing(){
 	ClearVram();
-	SetTileTable( bg_tiles2 );
-	DrawMap2(11,9,N782_F1);WaitVsync(10);
-	DrawMap2(11,9,N782_F2);WaitVsync(10);
-	DrawMap2(11,9,N782_F3);WaitVsync(10);
-	DrawMap2(11,9,N782_F4);WaitVsync(10);
-	DrawMap2(11,9,N782_F5);WaitVsync(10);
-	DrawMap2(11,9,N782_F4);WaitVsync(8);
-	DrawMap2(11,9,N782_F3);WaitVsync(8);
-	DrawMap2(11,9,N782_F2);WaitVsync(8);
-	DrawMap2(11,9,N782_F1);WaitVsync(8);
-	ClearVram();
-	SetTileTable( bg_tiles );
-
-	N782_print(0, 0, PSTR("0 title1"), 0);
-	game.gamestate1=GSTATE_TITLE2;
-	WaitVsync(15);
-
-	// Uzebox flash logo.
-	//
-
-	while(game.gamestate1==GSTATE_TITLE1){
-		WaitVsync(1);
-	}
-
-}
-void gstate_title2(){
-	// Quick credits screen.
-	//
-
-	ClearVram();
-	N782_print(0, 1, PSTR("1 title2"), 0);
-	game.gamestate1=GSTATE_TITLE_MAIN;
-	WaitVsync(15);
-
-	// UNO logo.
-
-	while(game.gamestate1==GSTATE_TITLE2){
-		WaitVsync(1);
-	}
-}
-void gstate_title_main(){
-	ClearVram();
-	Fill(0,0,28,28, 1);
-	N782_print(0, 0, PSTR("2 title_main"), 0);
 	game.gamestate1=GSTATE_PLAYING;
 
-	DrawMap2(3, 1, map_unoLogo1);
-	// while(1){}
-	WaitVsync(20);
-	// DrawMap2(0, 0, board_22x22);
-	// WaitVsync(20);
-	// DrawMap2(0, 0, board_28x28);
-	// WaitVsync(200);
-
-	// test01();
-	// test02();
-
-	WaitVsync(15);
-
-	// Use the timing of the user input as a random seed.
-	// while ( ! game.btnPressed1 ){ getInputs(); }
-
-	while(game.gamestate1==GSTATE_TITLE_MAIN){
-	}
-}
-void gstate_playing(){
-	ClearVram();
-	// N782_print(0, 3, PSTR("3 playing"), 0);
-	game.gamestate1=GSTATE_PLAYING;
-	// WaitVsync(15);
-
-	// test04();
+	//
 	void drawFaceDownCard(u8 playerNum, u8 position){
 		// This function assumes that the cards have been removed first.
 		u8 x,y;
@@ -2291,8 +3008,6 @@ void gstate_playing(){
 
 		DrawMap2(x, y, card);
 	}
-
-
 	// Only works with the cards of the specified player.
 	void displayCards_byPlayer(u8 playerNum, u8 option){
 		// Get the count of this player's cards.
@@ -2317,47 +3032,7 @@ void gstate_playing(){
 		}
 
 	}
-
-	// Draws the cards for ALL PLAYERS.
-	void displayCards(u8 option){
-		// option should have the values from the enum cardFaceShown.
-
-		// First, remove the ramiles and hide the cards for each player.
-		// removePlayerCards(1); // Card remains possessed by the player.
-		// removePlayerCards(2); // Card remains possessed by the player.
-		// removePlayerCards(3); // Card remains possessed by the player.
-		// removePlayerCards(4); // Card remains possessed by the player.
-
-		// Display cards face-down for the inactive players.
-		for(u8 i=1; i<4+1; i+=1){
-			if(option==CARDS_ACTIVEPLAYERFACEUP){
-				// Do not do this for the active player.
-				if(i==game.activePlayer){
-					continue;
-				}
-			}
-
-			// Get the count of this player's cards.
-			u8 numCards = countPlayerCards(i) ;
-
-			for(u8 pos=0; pos<5; pos+=1){
-				// Remove the existing card.
-				removeCard_sm(i, pos);
-
-				// Draw the card face down.
-				if(numCards>pos){ drawFaceDownCard(i, pos); }
-
-				// Remove and hide the card.
-				else            { removeCard_sm(i, pos); }
-			}
-		}
-
-		if(option==CARDS_ACTIVEPLAYERFACEUP){
-			// Display these cards normally (face-up.)
-			displayCardsForPlayer(game.activePlayer, 0*5, 1);
-		}
-	}
-
+	//
 	void getCursorPos(u8 playerNum, u8 cursorIndex, u8 *x, u8 *y){
 		if     (playerNum==1){
 			*x = pgm_read_byte(&(p1_pos_cursor[cursorIndex][0]));
@@ -2380,36 +3055,56 @@ void gstate_playing(){
 		// _emu_whisper(1,*y<<3);
 		// WaitVsync(75);
 	}
-	void getNextPlayerNumber(){
+	//
+	void nextPlayerNumber(u8 playerNum, enum NPN_nextPlayerNumber options){
 		// This function will set the next value for game.activePlayer.
-		game.activePlayers[0];
-		game.activePlayer;
-		game.direction;
+
+		// Allows you to directly specify the next player (ignoring order.)
+		if(playerNum!=255 && options==NPN_SET){
+			game.activePlayers[game.activePlayer-1]==playerNum-1;
+			return;
+		}
+
+		u8 activePlayer = game.activePlayer;
 
 		// Who is the next player?
 		while(1){
-			if     (game.direction==FORWARD) {
-				// Moving forward... in bounds? Increment.
-				if(game.activePlayer+1 !=5 ){ game.activePlayer++; }
+			if(options==NPN_NEXT){
+				if     (game.direction==FORWARD) {
+					// Moving forward... in bounds? Increment.
+					if( activePlayer+1 !=5 ){ activePlayer++; }
 
-				// Reset to player 1.
-				else                      { game.activePlayer=1; }
+					// Reset to player 1.
+					else                      { activePlayer=1; }
+				}
+				else if(game.direction==BACKWARD){
+					// Moving backward... in bounds? Decrement.
+					if( activePlayer-1!=0){ activePlayer--; }
+
+					// Reset to player 4.
+					else                      { activePlayer=4; }
+				}
+
+				// End the loop if the next player is active.
+
+				if( game.activePlayers[activePlayer-1] == 1 ){
+					// Do we SET the NEXT value?
+					if     (options==NPN_NEXT){
+						game.activePlayer=activePlayer;
+						return game.activePlayer ;
+					}
+					// Do we only GET the next value?
+					else if(options==NPN_GET){
+						return activePlayer ;
+					}
+				}
+
+				// Otherwise, loop again.
 			}
-			else if(game.direction==BACKWARD){
-				// Moving forward... in bounds? Increment.
-				if(game.activePlayer-1!=0){ game.activePlayer--; }
-
-				// Reset to player 4.
-				else                      { game.activePlayer=4; }
-			}
-
-			// End the loop if the next player is active.
-			if(game.activePlayers[game.activePlayer-1]==1){ break; }
-
-			// Otherwise, loop again.
 		}
 
 	}
+	//
 	void askUserToSetNewColor(){
 		// Ask the user to chose the new color.
 		// Use the message area rows and the draw/discard rows.
@@ -2420,7 +3115,7 @@ void gstate_playing(){
 		const u8 blue_value      = pgm_read_byte(&(blue_color  [2]));
 		const u8 red_value       = pgm_read_byte(&(red_color   [2]));
 		const u8 green_value     = pgm_read_byte(&(green_color [2]));
-		const u8 black_value     = 0x01;
+		const u8 black_value     = pgm_read_byte(&(blackTile   [2]));
 
 		// Cursor timer and current frame.
 		u8 * cursorTimer = &vsynccounter8b_gen1;
@@ -2496,6 +3191,8 @@ void gstate_playing(){
 			getInputs();
 			// Move cursor left or right. Perform bounds check.
 			if( (game.btnHeld1 & BTN_LEFT) ||  (game.btnHeld1 & BTN_RIGHT) ) {
+				playSFX(SELECTCURSOR1);
+
 				// Set new cursor index.
 				if( (game.btnHeld1 & BTN_LEFT) ){
 					cursorIndex=cursorIndex !=0 ? cursorIndex-1 : cursorIndex;
@@ -2509,6 +3206,7 @@ void gstate_playing(){
 				cursor_y = pgm_read_byte(&(wild_pos_cursor[cursorIndex][1]));
 				// Move the cursor sprite to the new location.
 				MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+
 
 				// Wait for the user to release all buttons.
 				getInputs();
@@ -2586,148 +3284,481 @@ void gstate_playing(){
 		}
 
 	}
+	//
+	u8 pause(){
+		// Ask the user to chose the new color.
+		// Use the message area rows and the draw/discard rows.
+		// The erased rows will be drawn after the user makes their selection.
 
-	while(game.gamestate1==GSTATE_PLAYING){
-		//
-		newGameSetup();
+		const u8 replacementTile = pgm_read_byte(&(wood_color2 [2]));
+		const u8 yellow_value    = pgm_read_byte(&(yellow_color[2]));
+		const u8 blue_value      = pgm_read_byte(&(blue_color  [2]));
+		const u8 red_value       = pgm_read_byte(&(red_color   [2]));
+		const u8 green_value     = pgm_read_byte(&(green_color [2]));
+		const u8 black_value     = 0x01;
 
-		// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
-		redrawMainInfoRegion();
-
-		// Replacement tile used when hiding a card in the player's hand.
-		// const u8 replacementTile = pgm_read_byte(&(wood_color2[2])) ;
-		const u8 replacementTile = pgm_read_byte(&(offBlackTile[2])) ;
-
-		// Cursor values.
+		// Cursor timer and current frame.
 		u8 * cursorTimer = &vsynccounter8b_gen1;
 		*cursorTimer=0;
-
-		u8 * msgTimer = &vsynccounter8b_gen2;
-		*msgTimer=0;
-		u8 msgDisplayed=0;
-
 		u8 currentCursor = 0;
-		u8 *cursor1map; cursor1map=cursor2_f1_d;
-		u8 *cursor2map; cursor2map=cursor2_f2_d;
-		u8 cursorIndex;
-		u8 cursor_x;
-		u8 cursor_y;
+		const char *cursor1map=cursor_f1_r;
+		const char *cursor2map=cursor_f2_r;
+		u8 cursorIndex=3;
+		u8 cursor_x=pgm_read_byte(&(pause_pos_cursor[cursorIndex][0]));;  // Can change.
+		u8 cursor_y=pgm_read_byte(&(pause_pos_cursor[cursorIndex][1]));; // Stays the same.
+		MapSprite2( 0, cursor1map, SPRITE_BANK0 );
+		MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+		SetSpriteVisibility(false);
 
-		// Player hand.
-		u8 cardSelected=0;
+		u8 numRowsToDraw=10;
+		const u8 rowWidth=14;
 
-		// Card sprite.
-		// Contains the tilemap (vram tiles) used by the selected card sprite. (2x3 tilemaps.)
-		u8 map1_2x3 [ 2 + (2*3) ];
+		u8 startx = 7;
+		u8 starty = 8;
+		u8 x      = startx;
+		u8 y      = starty;
+		u16 * srcVram_ptr ;
+		u16 * dstVram_ptr ;
 
-		// Contains the tilemap (vram tiles) used by the selected card sprite. (3x2 tilemaps.)
-		u8 map2_3x2 [ 2 + (3*2) ];
+		// // Remove the discard card.
+		removeCard_lg();
 
-		// Pointer to the tilemap arrayy
-		u8 * map ;
+		// Draw the top and the bottom row first.
+		Fill(startx,starty  ,rowWidth,1, black_value);
+		Fill(startx,starty+1,rowWidth,1, black_value);
+		N782_print(startx+2, starty  , S_PAUSEMENU, 0);
+		N782_print(startx+0, starty+1, S_ASET_BCANCEL     , 0);
 
-		// Dimensions for the selected card map.
-		u8 w;
-		u8 h;
+		// Move down to the next row.
+		y++;
 
-		// Player hand - row position.
-		u8 handRow = 0;
-
-		//
-		u8 counter;
-		u8 tile_x;
-		u8 tile_y;
-
-		u8 sprite_x;
-		u8 sprite_y;
-
-		s8 xdir;
-		s8 ydir;
-
-		// Discard Pile.
-		u8 discard_x = pgm_read_byte(&(discard_pos[0])) << 3 ; // sprite values.
-		u8 discard_y = pgm_read_byte(&(discard_pos[1])) << 3 ; // sprite values.
-
-		// End of turn flags.
-		u8 endOfTurnFlag = 0;
-		u8 playerDraws2  = 0;
-		u8 playerSkipped = 0;
-		u8 playerDraws4  = 0;
-		u8 playerReverse = 0;
-
-		u8 initialIteration=1;
-
-		// Display all cards face-down.
-		displayCards_byPlayer(1, CARDS_FACEDOWN);
-		displayCards_byPlayer(2, CARDS_FACEDOWN);
-		displayCards_byPlayer(3, CARDS_FACEDOWN);
-		displayCards_byPlayer(4, CARDS_FACEDOWN);
-
-		u8 thisPlayer;
-
-		u8 maxHandRows;
-		u8 playerCards;
-
-		// Main game loop.
-		while(game.gamestate1==GSTATE_PLAYING){
-			// Clear the endOfTurnFlag.
-			endOfTurnFlag=0;
-
+		// Open the window.
+		for(u8 i=0; i<numRowsToDraw; i+=1){
 			//
-			thisPlayer=game.activePlayer;
+			WaitVsync(3);
 
-			// Hide the cursor.
-			MapSprite2(0, cursor1map, SPRITE_OFF );
-			// MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
-			WaitVsync(1);
+			// Set pointers for memmove.
+			srcVram_ptr= &(vram[((y)   * VRAM_TILES_H)+x]);
+			dstVram_ptr= &(vram[((y+1) * VRAM_TILES_H)+x]);
 
-			// Flip down all player cards. (Clear ramtile usages.)
-			// displayCards(CARDS_FACEDOWN);
+			// Move the last row down 1.
+			memmove( dstVram_ptr, srcVram_ptr, rowWidth );
 
-			// Handle initial iteration. (Initial discard.)
-			if(initialIteration==1){
-				if(cards[game.lastCardPlayed].color==CARD_BLACK) { askUserToSetNewColor(); }
+			// Replace the old row with black.
+			Fill(startx,y,rowWidth,1, black_value);
 
-				if(cards[game.lastCardPlayed].value==CARD_DRAW2     ) { playerDraws2 =1; }
-				if(cards[game.lastCardPlayed].value==CARD_SKIP      ) { playerSkipped=1; }
-				if(cards[game.lastCardPlayed].value==CARD_REV       ) { playerReverse=1; }
-				if(cards[game.lastCardPlayed].value==CARD_WILD_DRAW4) { playerDraws4 =1; }
+			// Increment y.
+			y++;
+		}
+
+		// Draw the options.
+		N782_print(pgm_read_byte(&(pause_pos_cursor[3][0]))+1,pgm_read_byte(&(pause_pos_cursor[0][1])),PSTR("RESET ROUND"), 0);
+		N782_print(pgm_read_byte(&(pause_pos_cursor[3][0]))+1,pgm_read_byte(&(pause_pos_cursor[1][1])),PSTR("EXIT GAME"), 0);
+		N782_print(pgm_read_byte(&(pause_pos_cursor[3][0]))+1,pgm_read_byte(&(pause_pos_cursor[2][1])),PSTR("AUTO PLAY"), 0);
+		N782_print(pgm_read_byte(&(pause_pos_cursor[3][0]))+1,pgm_read_byte(&(pause_pos_cursor[3][1])),PSTR("CANCEL"), 0);
+
+		SetSpriteVisibility(true);
+
+		// Loop until a choice has been made.
+		while(1){
+			getInputs();
+			// Move cursor left or right. Perform bounds check.
+			if( (game.btnHeld1 & BTN_UP) ||  (game.btnHeld1 & BTN_DOWN) ) {
+				playSFX(SELECTCURSOR1);
+
+				// Set new cursor index.
+				if( (game.btnHeld1 & BTN_UP) ){
+					cursorIndex=cursorIndex !=0 ? cursorIndex-1 : cursorIndex;
+				}
+				// Set new cursor index.
+				if( (game.btnHeld1 & BTN_DOWN) ){
+					cursorIndex=cursorIndex !=3 ? cursorIndex+1 : cursorIndex;
+				}
+				// Set new cursor x and y.
+				cursor_x = pgm_read_byte(&(pause_pos_cursor[cursorIndex][0]));
+				cursor_y = pgm_read_byte(&(pause_pos_cursor[cursorIndex][1]));
+				// Move the cursor sprite to the new location.
+				MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+
+
+				// Wait for the user to release all buttons.
+				getInputs();
+				while(game.btnHeld1){ getInputs(); }
 			}
 
-			// Were some flags set at the end of the last turn?
-			if(playerDraws2 || playerSkipped || playerDraws4 || playerReverse){
-				if( playerDraws2  ){
-					msgHandler(DRAW2_PLAYER);
-					endOfTurnFlag=1;
-					// Draw 2
-					for(u8 i=0; i<2; i+=1){ dealSpecifiedCard_anim(game.activePlayer, 255, 2, 4, CARDS_FACEDOWN); }
-				}
-				else if( playerSkipped ){
-					msgHandler(SKIP_PLAYER);
-					endOfTurnFlag=1;
-				}
-				else if( playerDraws4  ){
-					msgHandler(DRAW4_PLAYER);
-					endOfTurnFlag=1;
-					// Draw 4
-					for(u8 i=0; i<4; i+=1){ dealSpecifiedCard_anim(game.activePlayer, 255, 2, 4, CARDS_FACEDOWN); }
-				}
-				else if( playerReverse  ){
-					endOfTurnFlag=1;
-					game.direction = !game.direction;
-					if(initialIteration==0){
-						getNextPlayerNumber();	// Sets up the next player.
+			// Did the user press A or START?
+			if( (game.btnHeld1 & BTN_A) || (game.btnHeld1 & BTN_START)){
+				//
+				// game.gamestate1=GSTATE_PLAYING;
+				// game.gamestate2=GSTATE_PLAYING_PLAYING;
+				// game.gamestate2=GSTATE_PLAYING_GAMESTART;
+
+				switch(cursorIndex){
+					// RESET ROUND.
+					case 0 : {
+						game.gamestate1=GSTATE_PLAYING;
+						game.gamestate2=GSTATE_PLAYING_GAMESTART;
+						break;
 					}
-					msgHandler(REVERSE_PLAYER);
+					// EXIT GAME.
+					case 1 : {
+						game.gamestate1=GSTATE_TITLE;
+						game.gamestate2=GSTATE_TITLE_MAINMENU;
+						break;
+					}
+					// AUTO PLAY.
+					case 2 : {
+						// game.gamestate1=GSTATE_PLAYING;
+						// game.gamestate2=GSTATE_PLAYING_GAMESTART;
+						break;
+					}
+					// CANCEL
+					case 3 : {
+						// game.gamestate1=GSTATE_PLAYING;
+						// game.gamestate2=GSTATE_PLAYING_GAMESTART;
+						break;
+					}
+					default: { break; }
+				};
+
+				// Hide the sprite.
+				MapSprite2( 0, cursor1map, SPRITE_OFF );
+				WaitVsync(1);
+				SetSpriteVisibility(false);
+
+				// Black out the title bars.
+				Fill(startx,starty ,rowWidth,1, black_value);
+				Fill(startx,y      ,rowWidth,1, black_value);
+
+				// Close the window.
+				for(u8 i=0; i<numRowsToDraw+2; i+=1){
+					//
+					WaitVsync(2);
+
+					// Set pointers for memmove.
+					srcVram_ptr= &vram[(y)  * VRAM_TILES_H]+x;
+					dstVram_ptr= &vram[(y-1)  * VRAM_TILES_H]+x;
+
+					// Move the last row down 1.
+					memmove( dstVram_ptr, srcVram_ptr, rowWidth );
+
+					// Replace the old row with the replacementTile.
+					Fill(startx,y,rowWidth,1, replacementTile);
+
+					// Decrement y.
+					y--;
 				}
+
+				// Remove the last line of the window.
+				Fill(startx,y,rowWidth,1, replacementTile);
+
+				SetSpriteVisibility(true);
+
+				// End the loop.
+				break;
 			}
 
-			// Reset those flags.
-			initialIteration=0;
-			playerDraws2 =0;
-			playerSkipped=0;
-			playerDraws4 =0;
-			playerReverse=0;
+			// Change the cursor frame?
+			if(*cursorTimer > 15 ){
+				// Change to which map?
+				if(currentCursor==0){ MapSprite2( 0, cursor1map, SPRITE_BANK0 ); }
+				else                { MapSprite2( 0, cursor2map, SPRITE_BANK0 ); }
+
+				// Redraw the sprite.
+				MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+
+				// Flip the cursor frame.
+				currentCursor = !currentCursor;
+
+				// Reset the counter.
+				*cursorTimer=0;
+			}
+
+			// Keep in sync.
+			WaitVsync(1);
+		}
+
+		switch(cursorIndex){
+			// RESET ROUND.
+			case 0 : { return 1; break; }
+			// EXIT GAME.
+			case 1 : { return 1; break; }
+			// AUTO PLAY.
+			case 2 : { return 2; break; }
+			// CANCEL
+			case 3 : { return 0; break; }
+			default: { break; }
+		};
+
+	}
+	//
+	void showPoints(){
+		// Show existing points for all players.
+
+		// ClearVram();
+
+		if(game.activePlayers[0]==1){
+			N782_print    ( 7+0  , 10+0 , S_PLAYER       , 0 ); // Player 1
+			N782_print_u8 ( 7+5  , 10+0 , 1                  ); // Player 1
+			N782_print_u16( 7+10 , 10+0 , game.points_p1     ); // Player 1
+		}
+
+		if(game.activePlayers[1]==1){
+			N782_print    ( 7+0  , 10+3 , S_PLAYER       , 0 ); // Player 2
+			N782_print_u8 ( 7+5  , 10+3 , 2                  ); // Player 2
+			N782_print_u16( 7+10 , 10+3 , game.points_p2     ); // Player 2
+		}
+
+		if(game.activePlayers[2]==1){
+			N782_print    ( 7+0  , 10+6 , S_PLAYER       , 0 ); // Player 3
+			N782_print_u8 ( 7+5  , 10+6 , 3                  ); // Player 3
+			N782_print_u16( 7+10 , 10+6 , game.points_p3     ); // Player 3
+		}
+
+		if(game.activePlayers[3]==1){
+			N782_print    ( 7+0  , 10+9 , S_PLAYER       , 0 ); // Player 4
+			N782_print_u8 ( 7+5  , 10+9 , 4                  ); // Player 4
+			N782_print_u16( 7+10 , 10+9 , game.points_p4     ); // Player 4
+		}
+
+	}
+	//
+	void setPoints(u8 winner){
+		// Tally up the points.
+
+		// Points are now added. The remaining player's cards are added up and that score is added to the winning player's score.
+			// "Number Card"    - Number value of the card is number of points.
+			// "Draw Two"       - 20 Points
+			// "Reverse"        - 20 Points
+			// "Skip"           - 20 Points
+			// "Wild"           - 50 Points
+			// "Wild Draw Four" - 50 Points
+		// If a player reaches 500 points then they win.
+
+	Fill(0, 0 , VRAM_TILES_H, VRAM_TILES_V, 1);
+
+	showPoints();
+
+	// Contains the tilemap (vram tiles) used by the selected card sprite. (3x2 tilemaps.)
+	u8 map_2x3 [ 2 + (2*3) ];
+	u8 map_3x2 [ 2 + (3*2) ];
+	map_2x3[0]=2; map_2x3[1]=3;
+	map_3x2[0]=3; map_3x2[1]=2;
+	// Pointer to the tilemap arrayy
+	u8 * map;
+	// Dimensions for the selected card map.
+	u8 w;
+	u8 h;
+	s8 xdir;
+	s8 ydir;
+	u8 dst_x;
+	u8 dst_y;
+	u8 counter;
+	// u8 rand_y[] = {12,14,16,18,};
+	u8 tile_x;
+	u8 tile_y;
+	u8 sprite_x ;//= tile_x << 3;
+	u8 sprite_y ;//= tile_y << 3;
+	u8 cardDelay=4;
+
+		// Only the winner of the round will get points.
+		u8 location;
+		u16 * points_slot;
+		switch(winner){
+			case 1  : {
+				location=CARD_LOCATION_PLAYER1;
+				points_slot=&game.points_p1;
+				dst_x=19;
+				dst_y=10;
+				break;
+			}
+			case 2  : {
+				location=CARD_LOCATION_PLAYER2;
+				points_slot=&game.points_p2;
+				dst_x=19;
+				dst_y=14;
+				break;
+			}
+			case 3  : {
+				location=CARD_LOCATION_PLAYER3;
+				points_slot=&game.points_p3;
+				dst_x=19;
+				dst_y=16;
+				break;
+			}
+			case 4  : {
+				location=CARD_LOCATION_PLAYER4;
+				points_slot=&game.points_p4;
+				dst_x=19;
+				dst_y=19;
+				break;
+			}
+			default : {
+				return ;
+				break;
+			}
+		}
+
+		clearAllRamtiles();
+		u8 pos=0;
+		u8 cardsSent=0;
+		for(u8 i=0; i<totalCardsInDeck; i+=1){
+			// Only add the points for cards that are NOT in the player's hand, draw, or discard.
+			if(
+				cards[i].location!=location              &&
+				cards[i].location!=CARD_LOCATION_DRAW    &&
+				cards[i].location!=CARD_LOCATION_DISCARD
+			) {
+				if(cardsSent%5==0){ pos=0; }
+				cardsSent++;
+
+				// Wilds: 50 points.
+				if     (cards[i].color==CARD_BLACK)                             { *points_slot+=50; }
+
+				// Number cards: Face value for points.
+				else if(cards[i].value>=CARD_0 && cards[i].value<=CARD_9 )      { *points_slot+=cards[i].value; }
+
+				// Action cards: 20 points.
+				else if(cards[i].value>=CARD_DRAW2 && cards[i].value<=CARD_REV ){ *points_slot+=50; }
+
+				// Send the card from one side of the screen to the other.
+
+				// tile_y=rand_y[getRandomNumber(12, 18) | 0x01]; // Force it to be even. ;
+
+				switch(cards[i].location){
+					case CARD_LOCATION_PLAYER1  : {
+						map = &map_2x3 ;
+						w=map_2x3[0];h=map_2x3[1];
+						tile_x=pgm_read_byte(&(p1_pos[pos][0]));
+						tile_y=pgm_read_byte(&(p1_pos[pos][1]));
+						break;
+					}
+					case CARD_LOCATION_PLAYER2  : {
+						map = &map_3x2 ;
+						w=map_3x2[0];h=map_3x2[1];
+						tile_x=pgm_read_byte(&(p2_pos[pos][0]));
+						tile_y=pgm_read_byte(&(p2_pos[pos][1]));
+						break;
+					}
+					case CARD_LOCATION_PLAYER3  : {
+						map = &map_2x3 ;
+						w=map_2x3[0];h=map_2x3[1];
+						tile_x=pgm_read_byte(&(p3_pos[pos][0]));
+						tile_y=pgm_read_byte(&(p3_pos[pos][1]));
+						break;
+					}
+					case CARD_LOCATION_PLAYER4  : {
+						map = &map_3x2 ;
+						w=map_3x2[0];h=map_3x2[1];
+						tile_x=pgm_read_byte(&(p4_pos[pos][0]));
+						tile_y=pgm_read_byte(&(p4_pos[pos][1]));
+						break;
+					}
+					default : {
+						return ;
+						break;
+					}
+				}
+
+				drawCard(
+					cards[i].location+1 ,
+					// 1 ,
+					tile_x         , // pgm_read_byte(&(discard_pos[0])) ,
+					tile_y         , // pgm_read_byte(&(discard_pos[1])) ,
+					SMALL_CARD     ,
+					cards[i].value ,
+					cards[i].color
+				);
+
+				// Get the tilemap for the new card.
+				setVramTilemap( tile_x, tile_y , w, h, map );
+
+				// Hide the vram card.
+				Fill(tile_x, tile_y , w, h, 1);
+
+				// Map the card to a spritemap.
+				MapSprite2_nra( 0, map, SPRITE_BANK1 );
+
+				sprite_x = tile_x << 3;
+				sprite_y = tile_y << 3;
+				// dst_x    = dst_x  << 3;
+				// dst_y    = dst_y  << 3;
+
+				// Set the xdir for the card movement.
+				if     (sprite_x<dst_x<< 3){ xdir =  1; }
+				else if(sprite_x>dst_x<< 3){ xdir = -1; }
+				else                       { xdir =  0; }
+
+				// Set the ydir for the card movement.
+				if     (sprite_y<dst_y<< 3){ ydir =  1; }
+				else if(sprite_y>dst_y<< 3){ ydir = -1; }
+				else                       { ydir =  0; }
+
+				// Reset the counter. (Is used to speed-limit the card movement.)
+				counter=0;
+
+				// Move the card.
+				while(1){
+					// Determine if an x and/or y movement is required this iteration.
+					if(sprite_x != dst_x<< 3){ sprite_x += xdir; }
+					if(sprite_y != dst_y<< 3){ sprite_y += ydir; }
+
+					// Redraw the sprite at the new location.
+					MoveSprite(0, sprite_x, sprite_y, map[0], map[1]);
+
+					// If both the x and the y values match the discard values then break.
+					if( sprite_x==dst_x<< 3 && sprite_y==dst_y<< 3 ) { break; }
+
+					// Do a vsync wait every other time.
+					// if(counter & 1) { WaitVsync(1); }
+					if(counter % cardDelay == 0 ){ WaitVsync(1); }
+					// if(counter & 1 ){ WaitVsync(1); }
+					// WaitVsync(1);
+
+					// Increment the counter.
+					counter+=1;
+				}
+
+				// Hide the card spritemap.
+				MapSprite2_nra( 0, map, SPRITE_OFF );
+
+				// Remove the tiles used by the small card (if they were the only instances of those tiles.)
+				removeUnusedRamtilesInTilemap(map);
+
+				showPoints();
+
+				pos++;
+
+				// WaitVsync(5);
+			}
+
+
+		}
+		clearAllRamtiles();
+
+		// Did the player win the game by getting enough points?
+		if(*points_slot>=game.pointsForWin){
+			//
+		}
+
+	}
+
+	void unoCheck(){
+		// Does the player now have UNO?
+		if     (countPlayerCards(game.activePlayer)==1){
+			// Make the user confirm their UNO within a short window of time.
+
+			// If confirmed... good. End the check.
+
+			// If unconfirmed within the window of time then the player must draw 1 card.
+		}
+	}
+
+	void winGame(u8 winnerOfTheRound){
+		// Win! End round, count points, start new round.
+			// WIN ROUND!!!
+
+			game.activePlayer = winnerOfTheRound;
 
 			// Update the displayed player data.
 			updatePlayerDisplayedData();
@@ -2735,459 +3766,827 @@ void gstate_playing(){
 			// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
 			redrawMainInfoRegion();
 
-			// If the end of turn flag is set then end this iteration. (Also, set the value for next player.)
-			if( endOfTurnFlag==1 ) {
-				WaitVsync(100);
+			msgHandler(GAMEWIN_PLAYER);
+			WaitVsync(200);
+
+			// Clear all reserved ramtile data.
+			clearAllReservedRamtiles();
+
+			// Tally up the points and then show the points screen.
+			ClearVram();
+			setPoints(game.activePlayer);
+			showPoints();
+			WaitVsync(200);
+
+			// game.gamestate1=GSTATE_PLAYING;
+			// game.gamestate2=GSTATE_PLAYING_PLAYING;
+			game.gamestate2=GSTATE_PLAYING_GAMESTART;
+
+			// SoftReset();
+	}
+
+	// Replacement tile used when hiding a card in the player's hand.
+	// const u8 replacementTile = pgm_read_byte(&(wood_color2[2])) ;
+	const u8 replacementTile = pgm_read_byte(&(offBlackTile[2])) ;
+
+	// Cursor values.
+	u8 * cursorTimer = &vsynccounter8b_gen1;
+	*cursorTimer=0;
+
+	u8 * msgTimer = &vsynccounter8b_gen2;
+	*msgTimer=0;
+	u8 msgDisplayed=0;
+
+	u8 currentCursor = 0;
+	u8 *cursor1map; cursor1map=cursor2_f1_d;
+	u8 *cursor2map; cursor2map=cursor2_f2_d;
+	u8 cursorIndex;
+	u8 cursor_x;
+	u8 cursor_y;
+
+	// Player hand.
+	u8 cardSelected=0;
+
+	// Card sprite.
+	// Contains the tilemap (vram tiles) used by the selected card sprite. (2x3 tilemaps.)
+	u8 map1_2x3 [ 2 + (2*3) ];
+
+	// Contains the tilemap (vram tiles) used by the selected card sprite. (3x2 tilemaps.)
+	u8 map2_3x2 [ 2 + (3*2) ];
+
+	// Pointer to the tilemap arrayy
+	u8 * map ;
+
+	// Dimensions for the selected card map.
+	u8 w;
+	u8 h;
+
+	// Player hand - row position.
+	u8 handRow = 0;
+
+	//
+	u8 counter;
+	u8 tile_x;
+	u8 tile_y;
+
+	u8 sprite_x;
+	u8 sprite_y;
+
+	s8 xdir;
+	s8 ydir;
+
+	// Discard Pile.
+	u8 discard_x = pgm_read_byte(&(discard_pos[0])) << 3 ; // sprite values.
+	u8 discard_y = pgm_read_byte(&(discard_pos[1])) << 3 ; // sprite values.
+
+	// End of turn flags.
+	u8 endOfTurnFlag = 0;
+	u8 playerDraws2  = 0;
+	u8 playerSkipped = 0;
+	u8 playerDraws4  = 0;
+	u8 playerReverse = 0;
+	u8 initialIteration=1;
+	u8 thisPlayer;
+	u8 maxHandRows;
+	u8 playerCards;
+	u8 winnerOfTheRound=255;
+	u8 retval;
+
+	void prePlay(){
+		// PRETURN SETUP:
+		// Clear the endOfTurnFlag.
+		// Determine active player.
+		// Hide the cursor.
+		// Handle if this is the initial play.
+		// Handle flags set by previous play or initial discard.
+		// Reset the flags.
+		// Redraw player data (card count, uno.)
+		// Redraw play color, direction, draw and discard piles.
+		// Should the turn end early (due to previously set flags?)
+
+		// TURN SETUP:
+		// Determine cursor coords, colors for the active player.
+		// Display the cursor.
+		// Reset handRow to 0.
+		// Flip up the active player's cards.
+
+		// ACTIVE TURN:
+		// Get gamepad input.
+		// NO CARD SELECTED?
+			// Directional pad buttons will change the cursor and the displayed "row" of cards.
+
+			// "A" will select a card.
+				// Make sure card is valid, is wild, color match, or value match.
+					// Set the info message flag if the user tries to select an invalid card.
+				// Hide the cursor.
+				// Copy vram for the selected card into ram map.
+				// Erase vram card.
+				// Use ram map to create a sprite out of the original vram tiles.
+				// Move the card (smoothly) in the correct direction 32 pixels (4 tiles.)
+				// Clear any info messages.
+				// Set the cardSelected flag.
+				// Ask the user to confirm the play or to cancel the selection.
+					// END OF BRANCH
+
+			// "B" will pass the player's turn.
+				// Clear any info messages.
+				// Ask the user to confirm the pass or to cancel the pass.
+					// Read gamepad.
+						// Pressed "A":
+							// Clear any info messages.
+							// Deal a card to the player.
+							// Set the end of turn flag.
+
+						// Pressed "B":
+							// Clear any info messages.
+					// If the end of turn flag is set then break the while loop for this play.
+				// If button was pressed wait until it has been released before continuing.
+
+		// CARD IS SELECTED?
+			// Pressed "A":
+				// Hide the cursor sprite.
+				// Determine which directions (for x and y) that the card will need to move in order to get to the discard pile.
+				// Clear any info messages.
+				// Move the card smoothly from its position toward the discard pile.
+				// Hide the card sprite.
+				// Remove the ramtiles associated with the card sprite (if applicable.)
+				// Clear the cardSelected flag.
+				// Update the game.lastCardPlayed with the selected card.
+				// Set the location of the selected card to CARD_LOCATION_DISCARD.
+				// Remove the large discard in vram and ramtiles (if applicable.)
+				// Set flags for the next play if the card was an action or wild card.
+					// If the card was a wild card then immediately ask the player to choose the new play color.
+				// Redraw player data (card count, uno.)
+				// Redraw play color, direction, draw and discard piles.
+				// Set the endOfTurnFlag.
+				// Break the while loop for this play.
+
+			// Pressed "B":
+				// Clear any info messages.
+				// Smoothly move the card sprite back to its original position.
+				// Hide the card spritemap.
+				// Use the card sprite map to draw the card back into vram.
+				// Clear the cardSelected flag.
+				// Unhide the cursor.
+
+		// Cursor map update.
+			// If the timer is high enough and a card is not selected then update the cursor map.
+			// Map and move the cursor sprite.
+			// Toggle the currentCursor.
+			// Reset the cursorTimer.
+
+		// Info message timer update (possible erase.)
+			// If the timer is high enough and msgDisplayed is set.
+			// Clear any info messages.
+			// Clear the msgDisplayed flag.
+			// Reset the msgTimer.
+
+		// POST ACTIVE TURN:
+			// Check if the current player has "UNO."
+				//
+			// Check if the current player now has 0 cards.
+				// Yes? Win!
+					// Show the win message.
+					// Count points to assign to the winning player.
+					// Show the points of all players.
+					// END OF ROUND.
+			// Flip the player's cards face down (clear ramtile usages where applicable.)
+
+			// Determine and set the next active player.
+
+	}
+
+	while(game.gamestate1==GSTATE_PLAYING){
+
+		// Game round initialization.
+		// Resets the game for a new round. (Does NOT impact scores.)
+		if     (game.gamestate2==GSTATE_PLAYING_GAMESTART){
+			newGameSetup();
+			redrawMainInfoRegion();
+
+			initialIteration = 1;
+			endOfTurnFlag    = 0;
+			playerDraws2     = 0;
+			playerSkipped    = 0;
+			playerDraws4     = 0;
+			playerReverse    = 0;
+			winnerOfTheRound = 255;
+
+			game.gamestate2=GSTATE_PLAYING_PLAYING;
+			// game.gamestate2=GSTATE_PLAYING_GAMESTART;
+			continue;
+		}
+
+		// Game in progress.
+		else if(game.gamestate2==GSTATE_PLAYING_PLAYING          ){
+			// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
+			redrawMainInfoRegion();
+
+			// Display all cards face-down.
+			if(game.activePlayers[0]==1){ displayCards_byPlayer(1, CARDS_FACEDOWN); }
+			if(game.activePlayers[1]==1){ displayCards_byPlayer(2, CARDS_FACEDOWN); }
+			if(game.activePlayers[2]==1){ displayCards_byPlayer(3, CARDS_FACEDOWN); }
+			if(game.activePlayers[3]==1){ displayCards_byPlayer(4, CARDS_FACEDOWN); }
+
+			// Main game loop. The program stays within this loop until the round is over or the gamestate2 changes.
+			while(game.gamestate2==GSTATE_PLAYING_PLAYING){
+				// Clear the endOfTurnFlag.
+				endOfTurnFlag=0;
+
+				//
+				thisPlayer=game.activePlayer;
+
+				// Hide the cursor.
+				MapSprite2(0, cursor1map, SPRITE_OFF );
+				// MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+				WaitVsync(1);
+
+				// Update the displayed player data.
+				updatePlayerDisplayedData();
+
+				// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
+				redrawMainInfoRegion();
+
+				// Handle initial iteration. (Initial discard.)
+				if(initialIteration==1){
+					if(cards[game.lastCardPlayed].color==CARD_BLACK     ) { askUserToSetNewColor(); }
+					if(cards[game.lastCardPlayed].value==CARD_DRAW2     ) { playerDraws2 =1; }
+					if(cards[game.lastCardPlayed].value==CARD_SKIP      ) { playerSkipped=1; }
+					if(cards[game.lastCardPlayed].value==CARD_REV       ) { playerReverse=1; }
+					if(cards[game.lastCardPlayed].value==CARD_WILD_DRAW4) { playerDraws4 =1; }
+				}
+
+#if VRAM_TILES_H == 32
+// N782_print_u8(8+0 ,6,playerDraws2);
+// N782_print_u8(8+2 ,6,playerSkipped);
+// N782_print_u8(8+4 ,6,playerDraws4);
+// N782_print_u8(8+6 ,6,playerReverse);
+
+// N782_print_u8(8+0 ,7,game.numPlayers);
+// N782_print_u8(8+2 ,7,thisPlayer);
+// N782_print_u8(8+4 ,7,initialIteration);
+// WaitVsync(50);
+#endif
+				// Were some flags set at the end of the last turn?
+				if(playerDraws2 || playerSkipped || playerDraws4 || playerReverse){
+					if     ( playerDraws2  ){
+						msgHandler(DRAW2_PLAYER);
+						endOfTurnFlag=1;
+						// Draw 2
+						for(u8 i=0; i<2; i+=1){
+							if(game.player_types[thisPlayer-1]!=HUMAN){
+								dealSpecifiedCard_anim(game.activePlayer, 255, 2, 3, CARDS_FACEDOWN);
+							}
+							else{
+								dealSpecifiedCard_anim(game.activePlayer, 255, 2, 3, CARDS_FACEUP);
+							}
+							playSFX(DRAWCARD);
+						}
+					}
+					else if( playerSkipped ){
+						msgHandler(SKIP_PLAYER);
+						endOfTurnFlag=1;
+					}
+					else if( playerDraws4  ){
+						msgHandler(DRAW4_PLAYER);
+						endOfTurnFlag=1;
+						// Draw 4
+						for(u8 i=0; i<4; i+=1){
+							if(game.player_types[thisPlayer-1]!=HUMAN){
+								dealSpecifiedCard_anim(game.activePlayer, 255, 2, 3, CARDS_FACEDOWN);
+							}
+							else{
+								dealSpecifiedCard_anim(game.activePlayer, 255, 2, 3, CARDS_FACEUP);
+							}
+
+							playSFX(DRAWCARD);
+						}
+					}
+					else if( playerReverse  ){
+						// Change the direction.
+						game.direction = !game.direction;
+
+						// Handle the initial deal differently.
+						if( initialIteration==1){
+							if(game.numPlayers == 2){
+								endOfTurnFlag = 0 ;
+								*msgTimer     = 0 ;
+								msgDisplayed  = 1 ;
+							}
+							else{
+								// Skip to the next player.
+								nextPlayerNumber(255, NPN_NEXT);
+								endOfTurnFlag=1;
+							}
+						}
+
+						// Number of players is 2?
+						else if( game.numPlayers == 2 ){
+							// End this turn.
+							endOfTurnFlag=1;
+						}
+						// Default actions.
+						else{
+							// Skip to the next player.
+							nextPlayerNumber(255, NPN_NEXT);
+							endOfTurnFlag=1;
+						}
+
+						msgHandler(REVERSE_PLAYER);
+					}
+				}
+
+				// Reset those flags.
+				initialIteration = 0;
+				playerDraws2     = 0;
+				playerSkipped    = 0;
+				playerDraws4     = 0;
+				playerReverse    = 0;
+
+				// Update the displayed player data.
+				updatePlayerDisplayedData();
+
+				// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
+				redrawMainInfoRegion();
+
+				// winnerOfTheRound=1;
+
+				// Do we have a winner??
+				if(winnerOfTheRound!=255){
+					winGame(winnerOfTheRound);
+					continue;
+				}
+
+				// If the end of turn flag is set then end this iteration. (Also, set the value for next player.)
+				if( endOfTurnFlag==1 ) {
+					WaitVsync(100);
+
+					// Flip down this player's cards. (Clear ramtile usages.)
+					displayCards_byPlayer(thisPlayer, CARDS_FACEDOWN);
+
+					clearbgmessage();
+					nextPlayerNumber(255, NPN_NEXT);
+					clearbgmessage();
+					continue;
+				}
+
+				// Setup the cursor for this player.
+				SetSpriteVisibility(false);
+				cursorIndex=0;
+				currentCursor=0;
+				*cursorTimer=0;
+				getCursorPos(game.activePlayer, cursorIndex, &cursor_x, &cursor_y);
+				if     (game.activePlayer==1){
+					cursor1map=cursor2_f1_d; // Cursor tilemap used.
+					cursor2map=cursor2_f2_d; // Cursor tilemap used.
+					map = &map1_2x3;         // vram tilemap for the card sprites.
+					w=2; h=3;                // Dimensions for the cards sprites.
+				}
+				else if(game.activePlayer==2){
+					cursor1map=cursor2_f1_l;
+					cursor2map=cursor2_f2_l;
+					map = &map2_3x2;
+					w=3; h=2;
+				}
+				else if(game.activePlayer==3){
+					cursor1map=cursor2_f1_u;
+					cursor2map=cursor2_f2_u;
+					map = &map1_2x3;
+					w=2; h=3;
+				}
+				else if(game.activePlayer==4){
+					cursor1map=cursor2_f1_r;
+					cursor2map=cursor2_f2_r;
+					map = &map2_3x2;
+					w=3; h=2;
+				}
+
+				// Display the cursor.
+				MapSprite2(0, cursor1map, SPRITE_BANK0 );
+				MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+				SetSpriteVisibility(true);
+
+				game.handRow=0;
+
+				// Flip up this player's cards. (Uses ramtiles.)
+				displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
+
+				// Loop until the player's turn ends.
+				while(endOfTurnFlag==0){
+					// Get gamepad inputs. (All human players can be controlled via either gamepad.)
+					getInputs();
+
+					// Pause?
+					if( (game.btnHeld1 & BTN_START)) {
+						retval=pause();
+						redrawMainInfoRegion();
+						// Cancel.
+						if     ( retval == 0 ){
+						}
+						// Restart round or exit game.
+						else if( retval == 1 ){ break; }
+						// Auto play.
+						else if( retval == 2 ){
+							// break;
+						}
+					}
+
+					// Do a soft-reset if both L and R shoulder buttons are pressed.
+					if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+
+					// CARD NOT YET SELECTED: Allow cursor movement and for the user to choose a card or pass their turn.
+					if(!cardSelected){
+						// Move cursor left or right. Perform bounds check.
+						if     (game.activePlayer==1 || game.activePlayer==3){
+							// Adjust the cursor position over card.
+							if( (game.btnHeld1 & BTN_LEFT) ||  (game.btnHeld1 & BTN_RIGHT) ) {
+								playSFX(SELECTCURSOR1);
+
+								if( game.btnHeld1 & (BTN_LEFT ) ){
+									cursorIndex=cursorIndex !=0 ? cursorIndex-1 : cursorIndex;
+								}
+								if( game.btnHeld1 & (BTN_RIGHT) ){
+									cursorIndex=cursorIndex !=4 ? cursorIndex+1 : cursorIndex;
+								}
+								// Redraw the cursor if moved.
+								getCursorPos(game.activePlayer, cursorIndex, &cursor_x, &cursor_y);
+								// Redraw the sprite.
+								MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+							}
+
+							// Adjust the handRow value and then redisplay cards.
+							if( (game.btnHeld1 & BTN_UP) ||  (game.btnHeld1 & BTN_DOWN) ) {
+								playSFX(SELECTCURSOR1);
+
+								if( game.btnHeld1 & (BTN_DOWN )  ) {
+									game.handRow = game.handRow <= (countPlayerCards(game.activePlayer)/5)-1 ? game.handRow+1 : game.handRow;
+
+								}
+								if( game.btnHeld1 & (BTN_UP) ) {
+									game.handRow = game.handRow == 0 ? game.handRow : game.handRow-1;
+								}
+
+								// Flip up this player's cards. (Uses ramtiles.)
+								displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
+							}
+						}
+						else if(game.activePlayer==2 || game.activePlayer==4){
+							// Adjust the cursor position over card.
+							if( (game.btnHeld1 & BTN_UP) ||  (game.btnHeld1 & BTN_DOWN) ) {
+								playSFX(SELECTCURSOR1);
+
+								if( game.btnHeld1 & (BTN_UP )  ){
+									cursorIndex=cursorIndex !=0 ? cursorIndex-1 : cursorIndex;
+								}
+								if( game.btnHeld1 & (BTN_DOWN) ){
+									cursorIndex=cursorIndex !=4 ? cursorIndex+1 : cursorIndex;
+								}
+								// Redraw the cursor if moved.
+								getCursorPos(game.activePlayer, cursorIndex, &cursor_x, &cursor_y);
+								// Redraw the sprite.
+								MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+							}
+
+							// Adjust the handRow value and then redisplay cards.
+							if( (game.btnHeld1 & BTN_LEFT) ||  (game.btnHeld1 & BTN_RIGHT) ) {
+								playSFX(SELECTCURSOR1);
+
+								if( game.btnHeld1 & (BTN_RIGHT )  ) {
+									game.handRow = game.handRow <= (countPlayerCards(game.activePlayer)/5)-1 ? game.handRow+1 : game.handRow;
+
+								}
+								if( game.btnHeld1 & (BTN_LEFT) ) {
+									game.handRow = game.handRow == 0 ? game.handRow : game.handRow-1;
+								}
+
+								// Flip up this player's cards. (Uses ramtiles.)
+								displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
+							}
+						}
+
+						// Select the card.
+						if     ( game.btnHeld1 & (BTN_A   )  ){
+							// Do not allow the card to be selected if it is invalid.
+							if(game.playerVisibleHand[cursorIndex]==255) { continue; }
+
+							// Do not allow the card to be selected if it is invalid.
+							if(
+								!(
+									// Not a wild?
+									   cards[ game.playerVisibleHand[cursorIndex] ].color == CARD_BLACK
+
+									// Not a matching color to the last played card?
+									|| cards[ game.playerVisibleHand[cursorIndex] ].color == cards[game.lastCardPlayed].color
+
+									// Not a matching value to the last played card?
+									|| cards[ game.playerVisibleHand[cursorIndex] ].value == cards[game.lastCardPlayed].value
+								)
+							){
+								// Change the color if the card was a different color that the discard but had a matching value.
+								msgHandler(INCORRECTCARD);
+								msgDisplayed=1;
+								*msgTimer=0;
+								continue;
+							}
+							else { msgDisplayed=0; }
+							/*
+							msgDisplayed=0;
+							*/
+
+							// Set the cardSelected flag. (Disallows further cursor movements.)
+							playSFX(SELECTCARD);
+							cardSelected=true;
+
+							// Get new x and y.
+							get_cardDims_byPlayerAndCardPosition(game.activePlayer, cursorIndex, &tile_x, &tile_y);
+							sprite_x=tile_x << 3 ;
+							sprite_y=tile_y << 3 ;
+
+							// Hide the cursor.
+							MapSprite2( 0, cursor1map, SPRITE_OFF);
+							WaitVsync(1);
+
+							// Get the tilemap for the selected card.
+							// map[0], map[1]
+							// setVramTilemap( tile_x, tile_y , pgm_read_byte(&(map)[1]), pgm_read_byte(&(map)[1]), map );
+							setVramTilemap( tile_x, tile_y , w, h, map );
+
+							// Clear the card in vram.
+							Fill(tile_x,tile_y, w, h, replacementTile);
+
+							// Map the card to a spritemap.
+							MapSprite2_nra( 1, map, SPRITE_BANK1 );
+
+							// (smoothly) Move the card into the selected position.
+							for(u8 i=0; i<8*4; i+=1){
+								// Adjust x or y depending on the active player.
+								if     (game.activePlayer==1){ sprite_y-=1; }
+								else if(game.activePlayer==2){ sprite_x+=1; }
+								else if(game.activePlayer==3){ sprite_y+=1; }
+								else if(game.activePlayer==4){ sprite_x-=1; }
+
+								MoveSprite(1, sprite_x, sprite_y, map[0], map[1]);
+
+								if(i & 2) { WaitVsync(1); }
+							}
+
+							//
+							clearbgmessage();
+
+							msgHandler(PLAYORCANCEL);
+						}
+
+						// Give up turn.
+						else if( game.btnHeld1 & (BTN_B   )  ){
+							clearbgmessage();
+
+							// Wait for the user to release the button.
+							while ( game.btnHeld1 ){
+								getInputs();
+								WaitVsync(1);
+							}
+
+							msgHandler(PASSORCANCEL);
+
+							// Wait for the user to make a choice.
+							while(1){
+								getInputs();
+
+								// Confirm - pass.
+								if( game.btnHeld1 & (BTN_A ) ){
+									// Clear the message.
+									clearbgmessage();
+
+									// Player draws 1 card.
+									// getCardFromDrawPile(game.activePlayer, 1);
+
+									// If this is a CPU player or UZENET player then don't show the new card.
+									// Show the card for HUMAN players only.
+
+									if(game.player_types[thisPlayer-1]!=HUMAN){
+										dealSpecifiedCard_anim(game.activePlayer, 255, 2, 3, CARDS_FACEDOWN);
+									}
+									else{
+										dealSpecifiedCard_anim(game.activePlayer, 255, 2, 3, CARDS_FACEUP);
+									}
+
+									playSFX(DRAWCARD);
+
+									// Set the endOfTurnFlag.
+									endOfTurnFlag=1;
+
+									break;
+								}
+
+								// Cancel - pass.
+								if( game.btnHeld1 & (BTN_B ) ){
+									// Clear the message.
+									clearbgmessage();
+
+									// Just break out of this while. Nothing else special to do.
+									break;
+								}
+							}
+
+							// End of turn?
+							if(endOfTurnFlag){ break; }
+						}
+
+						// If a button was pressed then wait for the button to be released.
+						else if( game.btnHeld1 ){
+							while ( game.btnHeld1 ){
+								getInputs();
+								// Do a soft-reset if both L and R shoulder buttons are pressed.
+								if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
+								WaitVsync(1);
+							}
+						}
+					}
+
+					// CARD SELECTED: Allow user to play the card or cancel the request.
+					else{
+						// PLAY CARD: Confirm the selection and play the card.
+						if( game.btnHeld1 & (BTN_A   )  ){
+							// playSFX(CARDPLAYED);
+
+							// Play the card.
+
+							// Hide the cursor sprite.
+							MapSprite2( 0, cursor1map, SPRITE_OFF );
+							WaitVsync(1);
+
+							// Set the xdir for the card movement.
+							if     (sprite_x<discard_x){ xdir =  1; }
+							else if(sprite_x>discard_x){ xdir = -1; }
+							else                       { xdir =  0; }
+
+							// Set the ydir for the card movement.
+							if     (sprite_y<discard_y){ ydir =  1; }
+							else if(sprite_y>discard_y){ ydir = -1; }
+							else                       { ydir =  0; }
+
+							// Reset the counter. (Is used to speed-limit the card movement.)
+							counter=0;
+
+							// Clear the confirmation message from the lower board region.
+							clearbgmessage();
+
+							// Move the card.
+							while(1){
+								// Determine if an x and/or y movement is required this iteration.
+								if(sprite_x != discard_x){ sprite_x += xdir; }
+								if(sprite_y != discard_y){ sprite_y += ydir; }
+
+								// Redraw the sprite at the new location.
+								MoveSprite(1, sprite_x, sprite_y, map[0], map[1]);
+
+								// If both the x and the y values match the discard values then break.
+								if( sprite_x==discard_x && sprite_y==discard_y ) { break; }
+
+								// Do a vsync wait every other time.
+								if(counter & 1) { WaitVsync(1); }
+
+								// Increment the counter.
+								counter+=1;
+							}
+
+							// Hide the small card spritemap.
+							MapSprite2_nra( 1, map, SPRITE_OFF );
+							WaitVsync(1);
+
+							// Remove the tiles used by the small card (if they were the only instances of those tiles.)
+							removeUnusedRamtilesInTilemap(map);
+
+							// Clear the cardSelected flag. (Allows cursor movements.)
+							cardSelected=false;
+
+							// Update the played card's position in the cards array.
+							game.lastCardPlayed                 = game.playerVisibleHand[cursorIndex];
+							cards[game.lastCardPlayed].location = CARD_LOCATION_DISCARD;
+
+							// Remove the discard card.
+							removeCard_lg();
+
+							// Set flags that will be used on the next player.
+
+							// Was the last card played Wild Draw 4?
+							if(cards[game.lastCardPlayed].value==CARD_WILD_DRAW4){ playerDraws4=1;  }
+							// Was the last card played a Draw Two?
+							if(cards[game.lastCardPlayed].value==CARD_DRAW2)     { playerDraws2=1;  }
+							// Was the last card played a Skip?
+							if(cards[game.lastCardPlayed].value==CARD_SKIP)      { playerSkipped=1; }
+							// Was the last card played a Reverse?
+							if(cards[game.lastCardPlayed].value==CARD_REV)       { playerReverse=1; }
+
+							// Was the played card a Wild or Wild Draw 4 card?
+							// If so, then offer ask the player to choose the new color.
+							if(cards[game.lastCardPlayed].color==CARD_BLACK)     { askUserToSetNewColor(); }
+
+							// End player's turn. Start next player's turn.
+							// Done! Start over at the beginning.
+
+							// Update the displayed player data.
+							updatePlayerDisplayedData();
+
+							// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
+							redrawMainInfoRegion();
+
+							endOfTurnFlag=1;
+							break;
+
+							// continue;
+						}
+
+						// CANCEL SELECTION: Cancel the selection and return the card to it's previous position.
+						if( game.btnHeld1 & (BTN_B   )  ){
+							playSFX(CANCELCARD);
+
+							// Clear the confirmation message from the lower board region.
+							clearbgmessage();
+
+							// (smoothly) Move the small card back to its prior position.
+							for(u8 i=0; i<8*4; i+=1){
+								// Adjust x or y depending on the active player.
+								if     (game.activePlayer==1){ sprite_y+=1; }
+								else if(game.activePlayer==2){ sprite_x-=1; }
+								else if(game.activePlayer==3){ sprite_y-=1; }
+								else if(game.activePlayer==4){ sprite_x+=1; }
+
+								MoveSprite(1, sprite_x, sprite_y, map[0], map[1]);
+
+								if(i & 2) { WaitVsync(1); }
+							}
+
+							// Hide the spritemap for the selected card.
+							MapSprite2_nra( 1, map, SPRITE_OFF);
+							WaitVsync(1);
+
+							// Use the spritemap to draw the card tiles back into vram.
+							DrawMap_vramtiles( tile_x, tile_y, map );
+
+							// Clear the cardSelected flag. (Allows cursor movements.)
+							cardSelected=false;
+
+							// Unhide the cursor.
+							MapSprite2(0, cursor1map, SPRITE_BANK0 );
+							MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+						}
+					}
+
+					// CURSOR UPDATE: Change the cursor map based on a counter. (Only occurs if a card is not yet selected.)
+					if(*cursorTimer > 15 && !cardSelected){
+						// Change to which map?
+						if(currentCursor==0){ MapSprite2( 0, cursor1map, SPRITE_BANK0 ); }
+						else                { MapSprite2( 0, cursor2map, SPRITE_BANK0 ); }
+
+						// Redraw the sprite.
+						MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
+
+						// Flip the cursor frame.
+						currentCursor = !currentCursor;
+
+						// Reset the counter.
+						*cursorTimer=0;
+					}
+
+					// MESSAGE TIMER UPDATE: Remove the message after the timer reaches its limit.
+					if(*msgTimer > 100 && msgDisplayed){
+						// Clear the message area.
+						clearbgmessage();
+
+						// Reset the message displayed flag.
+						msgDisplayed=0;
+
+						// Reset the counter.
+						*msgTimer=0;
+					}
+
+					// Keep in sync.
+					WaitVsync(1);
+
+				}
+
+				// End of turn.
+
+				// Does the player now have UNO?
+				unoCheck();
+
+				// Does the player now have zero cards?
+				if(countPlayerCards(game.activePlayer)==0){
+					// Set the value for the winner of this round. It will be checked after any action cards have run their course.
+					winnerOfTheRound=game.activePlayer;
+					// continue;
+				}
 
 				// Flip down this player's cards. (Clear ramtile usages.)
 				displayCards_byPlayer(thisPlayer, CARDS_FACEDOWN);
 
-				clearbgmessage();
-				getNextPlayerNumber();
-				clearbgmessage();
-				continue;
-			}
+				// Find and set the next active player number.
+				nextPlayerNumber(255, NPN_NEXT);
 
-			// Setup the cursor for this player.
-			SetSpriteVisibility(false);
-			cursorIndex=0;
-			currentCursor=0;
-			*cursorTimer=0;
-			getCursorPos(game.activePlayer, cursorIndex, &cursor_x, &cursor_y);
-			if     (game.activePlayer==1){
-				cursor1map=cursor2_f1_d; // Cursor tilemap used.
-				cursor2map=cursor2_f2_d; // Cursor tilemap used.
-				map = &map1_2x3;         // vram tilemap for the card sprites.
-				w=2; h=3;                // Dimensions for the cards sprites.
-			}
-			else if(game.activePlayer==2){
-				cursor1map=cursor2_f1_l;
-				cursor2map=cursor2_f2_l;
-				map = &map2_3x2;
-				w=3; h=2;
-			}
-			else if(game.activePlayer==3){
-				cursor1map=cursor2_f1_u;
-				cursor2map=cursor2_f2_u;
-				map = &map1_2x3;
-				w=2; h=3;
-			}
-			else if(game.activePlayer==4){
-				cursor1map=cursor2_f1_r;
-				cursor2map=cursor2_f2_r;
-				map = &map2_3x2;
-				w=3; h=2;
-			}
-
-			// Display the cursor.
-			MapSprite2(0, cursor1map, SPRITE_BANK0 );
-			MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
-			SetSpriteVisibility(true);
-
-			// Display the cards for the current player face-up.
-			// displayCards(CARDS_ACTIVEPLAYERFACEUP);
-
-			game.handRow=0;
-
-			// Flip up this player's cards. (Uses ramtiles.)
-			displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
-
-			// maxHandRows = countPlayerCards(thisPlayer)/5;
-			// if(playerCards/5 >= game.handRow){}
-			// maxHandRows
-
-			// Loop until the player's turn ends.
-			while(endOfTurnFlag==0){
-
-				// Get gamepad inputs. (All human players can be controlled via either gamepad.)
-				getInputs();
-
-				// Do a soft-reset if both L and R shoulder buttons are pressed.
-				if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
-
-				// CARD NOT YET SELECTED: Allow cursor movement and for the user to choose a card or pass their turn.
-				if(!cardSelected){
-					// Move cursor left or right. Perform bounds check.
-					if     (game.activePlayer==1 || game.activePlayer==3){
-						// Adjust the cursor position over card.
-						if( (game.btnHeld1 & BTN_LEFT) ||  (game.btnHeld1 & BTN_RIGHT) ) {
-							if( game.btnHeld1 & (BTN_LEFT ) ){
-								cursorIndex=cursorIndex !=0 ? cursorIndex-1 : cursorIndex;
-							}
-							if( game.btnHeld1 & (BTN_RIGHT) ){
-								cursorIndex=cursorIndex !=4 ? cursorIndex+1 : cursorIndex;
-							}
-							// Redraw the cursor if moved.
-							getCursorPos(game.activePlayer, cursorIndex, &cursor_x, &cursor_y);
-							// Redraw the sprite.
-							MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
-						}
-
-						// Adjust the handRow value and then redisplay cards.
-						if( (game.btnHeld1 & BTN_UP) ||  (game.btnHeld1 & BTN_DOWN) ) {
-							if( game.btnHeld1 & (BTN_UP )  ) {
-								game.handRow = game.handRow <= (countPlayerCards(game.activePlayer)/5)-1 ? game.handRow+1 : game.handRow;
-
-							}
-							if( game.btnHeld1 & (BTN_DOWN) ) {
-								game.handRow = game.handRow == 0 ? game.handRow : game.handRow-1;
-							}
-
-							// Flip up this player's cards. (Uses ramtiles.)
-							displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
-							debug_showDebugData();
-						}
-					}
-					else if(game.activePlayer==2 || game.activePlayer==4){
-						// Adjust the cursor position over card.
-						if( (game.btnHeld1 & BTN_UP) ||  (game.btnHeld1 & BTN_DOWN) ) {
-							if( game.btnHeld1 & (BTN_UP )  ){
-								cursorIndex=cursorIndex !=0 ? cursorIndex-1 : cursorIndex;
-							}
-							if( game.btnHeld1 & (BTN_DOWN) ){
-								cursorIndex=cursorIndex !=4 ? cursorIndex+1 : cursorIndex;
-							}
-							// Redraw the cursor if moved.
-							getCursorPos(game.activePlayer, cursorIndex, &cursor_x, &cursor_y);
-							// Redraw the sprite.
-							MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
-						}
-
-						// Adjust the handRow value and then redisplay cards.
-						if( (game.btnHeld1 & BTN_LEFT) ||  (game.btnHeld1 & BTN_RIGHT) ) {
-							if( game.btnHeld1 & (BTN_LEFT )  ) {
-								game.handRow = game.handRow <= (countPlayerCards(game.activePlayer)/5)-1 ? game.handRow+1 : game.handRow;
-
-							}
-							if( game.btnHeld1 & (BTN_RIGHT) ) {
-								game.handRow = game.handRow == 0 ? game.handRow : game.handRow-1;
-							}
-
-							// Flip up this player's cards. (Uses ramtiles.)
-							displayCards_byPlayer(thisPlayer, CARDS_FACEUP);
-							debug_showDebugData();
-						}
-					}
-
-					// Draw another row of cards?
-					if( game.btnHeld1 & (BTN_UP   ) ){
-					}
-					if( game.btnHeld1 & (BTN_DOWN ) ){
-					}
-
-					// Select the card.
-					if( game.btnHeld1 & (BTN_A   )  ){
-						// Do not allow the card to be selected if it is invalid.
-						if(game.playerVisibleHand[cursorIndex]==255) { continue; }
-
-						// Do not allow the card to be selected if it is invalid.
-						if(
-							!(
-								// Not a wild?
-								   cards[ game.playerVisibleHand[cursorIndex] ].color == CARD_BLACK
-
-								// Not a matching color to the last played card?
-								|| cards[ game.playerVisibleHand[cursorIndex] ].color == cards[game.lastCardPlayed].color
-
-								// Not a matching value to the last played card?
-								|| cards[ game.playerVisibleHand[cursorIndex] ].value == cards[game.lastCardPlayed].value
-							)
-						){
-							// Change the color if the card was a different color that the discard but had a matching value.
-							// N782_print( 7 , 17, S_INCORRECTYCARD  , 0 ) ;
-							// N782_print( 7 , 18, S_CHOSEANOTHER    , 0 ) ;
-							msgHandler(INCORRECTCARD);
-							msgDisplayed=1;
-							*msgTimer=0;
-							continue;
-						}
-						else { msgDisplayed=0; }
-
-						// Get new x and y.
-						get_cardDims_byPlayerAndCardPosition(game.activePlayer, cursorIndex, &tile_x, &tile_y);
-						sprite_x=tile_x << 3 ;
-						sprite_y=tile_y << 3 ;
-
-						// Hide the cursor.
-						MapSprite2( 0, cursor1map, SPRITE_OFF);
-						WaitVsync(1);
-
-						// Get the tilemap for the selected card.
-						// map[0], map[1]
-						// setVramTilemap( tile_x, tile_y , pgm_read_byte(&(map)[1]), pgm_read_byte(&(map)[1]), map );
-						setVramTilemap( tile_x, tile_y , w, h, map );
-
-						// Clear the card in vram.
-						Fill(tile_x,tile_y, w, h, replacementTile);
-
-						// Map the card to a spritemap.
-						MapSprite2_nra( 1, map, SPRITE_BANK1 );
-
-						// (smoothly) Move the card into the selected position.
-						for(u8 i=0; i<8*4; i+=1){
-							// Adjust x or y depending on the active player.
-							if     (game.activePlayer==1){ sprite_y-=1; }
-							else if(game.activePlayer==2){ sprite_x+=1; }
-							else if(game.activePlayer==3){ sprite_y+=1; }
-							else if(game.activePlayer==4){ sprite_x-=1; }
-
-							MoveSprite(1, sprite_x, sprite_y, map[0], map[1]);
-
-							if(i & 2) { WaitVsync(1); }
-						}
-
-						// Set the cardSelected flag. (Disallows further cursor movements.)
-						cardSelected=true;
-
-						//
-						clearbgmessage();
-
-						msgHandler(PLAYORPASS);
-					}
-
-					// Give up turn.
-					if( game.btnHeld1 & (BTN_B   )  ){
-						clearbgmessage();
-						msgHandler(PASSORCANCEL);
-
-						// Wait for the user to release the button.
-						while ( game.btnHeld1 ){
-							getInputs();
-							WaitVsync(1);
-						}
-
-						// Wait for the user to make a choice.
-						while(1){
-							getInputs();
-
-							// Confirm - pass.
-							if( game.btnHeld1 & (BTN_A ) ){
-								// Clear the message.
-								clearbgmessage();
-
-								// Player draws 1 card.
-								// getCardFromDrawPile(game.activePlayer, 1);
-								dealSpecifiedCard_anim(game.activePlayer, 255, 2, 4, CARDS_FACEDOWN);
-
-								// Set the endOfTurnFlag.
-								endOfTurnFlag=1;
-								break;
-							}
-
-							// Cancel - pass.
-							if( game.btnHeld1 & (BTN_B ) ){
-								// Clear the message.
-								clearbgmessage();
-
-								// Just break out of this while. Nothing else special to do.
-								break;
-							}
-						}
-
-						// End of turn?
-						if(endOfTurnFlag){ break; }
-
-					}
-
-					// If a button was pressed then wait for the button to be released.
-					if( game.btnHeld1 ){
-						while ( game.btnHeld1 ){
-							getInputs();
-							// Do a soft-reset if both L and R shoulder buttons are pressed.
-							if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
-							WaitVsync(1);
-						}
-					}
-
-				}
-
-				// CARD SELECTED: Allow user to play the card or cancel the request.
-				else{
-					// PLAY CARD: Confirm the selection and play the card.
-					if( game.btnHeld1 & (BTN_A   )  ){
-						// Play the card.
-
-						// Hide the cursor sprite.
-						MapSprite2( 0, cursor1map, SPRITE_OFF );
-						WaitVsync(1);
-
-						// Set the xdir for the card movement.
-						if     (sprite_x<discard_x){ xdir =  1; }
-						else if(sprite_x>discard_x){ xdir = -1; }
-						else                       { xdir =  0; }
-
-						// Set the ydir for the card movement.
-						if     (sprite_y<discard_y){ ydir =  1; }
-						else if(sprite_y>discard_y){ ydir = -1; }
-						else                       { ydir =  0; }
-
-						// Reset the counter. (Is used to speed-limit the card movement.)
-						counter=0;
-
-						// Clear the confirmation message from the lower board region.
-						clearbgmessage();
-
-						// Move the card.
-						while(1){
-							// Determine if an x and/or y movement is required this iteration.
-							if(sprite_x != discard_x){ sprite_x += xdir; }
-							if(sprite_y != discard_y){ sprite_y += ydir; }
-
-							// Redraw the sprite at the new location.
-							MoveSprite(1, sprite_x, sprite_y, map[0], map[1]);
-
-							// If both the x and the y values match the discard values then break.
-							if( sprite_x==discard_x && sprite_y==discard_y ) { break; }
-
-							// Do a vsync wait every other time.
-							if(counter & 1) { WaitVsync(1); }
-
-							// Increment the counter.
-							counter+=1;
-						}
-
-						// Hide the small card spritemap.
-						MapSprite2_nra( 1, map, SPRITE_OFF );
-						WaitVsync(1);
-
-						// Remove the tiles used by the small card (if they were the only instances of those tiles.)
-						removeUnusedRamtilesInTilemap(map);
-
-						// Clear the cardSelected flag. (Allows cursor movements.)
-						cardSelected=false;
-
-						// Update the played card's position in the cards array.
-						game.lastCardPlayed                 = game.playerVisibleHand[cursorIndex];
-						cards[game.lastCardPlayed].location = CARD_LOCATION_DISCARD;
-
-						// Remove the discard card.
-						removeCard_lg();
-
-						// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
-						redrawMainInfoRegion();
-
-						// Set flags that will be used on the next player.
-
-						// Was the last card played Wild Draw 4?
-						if(cards[game.lastCardPlayed].value==CARD_WILD_DRAW4){ playerDraws4=1;  }
-						// Was the last card played a Draw Two?
-						if(cards[game.lastCardPlayed].value==CARD_DRAW2)     { playerDraws2=1;  }
-						// Was the last card played a Skip?
-						if(cards[game.lastCardPlayed].value==CARD_SKIP)      { playerSkipped=1; }
-						// Was the last card played a Reverse?
-						if(cards[game.lastCardPlayed].value==CARD_REV)       { playerReverse=1; }
-
-						// Was the played card a Wild or Wild Draw 4 card?
-						// If so, then offer ask the player to choose the new color.
-						if(cards[game.lastCardPlayed].color==CARD_BLACK)     { askUserToSetNewColor(); }
-
-						// End player's turn. Start next player's turn.
-						// Done! Start over at the beginning.
-
-						endOfTurnFlag=1;
-						break;
-
-						// continue;
-					}
-
-					// CANCEL SELECTION: Cancel the selection and return the card to it's previous position.
-					if( game.btnHeld1 & (BTN_B   )  ){
-						// Clear the confirmation message from the lower board region.
-						clearbgmessage();
-
-						// (smoothly) Move the small card back to its prior position.
-						for(u8 i=0; i<8*4; i+=1){
-							// Adjust x or y depending on the active player.
-							if     (game.activePlayer==1){ sprite_y+=1; }
-							else if(game.activePlayer==2){ sprite_x-=1; }
-							else if(game.activePlayer==3){ sprite_y-=1; }
-							else if(game.activePlayer==4){ sprite_x+=1; }
-
-							MoveSprite(1, sprite_x, sprite_y, map[0], map[1]);
-
-							if(i & 2) { WaitVsync(1); }
-						}
-
-						// Hide the spritemap for the selected card.
-						MapSprite2_nra( 1, map, SPRITE_OFF);
-						WaitVsync(1);
-
-						// Use the spritemap to draw the card tiles back into vram.
-						DrawMap_vramtiles( tile_x, tile_y, map );
-
-						// Clear the cardSelected flag. (Allows cursor movements.)
-						cardSelected=false;
-
-						// Unhide the cursor.
-						MapSprite2(0, cursor1map, SPRITE_BANK0 );
-						MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
-					}
-				}
-
-				// CURSOR UPDATE: Change the cursor map based on a counter. (Only occurs if a card is not yet selected.)
-				if(*cursorTimer > 15 && !cardSelected){
-					// Change to which map?
-					if(currentCursor==0){ MapSprite2( 0, cursor1map, SPRITE_BANK0 ); }
-					else                { MapSprite2( 0, cursor2map, SPRITE_BANK0 ); }
-
-					// Redraw the sprite.
-					MoveSprite(0, cursor_x<<3, cursor_y<<3, 1, 1);
-
-					// Flip the cursor frame.
-					currentCursor = !currentCursor;
-
-					// Reset the counter.
-					*cursorTimer=0;
-				}
-
-				// MESSAGE TIMER UPDATE: Remove the message after the timer reaches its limit.
-				if(*msgTimer > 100 && msgDisplayed){
-					// Clear the message area.
-					clearbgmessage();
-
-					// Reset the message displayed flag.
-					msgDisplayed=0;
-
-					// Reset the counter.
-					*msgTimer=0;
-				}
-
-				// Keep in sync.
 				WaitVsync(1);
-
 			}
-
-			// End of turn.
-
-			// Does the player now have UNO?
-			if     (countPlayerCards(game.activePlayer)==1){
-				// Make the user confirm their UNO within a short window of time.
-
-				// If confirmed... good. End the check.
-
-				// If unconfirmed within the window of time then the player must draw 1 card.
-			}
-
-			// Does the player now have zero cards?
-			// Yes: Win! End round, count points, start new round.
-			else if(countPlayerCards(game.activePlayer)==0){
-				// WIN ROUND!!!
-
-				msgHandler(GAMEWIN_PLAYER);
-
-				WaitVsync(200);
-				SoftReset();
-			}
-
-			// Flip down this player's cards. (Clear ramtile usages.)
-			displayCards_byPlayer(thisPlayer, CARDS_FACEDOWN);
-
-			// Is the the next player an active player? If not, then skip to the next player until an active player is found.
-			getNextPlayerNumber();
-
-			WaitVsync(1);
 		}
-
 	}
 }
 
@@ -3196,95 +4595,19 @@ int main(){
 	// Initialize the game.
 	gameInit();
 
-	// u8 black_value  = pgm_read_byte( &( &bg_tiles[ (u16) ( (TILE_WIDTH*TILE_HEIGHT) * pgm_read_byte(&(blackTile[2]   )) ) ])[0] );
-
-	void rotationTests(){
-		// u8 thisTile1  = pgm_read_byte(&(arrow_yellow[2])) ;
-		// u8 thisTile2  = pgm_read_byte(&(arrow_blue[2])) ;
-		// u8 thisTile3  = pgm_read_byte(&(arrow_red[2])) ;
-		// u8 thisTile4  = pgm_read_byte(&(arrow_green[2])) ;
-		u8 thisTile1  = pgm_read_byte(&(tile_0[2])) ;
-		u8 thisTile2  = pgm_read_byte(&(tile_1[2])) ;
-		u8 thisTile3  = pgm_read_byte(&(tile_2[2])) ;
-		u8 thisTile4  = pgm_read_byte(&(tile_3[2])) ;
-
-		// u8 thisTile5  = pgm_read_byte(&(tile_0_flipped[2])) ;
-		// u8 thisTile6  = pgm_read_byte(&(tile_1_flipped[2])) ;
-		// u8 thisTile7  = pgm_read_byte(&(tile_2_flipped[2])) ;
-		// u8 thisTile8  = pgm_read_byte(&(tile_3_flipped[2])) ;
-
-		CopyFlashTile(thisTile1, 0);
-		CopyFlashTile(thisTile2, 1);
-		CopyFlashTile(thisTile3, 2);
-		CopyFlashTile(thisTile4, 3);
-		CopyFlashTile(thisTile1, 4);
-		CopyFlashTile(thisTile2, 5);
-		CopyFlashTile(thisTile3, 6);
-		CopyFlashTile(thisTile4, 7);
-
-		// CopyFlashTile(thisTile5, 8);
-		// CopyFlashTile(thisTile6, 9);
-		// CopyFlashTile(thisTile7, 10);
-		// CopyFlashTile(thisTile8, 11);
-		// CopyFlashTile(thisTile5, 12);
-		// CopyFlashTile(thisTile6, 13);
-		// CopyFlashTile(thisTile7, 14);
-		// CopyFlashTile(thisTile8, 15);
-
-		SetRamTile(10,5,0);
-		SetRamTile(10,7,1);
-		SetRamTile(10,9,2);
-		SetRamTile(10,11,3);
-		SetRamTile(12,5,4);
-		SetRamTile(12,7,5);
-		SetRamTile(12,9,6);
-		SetRamTile(12,11,7);
-
-		SetRamTile(10+5,5,8);
-		SetRamTile(10+5,7,9);
-		SetRamTile(10+5,9,10);
-		SetRamTile(10+5,11,11);
-
-		// SetRamTile(12+5,5,12);
-		// SetRamTile(12+5,7,13);
-		// SetRamTile(12+5,9,14);
-		// SetRamTile(12+5,11,15);
-
-		while(1){
-			rotateRamTile_n90(&ram_tiles[(4*64)]);
-			rotateRamTile_n90(&ram_tiles[(5*64)]);
-			rotateRamTile_n90(&ram_tiles[(6*64)]);
-			rotateRamTile_n90(&ram_tiles[(7*64)]);
-
-			// rotateRamTile_n90(&ram_tiles[(12*64)]);
-			// rotateRamTile_n90(&ram_tiles[(13*64)]);
-			// rotateRamTile_n90(&ram_tiles[(14*64)]);
-			// rotateRamTile_n90(&ram_tiles[(15*64)]);
-			WaitVsync(15);
-		}
-
-	}
-
-	// rotationTests();
-
 	// Main loop.
 	while(1){
 		// Run the correct function based on what the current game state is.
-		if      (game.gamestate1==GSTATE_TITLE1    ) { gstate_title1()    ; }
-		else if (game.gamestate1==GSTATE_TITLE2    ) { gstate_title2()    ; }
-		else if (game.gamestate1==GSTATE_TITLE_MAIN) { gstate_title_main(); }
-		else if (game.gamestate1==GSTATE_PLAYING   ) { gstate_playing()   ; }
-		if(0==1){}
+		// Go to that function and remain there until the gamestate1 changes.
+		if      (game.gamestate1==GSTATE_TITLE    ) { gstate_title()   ; }
+		else if (game.gamestate1==GSTATE_OPTIONS  ) { gstate_options() ; }
+		else if (game.gamestate1==GSTATE_RULES    ) { gstate_rules()   ; }
+		else if (game.gamestate1==GSTATE_CREDITS  ) { gstate_credits() ; }
+		else if (game.gamestate1==GSTATE_PLAYING  ) { gstate_playing() ; }
 
 		// This shouldn't happen. There should always be a matching gamestate.
 		else{
-			// getInputs();
-			// if( game.btnPressed1 ){
-			// 	if ( (game.btnPressed1 & (BTN_LEFT | BTN_RIGHT ) ) ){
-			// 	}
-			// }
-			// test03();
-			WaitVsync(1);
+			errorHandler(INVALIDGAMESTATE1);
 		}
 
 	}

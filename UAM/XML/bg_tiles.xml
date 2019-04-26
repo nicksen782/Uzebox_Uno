@@ -4,9 +4,9 @@
  <output file="UAM/PROGMEM/bg_tiles_progmem.inc">
  <tiles var-name="bg_tiles" tilesetOutputTo="PROGMEM" removeDupeTiles="1" />
  <maps pointers-size="8">
-  <map var-name="offBlackTile" left="2" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="blackTile" left="1" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="FULLfontset" left="18" top="2" width="16" height="4" mapOutputTo="NOWHERE" /> 
+  <map var-name="offBlackTile" left="2" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="FULLfontset" left="18" top="2" width="16" height="4" mapOutputTo="SKIPMAP" /> 
   <map var-name="fontset" left="1" top="2" width="16" height="4" mapOutputTo="NOWHERE" /> 
   <map var-name="orange_color" left="2" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="yellow_color" left="4" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
@@ -21,7 +21,7 @@
   <map var-name="border_green" left="12" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="border_black" left="14" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="card_back_lg" left="11" top="9" width="3" height="4" mapOutputTo="PROGMEM" /> 
-  <map var-name="card_front_lg" left="5" top="26" width="3" height="4" mapOutputTo="PROGMEM" /> 
+  <map var-name="card_front_lg" left="5" top="26" width="3" height="4" mapOutputTo="SKIPMAP" /> 
   <map var-name="cardsBelow_lg_lt27" left="23" top="9" width="3" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="cardsBelow_lg_lt54" left="23" top="10" width="3" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="cardsBelow_lg_lt81" left="23" top="11" width="3" height="1" mapOutputTo="PROGMEM" /> 
@@ -33,7 +33,7 @@
   <map var-name="card_wild_draw4_front_lg" left="13" top="21" width="3" height="4" mapOutputTo="PROGMEM" /> 
   <map var-name="card_wild_front_lg" left="17" top="21" width="3" height="4" mapOutputTo="PROGMEM" /> 
   <map var-name="map_lg_wild_draw4_flipped" left="6" top="43" width="3" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="card_front_sm" left="5" top="14" width="2" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="card_front_sm" left="5" top="14" width="2" height="3" mapOutputTo="SKIPMAP" /> 
   <map var-name="card_wild_front_sm" left="25" top="14" width="2" height="3" mapOutputTo="PROGMEM" /> 
   <map var-name="card_wild_d4front_sm" left="29" top="14" width="2" height="3" mapOutputTo="PROGMEM" /> 
   <map var-name="card_wild_front_sm_90neg" left="25" top="18" width="3" height="2" mapOutputTo="PROGMEM" /> 
@@ -82,8 +82,17 @@
   <map var-name="t_l_corner_bkd" left="10" top="34" width="3" height="3" mapOutputTo="PROGMEM" /> 
   <map var-name="t_r_corner_bkd" left="14" top="34" width="3" height="3" mapOutputTo="PROGMEM" /> 
   <map var-name="b_r_corner_bkw" left="14" top="38" width="3" height="3" mapOutputTo="PROGMEM" /> 
-  <map var-name="board_28x28" left="5" top="46" width="28" height="28" mapOutputTo="PROGMEM" /> 
-  <map var-name="map_unoLogo1" left="46" top="10" width="22" height="12" mapOutputTo="PROGMEM" /> 
+  <map var-name="board_28x28" left="71" top="9" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="titlescreen_logo" left="38" top="10" width="28" height="12" mapOutputTo="PROGMEM" /> 
+  <map var-name="titlescreen_options" left="40" top="23" width="24" height="14" mapOutputTo="PROGMEM" /> 
+  <map var-name="map_unoLogo1" left="38" top="10" width="28" height="12" mapOutputTo="PROGMEM" /> 
+  <map var-name="titlescreen_28x28" left="38" top="9" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="options1_28x28" left="38" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="options2_28x28" left="5" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="rules1_28x28" left="71" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="rules2_28x28" left="104" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="credits1_28x28" left="5" top="78" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="credits2_28x28" left="38" top="78" width="28" height="28" mapOutputTo="PROGMEM" /> 
  </maps> 
  </output> 
 </gfx-xform> 
