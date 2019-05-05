@@ -8,11 +8,12 @@
   <map var-name="offBlackTile" left="2" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="FULLfontset" left="18" top="2" width="16" height="4" mapOutputTo="SKIPMAP" /> 
   <map var-name="fontset" left="1" top="2" width="16" height="4" mapOutputTo="NOWHERE" /> 
-  <map var-name="orange_color" left="2" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="yellow_color" left="4" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="blue_color" left="6" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="red_color" left="8" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="green_color" left="10" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="colorsTile" left="16" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="orange_color" left="2" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="yellow_color" left="4" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="blue_color" left="6" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="red_color" left="8" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="green_color" left="10" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
   <map var-name="wood_color1" left="3" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="wood_color2" left="4" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="border_yellow" left="6" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
@@ -70,29 +71,55 @@
   <map var-name="card_front_blue_lg" left="13" top="26" width="3" height="4" mapOutputTo="PROGMEM" /> 
   <map var-name="card_front_red_lg" left="17" top="26" width="3" height="4" mapOutputTo="PROGMEM" /> 
   <map var-name="card_front_green_lg" left="21" top="26" width="3" height="4" mapOutputTo="PROGMEM" /> 
-  <map var-name="arrow_yellow" left="12" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="arrow_blue" left="14" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="arrow_red" left="16" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="arrow_green" left="18" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="b_l_corner_fwd" left="2" top="38" width="3" height="3" mapOutputTo="PROGMEM" /> 
-  <map var-name="t_l_corner_fwd" left="2" top="34" width="3" height="3" mapOutputTo="PROGMEM" /> 
-  <map var-name="t_r_corner_fwd" left="6" top="34" width="3" height="3" mapOutputTo="PROGMEM" /> 
-  <map var-name="b_r_corner_fwd" left="6" top="38" width="3" height="3" mapOutputTo="PROGMEM" /> 
-  <map var-name="b_l_corner_bkd" left="10" top="38" width="3" height="3" mapOutputTo="PROGMEM" /> 
-  <map var-name="t_l_corner_bkd" left="10" top="34" width="3" height="3" mapOutputTo="PROGMEM" /> 
-  <map var-name="t_r_corner_bkd" left="14" top="34" width="3" height="3" mapOutputTo="PROGMEM" /> 
-  <map var-name="b_r_corner_bkw" left="14" top="38" width="3" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="arrow_yellow_f1" left="12" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="arrow_blue_f1" left="14" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="arrow_red_f1" left="16" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="arrow_green_f1" left="18" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="arrow_yellow_f2" left="12" top="6" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="arrow_blue_f2" left="14" top="6" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="arrow_red_f2" left="16" top="6" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="arrow_green_f2" left="18" top="6" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="board_28x28" left="71" top="9" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="board_center_12x10" left="80" top="19" width="10" height="7" mapOutputTo="PROGMEM" /> 
   <map var-name="titlescreen_logo" left="38" top="10" width="28" height="12" mapOutputTo="PROGMEM" /> 
   <map var-name="titlescreen_options" left="40" top="23" width="24" height="14" mapOutputTo="PROGMEM" /> 
   <map var-name="map_unoLogo1" left="38" top="10" width="28" height="12" mapOutputTo="PROGMEM" /> 
   <map var-name="titlescreen_28x28" left="38" top="9" width="28" height="28" mapOutputTo="PROGMEM" /> 
   <map var-name="options1_28x28" left="38" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
-  <map var-name="options2_28x28" left="5" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="OLDoptions2_28x28" left="5" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="options2_28x28" left="104" top="78" width="28" height="28" mapOutputTo="PROGMEM" /> 
   <map var-name="rules1_28x28" left="71" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
   <map var-name="rules2_28x28" left="104" top="45" width="28" height="28" mapOutputTo="PROGMEM" /> 
   <map var-name="credits1_28x28" left="5" top="78" width="28" height="28" mapOutputTo="PROGMEM" /> 
   <map var-name="credits2_28x28" left="38" top="78" width="28" height="28" mapOutputTo="PROGMEM" /> 
+  <map var-name="b_l_corner_h_fwd" left="2" top="40" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="b_l_corner_v_fwd" left="2" top="38" width="1" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="t_l_corner_h_fwd" left="2" top="34" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="t_l_corner_v_fwd" left="2" top="34" width="1" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="t_r_corner_h_fwd" left="6" top="34" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="t_r_corner_v_fwd" left="8" top="34" width="1" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="b_r_corner_h_fwd" left="6" top="40" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="b_r_corner_v_fwd" left="8" top="38" width="1" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="b_l_corner_h_bkd" left="10" top="40" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="b_l_corner_v_bkd" left="10" top="38" width="1" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="t_l_corner_h_bkd" left="10" top="34" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="t_l_corner_v_bkd" left="10" top="34" width="1" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="t_r_corner_h_bkd" left="14" top="34" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="t_r_corner_v_bkd" left="16" top="34" width="1" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="b_r_corner_h_bkw" left="14" top="40" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="b_r_corner_v_bkw" left="16" top="38" width="1" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F1" left="102" top="9" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F2" left="111" top="9" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F3" left="120" top="9" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F4" left="102" top="13" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F5" left="111" top="13" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F6" left="120" top="13" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F7" left="102" top="17" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F8" left="111" top="17" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F9" left="120" top="17" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="UZEBOX_TEXT1_F10" left="102" top="21" width="8" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="blueStar" left="115" top="13" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="errorImg" left="18" top="34" width="10" height="3" mapOutputTo="PROGMEM" /> 
  </maps> 
  </output> 
 </gfx-xform> 

@@ -5,8 +5,10 @@ UNO for Uzebox
 
 You will need to download a copy of the Uzebox project.
 Put in a folder called "kernel" (in this project's root.)
+
 FULL UZEBOX PROJECT:
 git clone https://github.com/Uzebox/uzebox.git
+
 JUST THE LAST UZEBOX PROJECT COMMIT:
 git clone --depth=1 https://github.com/Uzebox/uzebox.git
 

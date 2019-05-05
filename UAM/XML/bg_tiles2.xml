@@ -5,13 +5,20 @@
  <tiles var-name="bg_tiles2" tilesetOutputTo="PROGMEM" removeDupeTiles="1" />
  <maps pointers-size="8">
   <map var-name="blackTile" left="0" top="0" width="1" height="1" mapOutputTo="NOWHERE" /> 
-  <map var-name="offBlackTile" left="1" top="0" width="1" height="1" mapOutputTo="NOWHERE" /> 
-
-  <map var-name="N782_F1" left="2" top="2" width="7" height="8" mapOutputTo="PROGMEM" /> 
-  <map var-name="N782_F2" left="12" top="2" width="7" height="8" mapOutputTo="PROGMEM" /> 
-  <map var-name="N782_F3" left="22" top="2" width="7" height="8" mapOutputTo="PROGMEM" /> 
-  <map var-name="N782_F4" left="32" top="2" width="7" height="8" mapOutputTo="PROGMEM" /> 
-  <map var-name="N782_F5" left="42" top="2" width="7" height="8" mapOutputTo="PROGMEM" /> 
+  <map var-name="offBlackTile" left="1" top="0" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="N782_FACE1_F1" left="2" top="2" width="7" height="5" mapOutputTo="PROGMEM" /> 
+  <map var-name="N782_FACE1_F2" left="12" top="2" width="7" height="5" mapOutputTo="PROGMEM" /> 
+  <map var-name="N782_FACE1_F3" left="22" top="2" width="7" height="5" mapOutputTo="PROGMEM" /> 
+  <map var-name="N782_FACE1_F4" left="32" top="2" width="7" height="5" mapOutputTo="PROGMEM" /> 
+  <map var-name="N782_FACE1_F5" left="42" top="2" width="7" height="5" mapOutputTo="PROGMEM" /> 
+  <map var-name="N782_TEXT1_F1" left="2" top="10" width="7" height="3" mapOutputTo="PROGMEM" /> 
+  <map var-name="N782_TEXT1_F2" left="10" top="10" width="7" height="3" mapOutputTo="SKIPMAP" /> 
+  <map var-name="N782_TEXT1_F3" left="18" top="10" width="7" height="3" mapOutputTo="SKIPMAP" /> 
+  <map var-name="N782_TEXT1_F4" left="26" top="10" width="7" height="3" mapOutputTo="SKIPMAP" /> 
+  <map var-name="N782_TEXT1_F5" left="2" top="14" width="7" height="3" mapOutputTo="SKIPMAP" /> 
+  <map var-name="N782_TEXT1_F6" left="10" top="14" width="7" height="3" mapOutputTo="SKIPMAP" /> 
+  <map var-name="N782_TEXT1_F7" left="18" top="14" width="7" height="3" mapOutputTo="SKIPMAP" /> 
+  <map var-name="N782_TEXT1_F8" left="26" top="14" width="7" height="3" mapOutputTo="SKIPMAP" /> 
  </maps> 
  </output> 
 </gfx-xform> 

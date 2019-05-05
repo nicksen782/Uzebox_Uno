@@ -37,31 +37,31 @@ KERNEL_OPTIONS += -DTILE_HEIGHT=8            # Tile height in pixels.
 KERNEL_OPTIONS += -DTILE_WIDTH=8             # Tile width in pixels.
 
 # Sprite/Ram tile options.
-KERNEL_OPTIONS += -DTRANSLUCENT_COLOR=0x09  # Color used for the transparent pixel in sprites.
-KERNEL_OPTIONS += -DRAM_TILES_COUNT=29      # 16+1 required for cards and compare, 6+6 for sprites and cursor (shared.) Number of ram tiles available.
-KERNEL_OPTIONS += -DMAX_SPRITES=12          # Number of sprites available.
-KERNEL_OPTIONS += -DSPRITE_RAM_ENABLE=1     # Enables the usage of ramtile sprites.
+KERNEL_OPTIONS += -DTRANSLUCENT_COLOR=0x09   # Color used for the transparent pixel in sprites.
+KERNEL_OPTIONS += -DRAM_TILES_COUNT=31       # 18+1 required for cards and compare, 6+6 for sprites and cursor (shared.) Number of ram tiles available.
+KERNEL_OPTIONS += -DMAX_SPRITES=7            # Number of sprites available.
+KERNEL_OPTIONS += -DSPRITE_RAM_ENABLE=1      # Enables the usage of ramtile sprites.
 
 # Gamepad options.
 KERNEL_OPTIONS += -DCONTROLLERS_VSYNC_READ=0 # Do not read the gamepads at vsync. Must read manually.
 
 # Networking options.
-KERNEL_OPTIONS += -DUART=0                   # UART.
+KERNEL_OPTIONS += -DUART=1                   # UART.
 
 # Misc options
-KERNEL_OPTIONS += -DTRUE_RANDOM_GEN=1      # Use the better random number generator.
+KERNEL_OPTIONS += -DTRUE_RANDOM_GEN=1        # Use the better random number generator.
 
 # Music options.
-# KERNEL_OPTIONS += -DMUSIC_ENGINE=STREAM      # Use the streaming music engine.
+KERNEL_OPTIONS += -DMUSIC_ENGINE=STREAM      # Use the streaming music engine.
 # KERNEL_OPTIONS += -DSONG_BUFFER_SIZE=16      # Set the ram buffer size for the music data.
-# KERNEL_OPTIONS += -DSTREAM_MUSIC_RAM=1       # Indicate where the music data will be sourced from. (1=ram, 0=flash.)
-KERNEL_OPTIONS += -DSOUND_MIXER=1            #
+KERNEL_OPTIONS += -DSTREAM_MUSIC_RAM=0       # Indicate where the music data will be sourced from. (1=ram, 0=flash.)
+KERNEL_OPTIONS += -DSOUND_MIXER=1             #
 # KERNEL_OPTIONS += -DSONG_SPEED=1             #
 KERNEL_OPTIONS += -DSOUND_CHANNEL_1_ENABLE=1 #
 KERNEL_OPTIONS += -DSOUND_CHANNEL_2_ENABLE=1 #
 KERNEL_OPTIONS += -DSOUND_CHANNEL_3_ENABLE=1 #
 KERNEL_OPTIONS += -DSOUND_CHANNEL_4_ENABLE=1 #
-KERNEL_OPTIONS += -DSOUND_CHANNEL_5_ENABLE=1 #
+KERNEL_OPTIONS += -DSOUND_CHANNEL_5_ENABLE=0 #
 # KERNEL_OPTIONS += -DSTREAM_MUSIC_DEBUG=1     #
 
 ## Options common to compile, link and assembly rules
@@ -69,26 +69,38 @@ COMMON = -mmcu=$(MCU)
 
 ## Compile options common for all C compilation units.
 # https://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/Code-Gen-Options.html
+# https://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html
+# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+# ARM gcc: http://www.keil.com/support/man/docs/armclang_ref/armclang_ref_chr1411640303038.htm
+# https://www.avrfreaks.net/forum/mcall-prologues
+# http://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+# https://p5r.uk/blog/2008/avr-gcc-optimisations.html
 CFLAGS = $(COMMON)
-CFLAGS += -DF_CPU=28636360UL
-CFLAGS += -gdwarf-2
-CFLAGS += -std=gnu99
-CFLAGS += -Os
-CFLAGS += -mcall-prologues
-CFLAGS += -fshort-enums
-CFLAGS += -fno-jump-tables
-CFLAGS += -ffunction-sections
-CFLAGS += -Wunused-but-set-variable
-CFLAGS += -Wunused-function
+CFLAGS += -DF_CPU=28636360UL        #
+CFLAGS += -gdwarf-2                 #
+CFLAGS += -std=gnu99                #
+CFLAGS += -Os                       #
+CFLAGS += -mcall-prologues          # Can make code smaller when there are lots of functions.
+CFLAGS += -ffreestanding            # Tell the compiler your main function is not returning. This saves some bytes on the stack. Use with: void main() __attribute__ ((noreturn));
+CFLAGS += -funsigned-char           # Use short types to save on flash.
+CFLAGS += -funsigned-bitfields      # Use short types to save on flash.
+CFLAGS += -fpack-struct             # Use short types to save on flash.
+CFLAGS += -fshort-enums             # Use short types to save on flash.
+CFLAGS += -Wunused-but-set-variable # Warn about set but unused variables.
+CFLAGS += -Wunused-function         # Warn about unused functions.
+CFLAGS += -fdata-sections           # Can save some flash.
+CFLAGS += -Wunused-variable         # Detect when a variable in a function isn't actually used.
+CFLAGS += -ffunction-sections       # Generates a separate ELF section for each function in the source file. The unused section elimination feature of the linker can then remove unused functions at link time.
+CFLAGS += -fdata-sections           # Enables the generation of one ELF section for each variable in the source file.
+CFLAGS += -Wmissing-declarations    # Provide compiler warnings on functions that are missing their declaration.
 
-# CFLAGS += -w
-# CFLAGS += -fdata-sections
+CFLAGS += -finline-limit=3            # Can reduce flash usage
+CFLAGS += -fno-inline-small-functions # Can reduce flash usage
 
-# Detect when a variable in a function isn't actually used.
-CFLAGS += -Wunused-variable
-
-# Use this one to see functions that are missing their prototype/declaration.
-# CFLAGS += -Wmissing-declarations
+# CFLAGS += -fmerge-all-constants
+# CFLAGS += -fjump-tables             # Use jump tables for sufficiently large switch statements.
+# CFLAGS += -fno-jump-tables          # Do not use jump tables for sufficiently large switch statements.
+# CFLAGS += -fno-tree-scev-cprop      # Vectorise the outer loop when multiple loops are nested for a size benefit.
 
 CFLAGS += $(KERNEL_OPTIONS)
 
@@ -100,9 +112,10 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 ## Linker flags
 LDFLAGS = $(COMMON)
 LDFLAGS += -Wl,-Map,${GAME}.map
-LDFLAGS += -Wl,-gc-sections
-# LDFLAGS += -Wl,--relax
-# LDFLAGS += --param inline-call-cost=2
+LDFLAGS += -Wl,-gc-sections           # Garbage collect unused code.
+LDFLAGS += -Wl,--relax                # Enables linker relaxations.
+LDFLAGS += --param inline-call-cost=2 # Can reduce flash usage
+
 # LDFLAGS += -Wl,--section-start,.noinit=0x800100 -Wl,--section-start,.data=0x800500
 # LDFLAGS += -Wl,--section-start,.noinit=0x800100 -Wl,--section-start,.data=0x800D00
 
@@ -116,9 +129,14 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 INCLUDES = -I"$(KERNEL_DIR)"
 
 ## Objects that must be built in order to link
-OBJECTS = uzeboxVideoEngineCore.o uzeboxCore.o uzeboxSoundEngine.o uzeboxSoundEngineCore.o uzeboxVideoEngine.o
-OBJECTS +=  spiram.o
-OBJECTS +=  sdBase.o
+OBJECTS =
+OBJECTS += uzeboxVideoEngineCore.o
+OBJECTS += uzeboxCore.o
+OBJECTS += uzeboxSoundEngine.o
+OBJECTS += uzeboxSoundEngineCore.o
+OBJECTS += uzeboxVideoEngine.o
+OBJECTS += spiram.o
+OBJECTS += sdBase.o
 # OBJECTS +=  sdWrite.o
 OBJECTS +=  $(GAME).o
 
