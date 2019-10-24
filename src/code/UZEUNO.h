@@ -14,6 +14,7 @@
 // ===== USER CODE INCLUDES =====
 // #include "../assets/defineSR.def"             //
 #include "../assets/bg_tiles_progmem.inc"     //
+// #include "../assets/font_tiles_progmem.inc"     //
 #include "../assets/bg_tiles2_progmem.inc"     //
 #include "../assets/sprite_tiles_progmem.inc" //
 #include "../assets/patches.inc" // SOUND PATCHES
@@ -36,14 +37,16 @@
 #define DEBUG_AUTOSTARTNEXTGAME 0                    // -- DEFAULT:  0             -- 1                 -- Makes it so that user input is NOT required to start the next game.
 #define ENDOFPLAY_RESRAMTILECHK 1                    // -- DEFAULT:  1             -- 1                 -- Allows the clearAllUnusedReservedRamtiles function to be defined.
 #define ENDOFPLAY_RESRAMTILECHK_ERR 1                // -- DEFAULT:  0             -- 1                 -- Indicates if the clearAllUnusedReservedRamtiles should error out or clear the ramtile.
-#define DEBUG_SHOWDATA          1                    // -- DEFAULT:  0             -- 1                 -- For dev. Shows lots of debug data on the right side of the screen.
+#define DEBUG_SHOWDATA          0                    // -- DEFAULT:  0             -- 1                 -- For dev. Shows lots of debug data on the right side of the screen.
+#define USESETRANDOMSEED        0
+#define RANDOMSEED              783
 // -----
 #define TOTALCARDSINDECK        108                  // -- DEFAULT:  108           -- 108               -- Should always be 108.
 #define RESERVEDRAMTILES        18                   // -- DEFAULT:  18            -- 18                -- Adjusts with need.
 #define DEFAULTHANDSIZE         7                    // -- DEFAULT:  7             -- 7                 -- Number of cards dealt to each player at the start of the game.
 #define INITIALDEALBASESPEED    9                    // -- DEFAULT:  9             -- 50                -- (higher is faster) Speed of the initial card dealing.
 #define ENDOFROUNDDEALBASESPEED 8                    // -- DEFAULT:  8             -- 9                 -- (higher is faster) Speed of the card movement at the scoring screen.
-#define CARDPLAYBASESPEED       2                    // -- DEFAULT:  2             -- 9                 -- (higher is faster) Speed the cards move when being played/cancelled/drawn.
+#define CARDPLAYBASESPEED       3                    // -- DEFAULT:  3             -- 9                 -- (higher is faster) Speed the cards move when being played/cancelled/drawn.
 #define CARDDRAWBASESPEED       3                    // -- DEFAULT:  3             -- 3                 -- (higher is faster) Speed the cards move when being played/cancelled/drawn.
 #define BASECPU_THINKTIME       20                   // -- DEFAULT:  20            -- 1                 -- Minimum time before the CPU makes its play.
 #define EXTRACPU_THINKTIME      60                   // -- DEFAULT:  60            -- 1                 -- Possible additional time before the CPU makes its play.
@@ -53,12 +56,12 @@
 #define ENDOFROUNDFINISHEDDELAY 150                  // -- DEFAULT:  150           -- 200               -- (higher is slower)
 #define MSGTIMEDELAY            100                  // -- DEFAULT:  100           -- 100               -- (higher is slower)
 #define CPUCHOOSECOLORDELAY     25                   // -- DEFAULT:  25            -- 10                -- (higher is slower)
-#define PLAYER1_DEFAULTTYPE     CPU                  // -- DEFAULT:  CPU           -- CPU               -- Player type of player 1
-#define PLAYER2_DEFAULTTYPE     HUMAN                // -- DEFAULT:  HUMAN         -- CPU               -- Player type of player 2
+#define PLAYER1_DEFAULTTYPE     HUMAN                  // -- DEFAULT:  CPU           -- CPU               -- Player type of player 1
+#define PLAYER2_DEFAULTTYPE     CPU                // -- DEFAULT:  HUMAN         -- CPU               -- Player type of player 2
 #define PLAYER3_DEFAULTTYPE     NONE                 // -- DEFAULT:  NONE          -- CPU               -- Player type of player 3
 #define PLAYER4_DEFAULTTYPE     NONE                 // -- DEFAULT:  NONE          -- CPU               -- Player type of player 4
 #define DEFAULTGS1              GS_TITLE             // -- DEFAULT:  GS_TITLE      -- GS_TITLE          -- Game state 1
-#define DEFAULTGS2              GS_TITLE_UZEBOX      // -- DEFAULT:  GS_TITLE_N782 -- GS_TITLE_MAINMENU -- Game state 2
+#define DEFAULTGS2              GS_TITLE_N782      // -- DEFAULT:  GS_TITLE_N782 -- GS_TITLE_MAINMENU -- Game state 2
 // ===== DEFINES =====
 
 // ===== STRINGS (PROGMEM) =====
@@ -70,13 +73,13 @@ const char S_MSG3[]               PROGMEM = ""                             ;
 // ----- MESSAGE: INFO AT GAME INIT -----
 
 // ----- ERROR STRINGS -----
-const char S_ERROR[]              PROGMEM = "ERROR!"                        ;
-const char S_DBLSPACE[]           PROGMEM = "  "                           ;
-const char S_DBLEXCLAMATION[]     PROGMEM = "!!"                           ;
-const char S_RAMTILEUSAGE[]       PROGMEM = "NOT ENOUGH RSRVD RAMTILES"    ;
-const char S_UNCLEAREDRESERVEDRT[] PROGMEM = "UNCLEARED RESERVED RT"        ;
-const char S_INVALIDGAMESTATE1[]  PROGMEM = "INVALID GAMESTATE1 "          ;
-const char S_INVALIDGAMESTATE2[]  PROGMEM = "INVALID GAMESTATE2 "          ;
+const char S_ERROR[]               PROGMEM = "ERROR!"                       ;
+const char S_DBLSPACE[]            PROGMEM = "  "                           ;
+const char S_DBLEXCLAMATION[]      PROGMEM = "!!"                           ;
+const char S_RAMTILEUSAGE[]        PROGMEM = "NOT ENOUGH RSRVD RAMTILES"    ;
+const char S_UNCLEAREDRESERVEDRT[] PROGMEM = "--UNCLEARED RESERVED RT--"    ;
+const char S_INVALIDGAMESTATE1[]   PROGMEM = "INVALID GAMESTATE1 "          ;
+const char S_INVALIDGAMESTATE2[]   PROGMEM = "INVALID GAMESTATE2 "          ;
 // ----- ERROR STRINGS -----
 
 // ----- MESSAGE: PLAYER TYPES (OPTIONS MENU) -----
@@ -301,6 +304,7 @@ enum soundSFXs            {
 	CANCELCARD    ,
 	DRAWCARD      ,
 	CARDPLAYED    ,
+	WINROUND      ,
 };
 enum NPN_nextPlayerNumber {
 	NPN_GET  ,
@@ -343,31 +347,37 @@ struct counts_   {
 	u8 sameDiscardValue ;
 	u8 hasMostColorOf   ;
 	u8 numCardsInHand   ;
-};   // __attribute__ ((__packed__))
+}; // __attribute__ ((__packed__))
 struct cards_    {
 	// (10 bits, takes 2 bytes per entry.)
 	enum card_location location :3 ; // 6/7 values.  Can change the value.
 	enum card_values   value    :4 ; // 15/16 values. Never changes value.
 	enum card_colors   color    :3 ; // 6/7 values.  Never changes value.
-};    // __attribute__ ((__packed__))
+}; // __attribute__ ((__packed__))
 struct game_     {
-	enum gamestates1   gamestate1      ;
-	enum gamestates2   gamestate2      ;
-	enum playDirection direction       ;
-	enum playerTypes   player_types[4] ;
-	enum playerTypes   ai_type         ;
-	enum winTypes      winStyle        ;
-	enum drawTypes     drawStyle       ;
+	enum gamestates1   gamestate1         ;
+	enum gamestates2   gamestate2         ;
+	enum playDirection direction          ;
+	enum playerTypes   player_types[4]    ;
+	enum playerTypes   ai_type            ;
+	enum winTypes      winStyle           ;
+	enum drawTypes     drawStyle          ;
 
 	u8 numPlayers                         ; // 1, 2, 3, 4.
 	u8 activePlayers[4]                   ; // FLAGS: index 0 is player 1, index 1 is player 2, etc.
 	u8 activePlayer                       ; // Currently active player. (1, 2, 3, 4)
-
 	u8 handRow                            ; // Stores the displayed row of cards for the player (5 cards at a time.)
-
 	u8 ramtile_ids_used[RESERVEDRAMTILES] ; // Array containing ramtile id reservations. (1 or 0 for availability.)
 	u8 playerVisibleHand[5]               ; // Active player's visible hand. (Values are indexes into cards array struct.)
 	u8 lastCardPlayed                     ; // Card at the top of the Discard Pile. (Index into cards array struct.)
+	u8 buttonPresses                      ; // DEBUG.
+	u8 autoPlay                           ; // DEBUG.
+	u8 handsPlayed                        ; // DEBUG.
+	u8 mostUsedRamtiles                   ; // DEBUG.
+	u8 vramTilemap[14]                    ; // Used for 2x3, 3x2, and 3x4 cards.
+	u8 playerArrowFrame                   ; // Stores the frame of the player arrow (not the cursor.)
+
+	u8 needCenterRedraw                   ; //
 
 	u16 pointsForWin                      ; // Points required to win the game. (Default is 500.)
 	u16 points_p1                         ; // A win is reached when points get to pointsForWin.
@@ -382,13 +392,6 @@ struct game_     {
 	u16 btnReleased1                      ; // Buttons released on the last gamepad read.
 
 	u16 randomSeed                        ; // Stores the randomly generated number used for the random seed.
-
-	u8  playerArrowFrame                  ; // Stores the frame of the player arrow (not the cursor.)
-
-	u8  buttonPresses                     ; // DEBUG.
-	u8  autoPlay                          ; // DEBUG.
-	u8  handsPlayed                       ; // DEBUG.
-	u8  mostUsedRamtiles                  ; // DEBUG.
 
 };     // __attribute__ ((__packed__))
 // ===== STRUCTS =====
@@ -548,13 +551,13 @@ struct cards_  cards[TOTALCARDSINDECK] = {
 // ===== TEST FUNCTIONS =====
 
 /*
-static void rotateArray(u8 *ptr, u8 times90, u8 w, u8 h);
-static void rotateArray(u8 *ptr, u8 times90, u8 w, u8 h){
+void rotateArray(u8 *ptr, u8 times90, u8 w, u8 h);
+void rotateArray(u8 *ptr, u8 times90, u8 w, u8 h){
 }
 
 // Clears ALL ramtile data.
-static void clearAllRamtiles();
-static void clearAllRamtiles(){
+void clearAllRamtiles();
+void clearAllRamtiles(){
 	// Clear ALL ramtiles.
 	for(u8 i=0; i<RAM_TILES_COUNT; i+=1){
 		// clearRamtile(i, BLACK_VALUE);

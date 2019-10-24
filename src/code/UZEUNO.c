@@ -2,25 +2,26 @@
 
 // ===== DEBUG =====
 // Send 8-bit value to CUzeBox whisper port.
-static void _emu_whisper(int port, u8 val) {
+void _emu_whisper(int port, u8 val) {
 	if(port==0x39 || port == 0){ u8 volatile * const _whisper_pointer1 = (u8 *) 0x39; *_whisper_pointer1 = val; }
 	if(port==0x3A || port == 1){ u8 volatile * const _whisper_pointer2 = (u8 *) 0x3A; *_whisper_pointer2 = val; }
 }
 // Clears the debug data (on the right side.)
-static void clear_debug_showDebugData(){
+void clear_debug_showDebugData(){
 #if DEBUG_SHOWDATA == 1 && VRAM_TILES_H == 32
 	// Clear the debug section.
 
 	u8 xx_start=28;
 	u8 inrow=4;
 
-	u8 color = pgm_read_byte(&(blackTile [2]));
+	// u8 color = pgm_read_byte(&(blackTile [2]));
+	u8 color = pgm_read_byte(&(offBlackTile [2]));
 
 	Fill(xx_start,0, inrow, VRAM_TILES_V, color);
 #endif
 }
 // Shows debug data (on the right side.)
-static void debug_showDebugData(){
+void debug_showDebugData(){
 #if DEBUG_SHOWDATA == 1 && VRAM_TILES_H == 32
 // clearAllUnusedReservedRamtiles();
 	u8 xx_start=28;
@@ -41,7 +42,7 @@ static void debug_showDebugData(){
 
 		if(i==RESERVEDRAMTILES+0){
 			xx=xx_start;
-			yy++;
+			// yy++;
 			yy++;
 			drawn=0;
 		}
@@ -82,8 +83,8 @@ static void debug_showDebugData(){
 	yy++;
 
 	// Count of handsPlayed.
-	N782_print(xx_start-1,yy, PSTR("HAND"), 0);yy++;
-	N782_print_u8(xx_start-0,yy, game.handsPlayed       ) ; yy++;
+	// N782_print(xx_start-1,yy, PSTR("HAND"), 0);yy++;
+	// N782_print_u8(xx_start-0,yy, game.handsPlayed       ) ; yy++;
 
 	// Count of Ramtiles.
 	// N782_print(xx_start-1,yy, PSTR("RTC"), 0);yy++;
@@ -147,17 +148,18 @@ static void debug_showDebugData(){
 	// N782_print(xx_start-1,yy, PSTR("P3PT"), 0); yy++; N782_print_u8(xx_start+0, yy  , game.points_p3); yy++;
 	// N782_print(xx_start-1,yy, PSTR("P4PT"), 0); yy++; N782_print_u8(xx_start+0, yy  , game.points_p4); yy++;
 
-	// // Counts of card colors/values for the active player's hand.
-	// countColorsValuesMatches(game.activePlayer);
-	// N782_print(xx_start-1,yy, PSTR("WD"), 0); N782_print_u8(xx_start+0,yy,counts.wild            ); yy++;
-	// N782_print(xx_start-1,yy, PSTR("W4"), 0); N782_print_u8(xx_start+0,yy,counts.wildd4          ); yy++;
-	// N782_print(xx_start-1,yy, PSTR("BK"), 0); N782_print_u8(xx_start+0,yy,counts.black           ); yy++;
-	// yy++;
-	// N782_print(xx_start-1,yy, PSTR("YE"), 0); N782_print_u8(xx_start+0,yy,counts.yellow          ); yy++;
-	// N782_print(xx_start-1,yy, PSTR("BL"), 0); N782_print_u8(xx_start+0,yy,counts.blue            ); yy++;
-	// N782_print(xx_start-1,yy, PSTR("RE"), 0); N782_print_u8(xx_start+0,yy,counts.red             ); yy++;
-	// N782_print(xx_start-1,yy, PSTR("GR"), 0); N782_print_u8(xx_start+0,yy,counts.green           ); yy++;
-	// yy++;
+/*/
+	// Counts of card colors/values for the active player's hand.
+	countColorsValuesMatches(game.activePlayer);
+	N782_print(xx_start-1,yy, PSTR("WD"), 0); N782_print_u8(xx_start+0,yy,counts.wild            ); yy++;
+	N782_print(xx_start-1,yy, PSTR("W4"), 0); N782_print_u8(xx_start+0,yy,counts.wildd4          ); yy++;
+	N782_print(xx_start-1,yy, PSTR("BK"), 0); N782_print_u8(xx_start+0,yy,counts.black           ); yy++;
+	yy++;
+	N782_print(xx_start-1,yy, PSTR("YE"), 0); N782_print_u8(xx_start+0,yy,counts.yellow          ); yy++;
+	N782_print(xx_start-1,yy, PSTR("BL"), 0); N782_print_u8(xx_start+0,yy,counts.blue            ); yy++;
+	N782_print(xx_start-1,yy, PSTR("RE"), 0); N782_print_u8(xx_start+0,yy,counts.red             ); yy++;
+	N782_print(xx_start-1,yy, PSTR("GR"), 0); N782_print_u8(xx_start+0,yy,counts.green           ); yy++;
+	yy++;
 	// N782_print(xx_start-1,yy, PSTR("DC"), 0); N782_print_u8(xx_start+0,yy,counts.sameDiscardColor); yy++;
 	// N782_print(xx_start-1,yy, PSTR("DV"), 0); N782_print_u8(xx_start+0,yy,counts.sameDiscardValue); yy++;
 	// yy++;
@@ -166,6 +168,7 @@ static void debug_showDebugData(){
 	// N782_print(xx_start-1,yy, PSTR("NCRD"), 0); yy++;
 	// N782_print_u8(xx_start+0,yy,counts.numCardsInHand); yy++;
 	// yy++;
+*/
 
 	// Count of button presses.
 	// N782_print(xx_start-1,yy, PSTR("BCNT"), 0);yy++;
@@ -183,12 +186,29 @@ static void debug_showDebugData(){
 	// N782_print(xx_start-1,yy, PSTR("HR"), 0);
 	// N782_print_u8(xx_start, yy  , game.handRow); yy++;
 
+/*
+*/
 	// Card indexes for the active player's displayed cards.
-	// N782_print(xx_start-1,yy, PSTR("A"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[0] ) ; yy++;
-	// N782_print(xx_start-1,yy, PSTR("B"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[1] ) ; yy++;
-	// N782_print(xx_start-1,yy, PSTR("C"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[2] ) ; yy++;
-	// N782_print(xx_start-1,yy, PSTR("D"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[3] ) ; yy++;
-	// N782_print(xx_start-1,yy, PSTR("E"), 0); N782_print_u8(xx_start,yy, game.playerVisibleHand[4] ) ; yy++;
+	void setColorTile(u8 x, u8 y, u8 cardIndex){
+		u8 color = cards[cardIndex].color;
+
+		if(cardIndex!=255){
+			if     (color==CARD_YELLOW) { SetTile(x,y,pgm_read_byte(&(tile_yellow_color [2])) ) ; }
+			else if(color==CARD_BLUE  ) { SetTile(x,y,pgm_read_byte(&(tile_blue_color [2])) )   ; }
+			else if(color==CARD_RED   ) { SetTile(x,y,pgm_read_byte(&(tile_red_color [2])) )    ; }
+			else if(color==CARD_GREEN ) { SetTile(x,y,pgm_read_byte(&(tile_green_color [2])) )  ; }
+			else if(color==CARD_BLACK ) { SetTile(x,y,pgm_read_byte(&(blackTile [2])) )         ; }
+			else                        { SetTile(x,y,pgm_read_byte(&(blueStar [2])) )          ; }
+		}
+		else{
+			SetTile(x,y,pgm_read_byte(&(tile_orange_color [2])) );
+		}
+	}
+	setColorTile(xx_start-1,yy, game.playerVisibleHand[0] ); N782_print_u8(xx_start,yy, game.playerVisibleHand[0] ) ; yy++;
+	setColorTile(xx_start-1,yy, game.playerVisibleHand[1] ); N782_print_u8(xx_start,yy, game.playerVisibleHand[1] ) ; yy++;
+	setColorTile(xx_start-1,yy, game.playerVisibleHand[2] ); N782_print_u8(xx_start,yy, game.playerVisibleHand[2] ) ; yy++;
+	setColorTile(xx_start-1,yy, game.playerVisibleHand[3] ); N782_print_u8(xx_start,yy, game.playerVisibleHand[3] ) ; yy++;
+	setColorTile(xx_start-1,yy, game.playerVisibleHand[4] ); N782_print_u8(xx_start,yy, game.playerVisibleHand[4] ) ; yy++;
 
 	// Card index for last discarded card.
 	// N782_print(xx_start-1,yy, PSTR("LAST"), 0);yy++;
@@ -202,7 +222,7 @@ static void debug_showDebugData(){
 #endif
 }
 // Error handler - Called upon reaching fatal errors.
-static void errorHandler(enum errorTypes error){
+void errorHandler(enum errorTypes error){
 	// EXAMPLE USAGE: errorHandler(RAMTILEUSAGE);
 	// Intended for fatal errors.
 
@@ -264,17 +284,17 @@ static void errorHandler(enum errorTypes error){
 
 // -- LOW LEVEL - VSYNC COUNTERS =====
 // Code that is run right before vsync.
-static void pre_VsyncCallBack(){
+void pre_VsyncCallBack(){
 }
 // Increments timers (run from post vsync.)
-static void updateIndividualTimers(){
+void updateIndividualTimers(){
 	vsynccounter16b_1   ++ ;
 	vsynccounter8b_gen1 ++ ;
 	vsynccounter8b_gen2 ++ ;
 	vsynccounter8b_gen3 ++ ;
 }
 // Code that is run right after vsync.
-static void post_VsyncCallBack(){
+void post_VsyncCallBack(){
 	updateIndividualTimers();
 
 	void hidePlayerArrows(){
@@ -355,7 +375,7 @@ static void post_VsyncCallBack(){
 		}
 }
 // Get gamepad inputs and store them in the game struct.
-static void getInputs(){
+void getInputs(){
 	// Reads input as a combining ( 'OR' ) of gamepad 1 and 2.
 	// Either gamepad can be used to control the game.
 
@@ -377,7 +397,7 @@ static void getInputs(){
 
 // ===== TEXT DISPLAY =====
 // Displays text (allows for a limited fontset.)
-static void N782_print(int x,int y,const char *string, u8 fromRam){
+void N782_print(int x,int y,const char *string, u8 fromRam){
 	// This works like the kernel print function but does not require a complete fontset.
 	// Can save flash space by not requiring punctuation font tiles.
 	// Punctuation characters can be added as needed.
@@ -422,6 +442,12 @@ static void N782_print(int x,int y,const char *string, u8 fromRam){
 	u8 question_start_index     = 20;
 	u8 at_start_index           = 21;
 	u8 underscore_start_index   = 48;
+
+	// Get the string length.
+	//
+
+	// Clear the existing value.
+	// Fill(x,y,3,1,0);
 
 	// Keep printing the string until the string terminator (NULL) is found.
 	while(1){
@@ -472,7 +498,7 @@ static void N782_print(int x,int y,const char *string, u8 fromRam){
 	}
 }
 // Displays u8 number display (allows for a limited fontset.)
-static void N782_print_u8(int x,int y, u8 num){
+void N782_print_u8(int x,int y, u8 num){
 	// Can print one number, 0-9.
 	// u8 thischar;
 	// u8 charAsTileNum;
@@ -484,11 +510,15 @@ static void N782_print_u8(int x,int y, u8 num){
 	u8 start_i=0;
 
 	u8 numbers_start_index=9;  // numbers_start_index is the tile index of 0.
+	// u8 numbers_start_index=137;  // numbers_start_index is the tile index of 0.
 
 	u8 cols[3] = {0};
 	cols[0] = ( (num/100) + 0 ) ; num %= 100;
 	cols[1] = ( (num/10)  + 0 ) ; num %= 10;
 	cols[2] = ( (num/1)   + 0 ) ; num %= 1;
+
+	// Clear the existing value.
+	// Fill(x,y,3,1,0);
 
 	// No leading zeros!
 	if(cols[0] == 0)                                { start_i=1; }
@@ -504,7 +534,7 @@ static void N782_print_u8(int x,int y, u8 num){
 	}
 }
 // Displays u16 number display (allows for a limited fontset.)
-static void N782_print_u16(int x,int y, u16 num){
+void N782_print_u16(int x,int y, u16 num){
 	// Can print one number, 0-9.
 	// u8 thischar;
 	// u8 charAsTileNum;
@@ -524,6 +554,9 @@ static void N782_print_u16(int x,int y, u16 num){
 	cols[3] = ( (num/10)    + 0 ) ; num %= 10;
 	cols[4] = ( (num/1)     + 0 ) ; num %= 1;
 
+	// Clear the existing value.
+	// Fill(x,y,3,1,0);
+
 	// No leading zeros!
 	// if(cols[0] == 0)                                { start_i=1; }
 	// if(cols[0] == 0 && cols[1] == 0)                { start_i=2; }
@@ -539,7 +572,7 @@ static void N782_print_u16(int x,int y, u16 num){
 
 }
 // Clears the displayed message (seen when playing cards.)
-static void clearbgmessage(){
+void clearbgmessage(){
 	// Fill(8,18, 12,1, pgm_read_byte(&(wood_color1 [2] )));
 	// Fill(8,19, 12,1, pgm_read_byte(&(yellow_color[2] )));
 	// Fill(8,20, 12,1, pgm_read_byte(&(blue_color  [2] )));
@@ -549,7 +582,7 @@ static void clearbgmessage(){
 	Fill(7,18, 14,3, replacementTile);
 }
 // Message handler - Central place for drawing game messages.
-static void msgHandler(enum msgTypes msg){
+void msgHandler(enum msgTypes msg){
 	// EXAMPLE USAGE: msgHandler(GAMESTART_FIRST);
 	// Intended for non-fatal errors.
 
@@ -644,9 +677,10 @@ static void msgHandler(enum msgTypes msg){
 
 // ===== INIT =====
 // Displays message and then wait for user input. Uses the button press/release timing as a random seed.
-static void getRandomSeedViaUserInput(){
+void getRandomSeedViaUserInput(){
 	// Get a random source: Use the time it takes for the user to press and then release the button.
 	vsynccounter8b_gen1=0;
+	vsynccounter8b_gen2=0;
 	u8 frame=0;
 	u8 x=(VRAM_TILES_H/2) - (12/2); // (12 is the length of the string.
 	u8 y=(VRAM_TILES_V/2) - 1;
@@ -668,13 +702,14 @@ static void getRandomSeedViaUserInput(){
 		// Did the user hold start?
 		if( game.btnPressed1 ){
 			// Reset the 8bit counter.
-			vsynccounter8b_gen1=0;
+			// vsynccounter8b_gen1=0;
+			vsynccounter8b_gen2=0;
 
 			// Wait for the user to release all buttons.
 			while(game.btnHeld1){ getInputs(); }
 
 			// Generate a random number that uses the timer values.
-			game.randomSeed = ( (vsynccounter16b_1 * vsynccounter8b_gen1) );
+			game.randomSeed = ( (vsynccounter16b_1 * vsynccounter8b_gen1 * vsynccounter8b_gen2)  );
 
 			// End the loop.
 			break;
@@ -685,13 +720,14 @@ static void getRandomSeedViaUserInput(){
 	}
 }
 // Run once at program start. (SETUP)
-static void gameInit(){
+void gameInit(){
 	// System init.
 	SetTileTable( bg_tiles );
 	ClearVram();
 
 	// Specify values for the sprite banks.
 	SetSpritesTileBank(0 , sprite_tiles   ); // 0 -- SPRITE_BANK0
+	// SetSpritesTileBank(1 , sprites_01   );     // 1 -- SPRITE_BANK1
 	SetSpritesTileBank(1 , bg_tiles   );     // 1 -- SPRITE_BANK1
 
 	// Init the music player.
@@ -705,11 +741,11 @@ static void gameInit(){
 	SetUserPostVsyncCallback( &post_VsyncCallBack ); //
 
 	// Show the compile date.
-	WaitVsync(50);
-	N782_print( 0, 0, S_GAMENAME , 0 ) ;
-	N782_print( 0, 1, S_MSG1 , 0) ; N782_print( 6, 1, S_MSG2 , 0) ;
-	N782_print( 0, 7, S_MSG3 , 0) ;
-	WaitVsync(50);
+	N782_print( 0, 0+3, S_GAMENAME , 0 ) ; // UZE UNO 2019
+	N782_print( 0, 1+3, S_MSG1 , 0) ;      // DATE
+	N782_print( 6, 1+3, S_MSG2 , 0) ;      // (DATETIME STRING)
+	N782_print( 0, 7+3, S_MSG3 , 0) ;      //
+	WaitVsync(100);
 	ClearVram();
 
 	// Init the inital game settings.
@@ -718,6 +754,7 @@ static void gameInit(){
 	// game.activePlayers[1]  = game.numPlayers > 1 ? 1 : 0 ;
 	// game.activePlayers[2]  = game.numPlayers > 2 ? 1 : 0 ;
 	// game.activePlayers[3]  = game.numPlayers > 3 ? 1 : 0 ;
+
 	game.activePlayer   = 255                       ;
 	game.pointsForWin   = 500                       ;
 	game.points_p1      = 0                         ;
@@ -769,7 +806,7 @@ static void gameInit(){
 
 // ===== SOUND UTILITIES =====
 // Plays the specified sound effect.
-static void playSFX(u8 patch){
+void playSFX(u8 patch){
 	u8 volume   = 128  ;
 	// bool retrig = true ;
 	bool retrig = true ;
@@ -797,6 +834,8 @@ static void playSFX(u8 patch){
 		case SELECTCURSOR1       : { TriggerFx(8,  volume, retrig); break ; }
 		// When a card is drawn.
 		case DRAWCARD            : { TriggerFx(7,  volume, retrig); break ; } //
+		// 'tiiiigh' sound. (Played when a player wins a round.
+		case WINROUND            : { TriggerFx(9,  255, retrig); break ; } //
 		//
 		default                  : { break ; }
 	};
@@ -808,7 +847,7 @@ static void playSFX(u8 patch){
 
 // ===== RAMTILE UTILITIES =====
 // CHECK: Clear any unused reserved ramtile if it is not in use in vram.
-static void clearAllUnusedReservedRamtiles(){
+void clearAllUnusedReservedRamtiles(){
 	#if ENDOFPLAY_RESRAMTILECHK==1
 	// Should be played at the start of each hand while the player's cards are still face-down.
 	u8 tile;
@@ -883,7 +922,7 @@ static void clearAllUnusedReservedRamtiles(){
 	#endif
 }
 // Clears all reserved ramtiles (indexes and data.)
-static void clearAllReservedRamtiles(){
+void clearAllReservedRamtiles(){
 	// Clear the ramtiles.
 	clearRamtile(0, TILE_RAMTILECLEAR);
 	for(u8 i=0; i<RESERVEDRAMTILES; i+=1){
@@ -894,7 +933,7 @@ static void clearAllReservedRamtiles(){
 }
 
 // Rotates a ramtile in place negative 90 degrees.
-static void rotateRamTile_n90(u8 mat[][8]){
+void rotateRamTile_n90(u8 mat[][8]){
 	// Based on: https://www.geeksforgeeks.org/inplace-rotate-square-matrix-by-90-degrees/
 	// Rotates anti-clockwise 90 degrees (so, -90 degrees.)
 	// Rotates in-place with no additional ramtile needed.
@@ -925,7 +964,7 @@ static void rotateRamTile_n90(u8 mat[][8]){
 	}
 }
 // Replaces all pixel values of the specified color to the new specified color.
-static void swapColors_ramtile(u8 srcColor, u8 dstColor, u8 ramtile_id){
+void swapColors_ramtile(u8 srcColor, u8 dstColor, u8 ramtile_id){
 	// Use these colors - from a PROGMEM tile.
 	// u8 YELLOW_VALUE = pgm_read_byte( &( &bg_tiles[ (u16) ( (TILE_WIDTH*TILE_HEIGHT) * pgm_read_byte(&(yellow_color[2])) ) ])[0] );
 	// u8 BLUE_VALUE   = pgm_read_byte( &( &bg_tiles[ (u16) ( (TILE_WIDTH*TILE_HEIGHT) * pgm_read_byte(&(blue_color[2]  )) ) ])[0] );
@@ -941,7 +980,7 @@ static void swapColors_ramtile(u8 srcColor, u8 dstColor, u8 ramtile_id){
 		case CARD_RED    : { srcColor = RED_VALUE;    break; } // Red
 		case CARD_GREEN  : { srcColor = GREEN_VALUE;  break; } // Green
 		case CARD_ORANGE : { srcColor = ORANGE_VALUE; break; } // Orange
-		case CARD_BLACK  : { srcColor = BLACK_VALUE;  break; }
+		// case CARD_BLACK  : { srcColor = BLACK_VALUE;  break; }
 		default  : { return; break; }
 	};
 
@@ -951,8 +990,8 @@ static void swapColors_ramtile(u8 srcColor, u8 dstColor, u8 ramtile_id){
 		case CARD_BLUE   : { dstColor = BLUE_VALUE  ; break; } // Blue
 		case CARD_RED    : { dstColor = RED_VALUE   ; break; } // Red
 		case CARD_GREEN  : { dstColor = GREEN_VALUE ; break; } // Green
-		case CARD_ORANGE : { dstColor = ORANGE_VALUE; break; } // Orange
-		case CARD_BLACK  : { dstColor = BLACK_VALUE ; break; }
+		// case CARD_ORANGE : { dstColor = ORANGE_VALUE; break; } // Orange
+		// case CARD_BLACK  : { dstColor = BLACK_VALUE ; break; }
 		default  : { return; break; }
 	};
 
@@ -971,7 +1010,7 @@ static void swapColors_ramtile(u8 srcColor, u8 dstColor, u8 ramtile_id){
 	}
 }
 // Clears the pixel data from a ramtile (erases the ramtile data.)
-static void clearRamtile( u8 id, u8 newColor){
+void clearRamtile( u8 id, u8 newColor){
 	// Clears the pixel data in the specified ramtile.
 	// NOTE: Assumes that you've already removed the ramtile from game.ramtile_ids_used.
 
@@ -1043,7 +1082,7 @@ u8 tileIsDuplicateOf(u8 ramtile_id){
 
 // ===== CARD UTILITIES =====
 // Removes the card from the specified player and card position.
-static void removeCard_sm(u8 player, u8 position){
+void removeCard_sm(u8 player, u8 position){
 	u8 x;
 	u8 y;
 	u8 w;
@@ -1073,7 +1112,7 @@ static void removeCard_sm(u8 player, u8 position){
 	// clearAllUnusedReservedRamtiles();
 }
 // Removes the large card (discard.)
-static void removeCard_lg(){
+void removeCard_lg(){
 	// Local variables.
 	const u8 replacementTile = pgm_read_byte(&(wood_color1[2]));
 	const u8 x = pgm_read_byte(&(discard_pos[0]));
@@ -1093,7 +1132,7 @@ static void removeCard_lg(){
 	// clearAllUnusedReservedRamtiles();
 }
 // Removes and clears the ramtiles that are no longer in use by the specified map.
-static void removeUnusedRamtilesInTilemap(u8 *map){
+void removeUnusedRamtilesInTilemap(u8 *map){
 	// return  ;
 	// This function operates similar to removeCard_sm and removeCard_lg.
 	 // Requires a tilemap that uses vram ids (and is stored in RAM, not PROGMEM.)
@@ -1159,7 +1198,7 @@ static void removeUnusedRamtilesInTilemap(u8 *map){
 
 }
 // Returns all discarded cards to the draw pile except the last played card.
-static void returnDiscardsToDrawPile(){
+void returnDiscardsToDrawPile(){
 	// Return all discards to the draw pile.
 	for(u8 i=0; i<TOTALCARDSINDECK; i+=1){
 		if( cards[i].location==CARD_LOCATION_DISCARD ) {
@@ -1182,7 +1221,7 @@ static void returnDiscardsToDrawPile(){
 	// debug_showDebugData();
 }
 // Returns ALL cards to the Draw Pile.
-static void resetTheDeck(){
+void resetTheDeck(){
 	// Return all cards to the draw pile.
 	for(u8 i=0; i<TOTALCARDSINDECK; i+=1){
 		cards[i].location = CARD_LOCATION_DRAW ;
@@ -1192,11 +1231,12 @@ static void resetTheDeck(){
 
 // ===== CARD DRAWING =====
 // Populate the specified map array with vram tiles.
-static void setVramTilemap(u8 x, u8 y, u8 w, u8 h, u8 *map){
+void setVramTilemap(u8 x, u8 y, u8 w, u8 h, u8 *map){
 	// Provide the origin x and y and the width and height of the tilemap.
 	// Also apply a reference to an already defined and appropriately sized array.
 	// The passed array will be adjusted in this function.
 	// This function does not return anything.
+	// The passed map needs to be large enough!
 
 	map[0] = w;
 	map[1] = h;
@@ -1208,10 +1248,287 @@ static void setVramTilemap(u8 x, u8 y, u8 w, u8 h, u8 *map){
 			i+=1;
 		}
 	}
+}
+// Returns a vram tilemap.
+void getNewCardTilemap( u8 playerNum, u8 size, u8 value, u8 color, u8 *map){
+	u8 getNextAvailableResRamtile(){
+		for(u8 i=0; i<RESERVEDRAMTILES; i+=1){
+			if(game.ramtile_ids_used[i]==0){ return i ; }
+		}
+	}
+	u8 asRamtile(u8 tile, u8 rotations){
+		u8 newRamtile_id ;
+		// u8 check=0;
+		CopyFlashTile(tile, 0);
+		swapColors_ramtile(CARD_ORANGE, color, 0);
+		newRamtile_id=tileIsDuplicateOf(0);
 
+		// If tileIsDuplicateOf returns non-zero then the tile exists
+		// The tile id of the original was returned.
+
+		// If rotations were specified then skip this check.
+		// It will be made again later after the rotations.
+		if( newRamtile_id !=0 && !rotations ) {
+			// SetRamTile(x,y, newRamtile_id);
+			// return newRamtile_id;
+			// check=1;
+		}
+
+		// If tileIsDuplicateOf returns 0 then the tile is new.
+		else{
+			// Check that there is an available ramtile in the reservation list.
+			if( countAvailableRamtile_ids() !=0 ) {
+				// Perform the specified number of rotations.
+				while(rotations){
+					// rotateRamTile_n90( &ram_tiles[(0*64)]); // n90 rotate ramtile 0.
+					rotateRamTile_n90( (u8 (*)[8]) &ram_tiles[0*64] ); // n90 rotate ramtile 0.
+					rotations--;
+				}
+				// Check if the rotated ramtile matches another reserved ramtile.
+				newRamtile_id=tileIsDuplicateOf(0);
+
+				if( newRamtile_id !=0 ) {
+					// Duplicate! Don't use a new ramtile.
+					// Use the ramtile id that was returned from tileIsDuplicateOf.
+					// return newRamtile_id;
+					// check=2;
+				}
+				else{
+					// Get a handle on the first available reserved ramtile array index.
+					newRamtile_id = getNextAvailableResRamtile()+1;
+
+					// Copy the ramtile to the available ramtile.
+					CopyRamTile(0,   newRamtile_id);
+
+					// Set the value to 1 (indicating "used".)
+					game.ramtile_ids_used[newRamtile_id-1]=1;
+
+					// return newRamtile_id;
+					// check=3;
+				}
+			}
+
+			// Was an available id NOT found?
+			else {
+				// Display the error.
+				errorHandler(RAMTILEUSAGE);
+			}
+			// _emu_whisper(0,check);
+			// _emu_whisper(1,check);
+			// WaitVsync(10);
+			return newRamtile_id;
+		}
+
+	}
+	void copyFlashTilemap(const char *base, u8 *map){
+		// Copy the PROGMEM map into the ram map.
+		for(u8 i=0; i<map[0]*map[1]; i+=1) { map[2+i] = pgm_read_word(&(base[2+i]))+RAM_TILES_COUNT ; }
+	}
+
+	u8 w;
+	u8 h;
+	u8 r90=false;
+
+	const char * top    ;
+	const char * base   ;
+
+	// The number tiles are the same for large and small card.
+	switch(value){
+		case CARD_0          : { top=tile_0 ;         break; }
+		case CARD_1          : { top=tile_1 ;         break; }
+		case CARD_2          : { top=tile_2 ;         break; }
+		case CARD_3          : { top=tile_3 ;         break; }
+		case CARD_4          : { top=tile_4 ;         break; }
+		case CARD_5          : { top=tile_5 ;         break; }
+		case CARD_6          : { top=tile_6 ;         break; }
+		case CARD_7          : { top=tile_7 ;         break; }
+		case CARD_8          : { top=tile_8 ;         break; }
+		case CARD_9          : { top=tile_9 ;         break; }
+		default : { break; }
+	}
+
+	if(size==SMALL_CARD){
+		if     (playerNum==1 || playerNum==3){ r90=false; w=2; h=3; }
+		else if(playerNum==2 || playerNum==4){ r90=true ; w=3; h=2; }
+
+		map[0]=w;
+		map[1]=h;
+
+		// If this is a wild card then no coloring is needed and no ramtiles are needed.
+		if     (value==CARD_WILD || value==CARD_WILD_DRAW4){
+			// Determine the correct map to draw and then draw it.
+			switch(value){
+				case CARD_WILD       : {
+					if     (r90==false) { base = card_wild_front_sm; }
+					else if(r90==true ) { base = card_wild_front_sm_90neg; }
+					break;
+				}
+				case CARD_WILD_DRAW4 : {
+					if     (r90==false) { base = card_wild_d4front_sm;       }
+					else if(r90==true ) { base = card_wild_d4front_sm_90neg; }
+					break;
+				}
+			}
+
+			// Copy the PROGMEM map into the ram map.
+			copyFlashTilemap(base,map);
+			return;
+		}
+
+		else{
+			// Action cards.
+			switch(value){
+				case CARD_DRAW2      : { top=map_sm_draw2 ;   break; }
+				case CARD_SKIP       : { top=map_sm_skip ;    break; }
+				case CARD_REV        : { top=map_sm_reverse ; break; }
+				default : { break; }
+			}
+
+			// Get the correctly rotated color base for this card.
+			switch(color){
+				case CARD_YELLOW     : {
+					if     (r90==false) { base=card_front_yellow_sm;       }
+					else if(r90==true)  { base=card_front_yellow_sm_90deg; }
+					break;
+				}
+				case CARD_BLUE       : {
+					if     (r90==false) { base=card_front_blue_sm;       }
+					else if(r90==true)  { base=card_front_blue_sm_90deg; }
+					break;
+				}
+				case CARD_RED        : {
+					if     (r90==false) { base=card_front_red_sm;       }
+					else if(r90==true)  { base=card_front_red_sm_90deg; }
+					break;
+				}
+				case CARD_GREEN      : {
+					if     (r90==false) { base=card_front_green_sm;       }
+					else if(r90==true)  { base=card_front_green_sm_90deg; }
+					break;
+				}
+				default : { break; }
+			}
+
+			// All other cards require ramtiles and re-coloring.
+
+			// Create the required ram tiles.
+			// Copy the ram tile and flash tile vram ids into the new map.
+			// Return the new map.
+			if     (r90==false) {
+				map[2]=asRamtile(pgm_read_word(&(top [2+0])), 0);   // x0,y0. RT, ROT0, Tile id #0  // Used by SMALL_CARD and LARGE_CARD
+				map[3]=pgm_read_word(&(base[2+1]))+RAM_TILES_COUNT; // x1,y0. FT, ROT0, Tile id #1  // Used by SMALL_CARD and LARGE_CARD
+				map[4]=pgm_read_word(&(base[2+2]))+RAM_TILES_COUNT; // x0,y1. FT, ROT0, Tile id #2  // Used by SMALL_CARD and LARGE_CARD
+				map[5]=pgm_read_word(&(base[2+3]))+RAM_TILES_COUNT; // x1,y1. FT, ROT0, Tile id #3  // Used by SMALL_CARD and LARGE_CARD
+				map[6]=pgm_read_word(&(base[2+4]))+RAM_TILES_COUNT; // x0,y2. FT, ROT0, Tile id #4  // Used by SMALL_CARD and LARGE_CARD
+				map[7]=asRamtile(pgm_read_word(&(top [2+0])), 2);   // x1,y2. RT, ROT2, Tile id #5  // Used by SMALL_CARD and LARGE_CARD
+			}
+			else if(r90==true)  {
+				map[0]=w;
+				map[1]=h;
+
+				// OLD WAY
+				// map[3]=asRamtile(pgm_read_word(&(top [2+0])), 1);   // x0,y0. RT, ROT0, Tile id #0  // Used by SMALL_CARD and LARGE_CARD
+				// map[3]=pgm_read_word(&(base[2+1]))+RAM_TILES_COUNT; // x1,y0. FT, ROT0, Tile id #1  // Used by SMALL_CARD and LARGE_CARD
+				// map[4]=pgm_read_word(&(base[2+2]))+RAM_TILES_COUNT; // x0,y1. FT, ROT0, Tile id #2  // Used by SMALL_CARD and LARGE_CARD
+				// map[5]=pgm_read_word(&(base[2+3]))+RAM_TILES_COUNT; // x1,y1. FT, ROT0, Tile id #3  // Used by SMALL_CARD and LARGE_CARD
+				// map[6]=pgm_read_word(&(base[2+4]))+RAM_TILES_COUNT; // x0,y2. FT, ROT0, Tile id #4  // Used by SMALL_CARD and LARGE_CARD
+				// map[2]=asRamtile(pgm_read_word(&(top [2+0])), 3);   // x1,y2. RT, ROT2, Tile id #5  // Used by SMALL_CARD and LARGE_CARD
+
+				// NEW WAY
+				map[2]=pgm_read_word(&(base[2+0]))+RAM_TILES_COUNT; // FT
+				map[3]=pgm_read_word(&(base[2+1]))+RAM_TILES_COUNT; // FT
+				map[4]=asRamtile(pgm_read_word(&(top [2+0])), 3);; // RT
+				map[5]=asRamtile(pgm_read_word(&(top [2+0])), 1);; // RT
+				map[6]=pgm_read_word(&(base[2+4]))+RAM_TILES_COUNT; // FT
+				map[7]=pgm_read_word(&(base[2+5]))+RAM_TILES_COUNT; // FT
+
+			}
+		}
+	}
+
+	else if(size==LARGE_CARD){
+		w=3;
+		h=4;
+		map[0]=w; // Width
+		map[1]=h; // Height
+
+		if(value==CARD_WILD || value==CARD_WILD_DRAW4){
+			if     (value==CARD_WILD){
+				base=card_wild_front_lg;
+			}
+			else if(value==CARD_WILD_DRAW4){
+				base=card_wild_draw4_front_lg;
+			}
+
+			// Copy the PROGMEM map into the ram map.
+			copyFlashTilemap(base,map);
+		}
+		else{
+			// Action cards.
+			switch(value){
+				case CARD_DRAW2      : { top=map_lg_draw2 ;    break; }
+				case CARD_SKIP       : { top=map_lg_skip ;     break; }
+				case CARD_REV        : { top=map_lg_reverse ;  break; }
+				default : { break; }
+			}
+
+			switch(color){
+				case CARD_YELLOW     : { base=card_front_yellow_lg; break; }
+				case CARD_BLUE       : { base=card_front_blue_lg;   break; }
+				case CARD_RED        : { base=card_front_red_lg;    break; }
+				case CARD_GREEN      : { base=card_front_green_lg;  break; }
+				default : { break; }
+			}
+
+			// TOP
+			if     (value==CARD_DRAW2 || value==CARD_REV){
+				map[2] =asRamtile(pgm_read_word(&(top[2+0])),0);     // x0,y0. RT, ROT0, Tile id #0
+				map[3] =asRamtile(pgm_read_word(&(top[2+1])),0);     // x1,y0. RT, ROT0, Tile id #1
+				map[4] =asRamtile(pgm_read_word(&(top[2+2])),0);     // x2,y0. RT, ROT0, Tile id #2
+			}
+			else if(value==CARD_SKIP){
+				map[2] =asRamtile(pgm_read_word(&(top [2+0])), 0);   // x0,y0. FT, ROT0, Tile id #0
+				map[3] =asRamtile(pgm_read_word(&(top [2+1])), 0);   // x1,y0. FT, ROT0, Tile id #1
+				map[4] =pgm_read_word(&(base[2+2]))+RAM_TILES_COUNT; // x2,y0. RT, ROT0, Tile id #2
+			}
+			else{
+				map[2] =asRamtile(pgm_read_word(&(top [2+0])), 0);   // x0,y0. RT, ROT0, Tile id #0
+				map[3] =pgm_read_word(&(base[2+1]))+RAM_TILES_COUNT; // x1,y0. FT, ROT0, Tile id #1
+				map[4] =pgm_read_word(&(base[2+2]))+RAM_TILES_COUNT; // x2,y0. FT, ROT0, Tile id #2
+			}
+
+			// MIDDLE ROWS
+			map[5] =pgm_read_word(&( base [2+3]))+RAM_TILES_COUNT ;  // x0,y1. FT, ROT0, Tile id #3
+			map[6] =pgm_read_word(&( base [2+4]))+RAM_TILES_COUNT ;  // x1,y1. FT, ROT0, Tile id #4
+			map[7] =pgm_read_word(&( base [2+5]))+RAM_TILES_COUNT ;  // x2,y1. FT, ROT0, Tile id #5
+			map[8] =pgm_read_word(&( base [2+6]))+RAM_TILES_COUNT ;  // x0,y2. FT, ROT0, Tile id #6
+			map[9] =pgm_read_word(&( base [2+7]))+RAM_TILES_COUNT ;  // x1,y2. FT, ROT0, Tile id #7
+			map[10]=pgm_read_word(&( base [2+8]))+RAM_TILES_COUNT ;  // x2,y2. FT, ROT0, Tile id #8
+
+			// BOTTOM
+			if     (value==CARD_DRAW2 || value==CARD_REV){
+				map[11]=asRamtile(pgm_read_word(&(top[2+2])),2);;    // x0,y3. RT, ROT0, Tile id #9
+				map[12]=asRamtile(pgm_read_word(&(top[2+1])),2);;    // x1,y3. RT, ROT0, Tile id #10
+				map[13]=asRamtile(pgm_read_word(&(top[2+0])),2);;    // x2,y3. RT, ROT0, Tile id #11
+			}
+			else if(value==CARD_SKIP){
+				map[11]=pgm_read_word(&(base[2+5]))+RAM_TILES_COUNT; // x0,y3. RT, ROT0, Tile id #9
+				map[12]=asRamtile(pgm_read_word(&(top[2+1])), 2);    // x1,y3. RT, ROT0, Tile id #10
+				map[13]=asRamtile(pgm_read_word(&(top[2+0])), 2);    // x2,y3. RT, ROT0, Tile id #11
+			}
+			else{
+				map[11]=pgm_read_word(&(base[2+5]))+RAM_TILES_COUNT; // x0,y3. RT, ROT0, Tile id #9
+				map[12]=pgm_read_word(&(base[2+1]))+RAM_TILES_COUNT; // x1,y3. RT, ROT0, Tile id #10
+				map[13]=asRamtile(pgm_read_word(&(top [2+0])), 2);   // x2,y3. RT, ROT0, Tile id #11
+			}
+		}
+	}
+
+	// Clear the data in the comparison ramtile.
+	clearRamtile(0, TILE_RAMTILECLEAR);
 }
 // Draws a tilemap from the specified vram map.
-static void DrawMap_vramtiles(u8 x,u8 y, u8 *map) {
+void DrawMap_vramtiles(u8 x,u8 y, u8 *map) {
 	// Give x, y, and an array from ram for the tilemap to draw.
 	const u8 mapWidth  = map[0];
 	const u8 mapHeight = map[1];
@@ -1233,278 +1550,29 @@ static void DrawMap_vramtiles(u8 x,u8 y, u8 *map) {
 		}
 	}
 }
+
 // Draws small and large cards. Reserves/deduplicates ramtiles used.
-static void drawCard( u8 playerNum, u8 x, u8 y, u8 size, u8 value, u8 color){
-	// IMPORTANT: Remove the card first BEFORE drawing the card.
-	// removeCard_sm(1, 3); // player number, card position.
-
-	// CARD UTILITIES
-	void draw1tile_forCards(u8 x, u8 y, u8 tile, u8 color, u8 useRamtile, u8 rotations){
-		// Read into ramtile 0.
-			// Convert the orange to the specified color.
-			// Determine if we already have this exact tile.
-				// YES? Point instead to the found tile.
-				// NO? Copy to next ram tile.
-
-		u8 newRamtile_id ;
-
-		if(useRamtile==1){
-			CopyFlashTile(tile, 0);
-			swapColors_ramtile(CARD_ORANGE, color, 0);
-			newRamtile_id=tileIsDuplicateOf(0);
-
-			// If tileIsDuplicateOf returns non-zero then the tile exists and that tile id was returned.
-			// If rotations were specified then skip this check. It will be made again later after the rotations.
-			if( newRamtile_id !=0 && !rotations ) { SetRamTile(x,y, newRamtile_id); }
-
-			// If tileIsDuplicateOf returns 0 then the tile is new.
-			else{
-				// Is there an availale ram tile?
-				if( countAvailableRamtile_ids() !=0 ) {
-					// Yes? Determine which one.
-					// Look in game.ramtile_ids_used for the first 0 value and use that index+1 as the new ramtile id.
-					for(u8 i=0; i<RESERVEDRAMTILES; i+=1){
-						// Found an index where the value set is 0?
-						if(game.ramtile_ids_used[i]==0){
-							// The current value of the i iterator will be the index and the next ram tile used.
-							// Copy ramtile 0 to the id and then draw it.
-
-							// Rotate the ramtile the number of times specified.
-							while(rotations){
-								// rotateRamTile_n90( &ram_tiles[(0*64)]); // n90 rotate ramtile 0.
-								rotateRamTile_n90( (u8 (*)[8]) &ram_tiles[0*64] ); // n90 rotate ramtile 0.
-								rotations--;
-							}
-
-							// Is this rotated ramtile the same as another ramtile?
-							newRamtile_id=tileIsDuplicateOf(0);
-							if( newRamtile_id !=0 ) {
-								// Duplicate! Don't use a new ramtile. Use the ramtile id that was returned from tileIsDuplicateOf.
-								SetRamTile(x,y, newRamtile_id);
-							}
-							else{
-								// Copy the ramtile to the available ramtile.
-								CopyRamTile(0,   i+1);
-
-								// Display the ramtile.
-								SetRamTile (x,y, i+1);
-
-								// Set the value to 1 (indicating "used".)
-								game.ramtile_ids_used[i]=1;
-							}
-
-							// Done.
-							break;
-						}
-					}
-				}
-
-				// Was an available id NOT found? // Print the warning.
-				else {
-					errorHandler(RAMTILEUSAGE);
-				}
-			}
-		}
-		else{
-			SetTile(x,y,tile);
-		}
-
-	}
-	// CARD UTILITIES
-
-	const char * top    ;
-	const char * base   ;
-	// const char * bottom ;
-
-	// Hide the cursor sprite.
-	// sprites[0].x=OFF_SCREEN;
-
+void drawCard( u8 playerNum, u8 x, u8 y, u8 size, u8 value, u8 color){
 	// Disable the kernel processing of sprites.
 	SetSpriteVisibility(false);
 
-	// The number tiles are the same for large and small card.
-	switch(value){
-		case CARD_0          : { top=tile_0 ;         break; }
-		case CARD_1          : { top=tile_1 ;         break; }
-		case CARD_2          : { top=tile_2 ;         break; }
-		case CARD_3          : { top=tile_3 ;         break; }
-		case CARD_4          : { top=tile_4 ;         break; }
-		case CARD_5          : { top=tile_5 ;         break; }
-		case CARD_6          : { top=tile_6 ;         break; }
-		case CARD_7          : { top=tile_7 ;         break; }
-		case CARD_8          : { top=tile_8 ;         break; }
-		case CARD_9          : { top=tile_9 ;         break; }
-		default : { break; }
-	}
+	// Get a vram tilemap for the specified card.
+	getNewCardTilemap( playerNum, size, value, color, game.vramTilemap);
 
-	// Draw a 2x3 tile card?
-	if(size==SMALL_CARD){
-		// Action cards.
-		switch(value){
-			case CARD_DRAW2      : { top=map_sm_draw2 ;   break; }
-			case CARD_SKIP       : { top=map_sm_skip ;    break; }
-			case CARD_REV        : { top=map_sm_reverse ; break; }
-			default : { break; }
-		}
-
-		switch(color){
-			case CARD_YELLOW     : {
-				if     (playerNum==1 || playerNum==3) { base=card_front_yellow_sm;       }
-				else if(playerNum==2 || playerNum==4) { base=card_front_yellow_sm_90deg; }
-				break;
-			}
-			case CARD_BLUE       : {
-				if     (playerNum==1 || playerNum==3) { base=card_front_blue_sm;       }
-				else if(playerNum==2 || playerNum==4) { base=card_front_blue_sm_90deg; }
-				break;
-			}
-			case CARD_RED        : {
-				if     (playerNum==1 || playerNum==3) { base=card_front_red_sm;       }
-				else if(playerNum==2 || playerNum==4) { base=card_front_red_sm_90deg; }
-				break;
-			}
-			case CARD_GREEN      : {
-				if     (playerNum==1 || playerNum==3) { base=card_front_green_sm;       }
-				else if(playerNum==2 || playerNum==4) { base=card_front_green_sm_90deg; }
-				break;
-			}
-			default : { break; }
-		}
-
-		// If this is a wild card then no coloring is needed and no ramtiles are needed. Just draw the maps.
-		if     (value==CARD_WILD || value==CARD_WILD_DRAW4){
-			// Determine the correct map to draw and then draw it.
-			switch(value){
-				case CARD_WILD       : {
-					if     (playerNum==1 || playerNum==3) { DrawMap2( x  , y   , card_wild_front_sm       ); }
-					else if(playerNum==2 || playerNum==4) { DrawMap2( x  , y   , card_wild_front_sm_90neg ); }
-				break;
-			}
-				case CARD_WILD_DRAW4 : {
-					if     (playerNum==1 || playerNum==3) { DrawMap2( x  , y   , card_wild_d4front_sm       ); }
-					else if(playerNum==2 || playerNum==4) { DrawMap2( x  , y   , card_wild_d4front_sm_90neg ); }
-					break;
-				}
-			}
-		}
-
-		// All other cards require ramtiles and re-coloring.
-		else{
-			// Ramtiles are needed by the top-left, bottom-right corners only.
-			// Use flash tiles for the rest.
-			if     (playerNum==1 || playerNum==3) {
-				// ROW #1
-				draw1tile_forCards(x+0, y+0, pgm_read_word(&(top [2+0])) ,color, 1,0) ; // ROW #1: Left
-				draw1tile_forCards(x+1, y+0, pgm_read_word(&(base[2+1])) ,color, 0,0) ; // ROW #1: Right
-
-				// ROW #2
-				draw1tile_forCards(x+0, y+1, pgm_read_word(&(base[2+2])) ,color, 0,0) ; // ROW #2: Left
-				draw1tile_forCards(x+1, y+1, pgm_read_word(&(base[2+3])) ,color, 0,0) ; // ROW #2: Right
-
-				// ROW #3
-				draw1tile_forCards(x+0, y+2, pgm_read_word(&(base[2+4])) ,color, 0,0) ; // ROW #3: Left
-				draw1tile_forCards(x+1, y+2, pgm_read_word(&(top [2+0])) ,color, 1,2) ; // ROW #3: Right
-			}
-			else if(playerNum==2 || playerNum==4) {
-				// ROW #1
-				draw1tile_forCards(x+0, y+0, pgm_read_word(&(top [0+2])) ,color, 1,1) ; // ROW #1: Left
-				draw1tile_forCards(x+1, y+0, pgm_read_word(&(base[1+2])) ,color, 0,0) ; // ROW #1: Middle
-				draw1tile_forCards(x+2, y+0, pgm_read_word(&(base[2+2])) ,color, 0,0) ; // ROW #1: Right
-
-				// ROW #2
-				draw1tile_forCards(x+0, y+1, pgm_read_word(&(base[3+2])) ,color, 0,0) ; // ROW #2: Left
-				draw1tile_forCards(x+1, y+1, pgm_read_word(&(base[4+2])) ,color, 0,0) ; // ROW #2: Middle
-				draw1tile_forCards(x+2, y+1, pgm_read_word(&(top [0+2])) ,color, 1,3) ; // ROW #2: Right
-			}
-		}
-	}
-
-	// Draw a3x4 tile card?
-	else if(size==LARGE_CARD){
-		// Action cards.
-		switch(value){
-			case CARD_DRAW2      : { top=map_lg_draw2 ;    break; }
-			case CARD_SKIP       : { top=map_lg_skip ;     break; }
-			case CARD_REV        : { top=map_lg_reverse ;  break; }
-			default : { break; }
-		}
-
-		switch(color){
-			case CARD_YELLOW     : { base=card_front_yellow_lg; break; }
-			case CARD_BLUE       : { base=card_front_blue_lg;   break; }
-			case CARD_RED        : { base=card_front_red_lg;    break; }
-			case CARD_GREEN      : { base=card_front_green_lg;  break; }
-			// case CARD_ORANGE     : { base=card_front_lg;        break; }
-			// case CARD_BLACK      : { base=card_front_lg;       break; }
-			default : { break; }
-		}
-
-		// If this is a wild card then no coloring is needed and no ramtiles are needed. Just draw the maps.
-		if     (value==CARD_WILD || value==CARD_WILD_DRAW4){
-			switch(value){
-				case CARD_WILD       : { base=card_wild_front_lg;       break; }
-				case CARD_WILD_DRAW4 : { base=card_wild_draw4_front_lg; break; }
-			}
-			DrawMap2( x  , y   , base   );
-		}
-		// All other cards require ramtiles and re-coloring.
-		else{
-			// Draw the base (flash tiles.) (Rows 2 and 3.)
-			draw1tile_forCards(x+0, y+1, pgm_read_word(&( base [2+3])),  color, 0,0); // ROW #2 - LEFT
-			draw1tile_forCards(x+1, y+1, pgm_read_word(&( base [2+4])),  color, 0,0); // ROW #2 - MIDDLE
-			draw1tile_forCards(x+2, y+1, pgm_read_word(&( base [2+5])),  color, 0,0); // ROW #2 - RIGHT
-			draw1tile_forCards(x+0, y+2, pgm_read_word(&( base [2+6])),  color, 0,0); // ROW #3 - LEFT
-			draw1tile_forCards(x+1, y+2, pgm_read_word(&( base [2+7])),  color, 0,0); // ROW #3 - MIDDLE
-			draw1tile_forCards(x+2, y+2, pgm_read_word(&( base [2+8])), color, 0,0); // ROW #3 - RIGHT
-
-			// Draw the top.
-			if     (value==CARD_DRAW2 || value==CARD_REV){
-				draw1tile_forCards(x+0, y+0, pgm_read_word(&( top  [2+0])), color, 1,0); // ROW #1 - LEFT
-				draw1tile_forCards(x+1, y+0, pgm_read_word(&( top  [2+1])), color, 1,0); // ROW #1 - MIDDLE
-				draw1tile_forCards(x+2, y+0, pgm_read_word(&( top  [2+2])), color, 1,0); // ROW #1 - RIGHT
-			}
-			else if(value==CARD_SKIP){
-				draw1tile_forCards(x+0, y+0, pgm_read_word(&( top  [2+0])), color, 1,0); // ROW #1 - LEFT
-				draw1tile_forCards(x+1, y+0, pgm_read_word(&( top  [2+1])), color, 1,0); // ROW #1 - MIDDLE
-				draw1tile_forCards(x+2, y+0, pgm_read_word(&( base [2+2])), color, 0,0); // ROW #1 - RIGHT
-			}
-			else{
-				draw1tile_forCards(x+0, y+0, pgm_read_word(&( top  [2+0])), color, 1,0); // ROW #1 - LEFT
-				draw1tile_forCards(x+1, y+0, pgm_read_word(&( base [2+1])), color, 0,0); // ROW #1 - MIDDLE
-				draw1tile_forCards(x+2, y+0, pgm_read_word(&( base [2+2])), color, 0,0); // ROW #1 - RIGHT
-			}
-
-			// Draw the bottom.
-			if     (value==CARD_DRAW2 || value==CARD_REV){
-				draw1tile_forCards(x+0, y+3, pgm_read_word(&( top  [2+2])), color, 1,2); // ROW #4 - RIGHT
-				draw1tile_forCards(x+1, y+3, pgm_read_word(&( top  [2+1])), color, 1,2); // ROW #4 - MIDDLE
-				draw1tile_forCards(x+2, y+3, pgm_read_word(&( top  [2+0])), color, 1,2); // ROW #4 - LEFT
-			}
-			else if(value==CARD_SKIP){
-				draw1tile_forCards(x+0, y+3, pgm_read_word(&( base [2+5])), color, 0,0); // ROW #4 - RIGHT
-				draw1tile_forCards(x+1, y+3, pgm_read_word(&( top  [2+1])), color, 1,2); // ROW #4 - MIDDLE
-				draw1tile_forCards(x+2, y+3, pgm_read_word(&( top  [2+0])), color, 1,2); // ROW #4 - LEFT
-			}
-			else{
-				draw1tile_forCards(x+0, y+3, pgm_read_word(&( base [2+5])), color, 0,0); // ROW #4 - RIGHT
-				draw1tile_forCards(x+1, y+3, pgm_read_word(&( base [2+1])), color, 0,0); // ROW #4 - MIDDLE
-				draw1tile_forCards(x+2, y+3, pgm_read_word(&( top  [2+0])), color, 1,2); // ROW #4 - LEFT
-			}
-
-		}
-	}
+	// Draw the vram tilemap.
+	DrawMap_vramtiles(x,y, game.vramTilemap);
 
 	// Clear the data in the comparison ramtile.
-	// clearRamtile(0, BLACK_VALUE);
-	clearRamtile(0, TILE_RAMTILECLEAR);
+	// clearRamtile(0, TILE_RAMTILECLEAR);
 
 	// Enable the kernel processing of sprites.
 	SetSpriteVisibility(true);
 
+	// DEBUG: Update the debug info.
 	debug_showDebugData();
 }
 // Map a spritemap to sprites. Uses vram ids. Auto sets the SPRITE_RAM if the tile is a ramtile.
-static void MapSprite2_nra( u8 startSprite, const char *map, u8 spriteFlags ) {
+void MapSprite2_nra( u8 startSprite, const char *map, u8 spriteFlags ) {
 	// Similar syntax to MapSprite2. Supports all sprite flags such as: SPRITE_FLIP_X, SPRITE_FLIP_Y, SPRITE_OFF.
 	 // The map uses vram ids (not the normal tile ids.)
 	 // SPRITE_RAM is set automatically as determined by the value of the vram id.
@@ -1693,29 +1761,31 @@ void countColorsValuesMatches(u8 playerNum){
 // ===== UTILITIES =====
 
 // Draws the "stack" under the Draw Pile based on the count of the Draw Pile.
-static void redrawUnderDrawPile(){
+void redrawUnderDrawPile(){
 	u8 theCount = countDrawPile() ;
 	u8 x = pgm_read_byte(&(draw_pos_below[0]));
 	u8 y = pgm_read_byte(&(draw_pos_below[1]));
 
-	if     (theCount <  27 ) { DrawMap2(x,y, cardsBelow_lg_lt27) ;} // 27
+	if     (theCount == 0  ) { Fill(x,y, 2, 1, pgm_read_byte(&(wood_color1 [2]))); }
+	else if(theCount <  27 ) { DrawMap2(x,y, cardsBelow_lg_lt27) ;} // 27
 	else if(theCount <  54 ) { DrawMap2(x,y, cardsBelow_lg_lt54) ;} // 54
 	else if(theCount <  81 ) { DrawMap2(x,y, cardsBelow_lg_lt81) ;} // 81
 	else if(theCount <= 108) { DrawMap2(x,y, cardsBelow_lg_lt108);} // 108
 }
 // Draws the "stack" under the Discard Pile based on the count of the Discard Pile.
-static void redrawUnderDiscardPile(){
+void redrawUnderDiscardPile(){
 	u8 theCount = countDiscardPile() ;
 	u8 x = pgm_read_byte(&(discard_pos_below[0]));
 	u8 y = pgm_read_byte(&(discard_pos_below[1]));
 
-	if     (theCount <  27 ) { DrawMap2(x,y, cardsBelow_lg_lt27) ;}
+	if     (theCount == 0  ) { Fill(x,y, 2, 1, pgm_read_byte(&(wood_color1 [2]))); }
+	else if(theCount <  27 ) { DrawMap2(x,y, cardsBelow_lg_lt27) ;}
 	else if(theCount <  54 ) { DrawMap2(x,y, cardsBelow_lg_lt54) ;}
 	else if(theCount <  81 ) { DrawMap2(x,y, cardsBelow_lg_lt81) ;}
 	else if(theCount <= 108) { DrawMap2(x,y, cardsBelow_lg_lt108);}
 }
 // Returns all cards for the specified player to the Draw Pile.
-static void returnCardsForPlayer(u8 playerNum){
+void returnCardsForPlayer(u8 playerNum){
 	u8 location;
 
 	// Get location by player number.
@@ -1738,7 +1808,7 @@ static void returnCardsForPlayer(u8 playerNum){
 	}
 }
 // Draws up to 5 cards from the specified player's hand. Can adjust the start position and draw speed.
-static void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
+void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
 	u8 location ;
 	u8 cardsAssigned=0 ;
 	u8 x;
@@ -1760,6 +1830,9 @@ static void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
 	// 	// Remove the existing card.
 	// 	removeCard_sm(playerNum, pos);
 	// }
+
+	// Clear game.playerVisibleHand.
+	for(u8 pos=0; pos<5; pos+=1){ game.playerVisibleHand[pos]=255; }
 
 	// 5 card positions.
 	for(u8 i=0; i<TOTALCARDSINDECK && (cardsAssigned<5); i+=1){
@@ -1856,7 +1929,7 @@ static void displayCardsForPlayer(u8 playerNum, u8 startPos, u8 cardDelay){
 	}
 }
 // Remove all cards displayed for the specified player.
-static void removePlayerCards(u8 playerNumber){
+void removePlayerCards(u8 playerNumber){
 	// Player number must be valid! If not then nothing will happen.
 	// Player 1 is 1. (not zero-indexed.)
 	// Card positions ARE zero-indexed.
@@ -1946,22 +2019,18 @@ u8 getCardFromDrawPile(u8 playerNum, u8 howMany){
 
 }
 // Draw and animate a card from the Draw pile into a player's hand.
-static void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay, u8 option){
+void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay, u8 option){
 	// Draw one card from the Draw Pile and assign to the specified player.
 	// Get the last card assigned's index into the cards array.
 	// NOTE: This function assumes that the cards have been removed first.
 	const char * card ;
 	// u8 location;
 
-	// Card sprite.
-	// Contains the tilemap (vram tiles) used by the selected card sprite. (2x3 tilemaps.)
-	u8 map1_2x3 [ 2 + (2*3) ];
-
-	// Contains the tilemap (vram tiles) used by the selected card sprite. (3x2 tilemaps.)
-	u8 map2_3x2 [ 2 + (3*2) ];
-
-	// Pointer to the tilemap arrayy
+	// Pointer to the tilemap array
 	u8 * map ;
+	// map=game.vramTilemap;
+	u8 map_14[14];
+	map=map_14;
 
 	// Dimensions for the selected card map.
 	u8 w;
@@ -1985,37 +2054,33 @@ static void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 ca
 		case 1 : {
 			card=card_back_sm_0deg;
 			w=2; h=3;
-			map = map1_2x3;
+			map[0]=w; map[1]=h;
 			dst_x=pgm_read_byte(&(p1_pos[cardPos][0]));
 			dst_y=pgm_read_byte(&(p1_pos[cardPos][1]));
-			// location=CARD_LOCATION_PLAYER1;
 			break;
 		}
 		case 2 : {
 			card=card_back_sm_neg90deg;
 			w=3; h=2;
-			map = map2_3x2;
+			map[0]=w; map[1]=h;
 			dst_x=pgm_read_byte(&(p2_pos[cardPos][0]));
 			dst_y=pgm_read_byte(&(p2_pos[cardPos][1]));
-			// location=CARD_LOCATION_PLAYER2;
 			break;
 		}
 		case 3 : {
 			card=card_back_sm_360deg;
 			w=2; h=3;
-			map = map1_2x3;
+			map[0]=w; map[1]=h;
 			dst_x=pgm_read_byte(&(p3_pos[cardPos][0]));
 			dst_y=pgm_read_byte(&(p3_pos[cardPos][1]));
-			// location=CARD_LOCATION_PLAYER3;
 			break;
 		}
 		case 4 : {
 			card=card_back_sm_90deg;
 			w=3; h=2;
-			map = map2_3x2;
+			map[0]=w; map[1]=h;
 			dst_x=pgm_read_byte(&(p4_pos[cardPos][0]));
 			dst_y=pgm_read_byte(&(p4_pos[cardPos][1]));
-			// location=CARD_LOCATION_PLAYER4;
 			break;
 		}
 		default : { return; break; }
@@ -2119,12 +2184,222 @@ static void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 ca
 	updatePlayerDisplayedData();
 
 	// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
-	redrawMainInfoRegion();
+	// redrawMainInfoRegion();
 
 	return;
 }
+// Draw and animate a card from the Draw pile into a player's hand.
+// void dealSpecifiedCard_anim(u8 playerNum, u8 cardIndex, u8 cardPos, u8 cardDelay, u8 option){
+// 	// Draw one card from the Draw Pile and assign to the specified player.
+// 	// Get the last card assigned's index into the cards array.
+// 	// NOTE: This function assumes that the cards have been removed first.
+// 	const char * card ;
+// 	// u8 location;
+
+// 	// Pointer to the tilemap array
+// 	u8 * map ;
+// 	map=game.vramTilemap;
+
+// 	// Dimensions for the selected card map.
+// 	u8 w;
+// 	u8 h;
+
+// 	s8 xdir;
+// 	s8 ydir;
+
+// 	u8 tile_x=pgm_read_byte(&(draw_pos[0]));
+// 	u8 tile_y=pgm_read_byte(&(draw_pos[1]));
+// 	u8 sprite_x = tile_x << 3;
+// 	u8 sprite_y = tile_y << 3;
+
+// 	u8 dst_x;
+// 	u8 dst_y;
+
+// 	u8 counter;
+
+// 	// Get the proper card tilemap, position, and dimensions.
+// 	switch(playerNum){
+// 		case 1 : {
+// 			card=card_back_sm_0deg;
+// 			w=2; h=3;
+// 			map[0]=w; map[1]=h;
+// 			dst_x=pgm_read_byte(&(p1_pos[cardPos][0]));
+// 			dst_y=pgm_read_byte(&(p1_pos[cardPos][1]));
+// 			break;
+// 		}
+// 		case 2 : {
+// 			card=card_back_sm_neg90deg;
+// 			w=3; h=2;
+// 			map[0]=w; map[1]=h;
+// 			dst_x=pgm_read_byte(&(p2_pos[cardPos][0]));
+// 			dst_y=pgm_read_byte(&(p2_pos[cardPos][1]));
+// 			break;
+// 		}
+// 		case 3 : {
+// 			card=card_back_sm_360deg;
+// 			w=2; h=3;
+// 			map[0]=w; map[1]=h;
+// 			dst_x=pgm_read_byte(&(p3_pos[cardPos][0]));
+// 			dst_y=pgm_read_byte(&(p3_pos[cardPos][1]));
+// 			break;
+// 		}
+// 		case 4 : {
+// 			card=card_back_sm_90deg;
+// 			w=3; h=2;
+// 			map[0]=w; map[1]=h;
+// 			dst_x=pgm_read_byte(&(p4_pos[cardPos][0]));
+// 			dst_y=pgm_read_byte(&(p4_pos[cardPos][1]));
+// 			break;
+// 		}
+// 		default : { return; break; }
+// 	};
+
+// 	// dst_x = dst_x<<3;
+// 	// dst_y = dst_y<<3;
+
+// 	// If the card index is 255 then actually get a new card and use the new index.
+// 	// Otherwise, use the specified card index.
+// 	if(cardIndex==255){
+// 		cardIndex = getCardFromDrawPile(playerNum, 1);
+// 	}
+
+// 	// // If either pile has cards... or something...
+// 	// if( countDrawPile() || countDiscardPile() ){
+// 	// }
+
+// 	// If the cardIndex is 255 (returned from function) then there was not a card available.
+// 	if(cardIndex==255){
+// 		return;
+// 	}
+
+// 	// Draw card face down.
+// 	if     (option==CARDS_FACEDOWN){
+// 		// Draw the properly rotated facedown card.
+// 		DrawMap2(tile_x, tile_y, card);
+// 	}
+// 	// Draw card face up.
+// 	else if(option==CARDS_FACEUP  ){
+
+// 		// // Draw the card. Will be rotated correctly for the player.
+// 		// drawCard(
+// 		// 	playerNum                     , // u8 playerNum
+// 		// 	tile_x                        , // u8 x
+// 		// 	tile_y                        , // u8 y
+// 		// 	SMALL_CARD                    , // u8 size
+// 		// 	cards[cardIndex].value        , // u8 value
+// 		// 	cards[cardIndex].color          // u8 color
+// 		// );
+
+// 		// Set the map's dimensions.
+// 		map[0]=w; map[1]=h;
+
+// 		// Remove the card that the sprite is now overlapping.
+// 		removeCard_sm(playerNum, cardPos);
+
+// 		// Generate a new vram map for this card.
+// 		// getNewCardTilemap(
+// 		// 	playerNum              ,
+// 		// 	SMALL_CARD             ,
+// 		// 	cards[cardIndex].value ,
+// 		// 	cards[cardIndex].color ,
+// 		// 	map
+// 		// );
+
+// 		// Move the card to the destination.
+// 		struct cardData_ cardData;
+// 		cardData.player   = playerNum      ;
+// 		cardData.tile_x   = tile_x         ;
+// 		cardData.tile_y   = tile_y         ;
+// 		cardData.dst_x    = dst_x          ;
+// 		cardData.dst_y    = dst_y          ;
+// 		cardData.cardSize = SMALL_CARD     ;
+// 		cardData.value    = cards[cardIndex].value ;
+// 		cardData.color    = cards[cardIndex].color ;
+// 		cardData.w        = w              ;
+// 		cardData.h        = h              ;
+// 		cardData.map      = map            ;
+// 		cardData.fillTile = pgm_read_byte(&(offBlackTile[2])) ;
+// 		moveCard(&cardData, 0, 0, ENDOFROUNDDEALBASESPEED);
+
+// 		// Clear the card from the current position.
+// 		// Fill(tile_x, tile_y ,w, h, 0x01);
+
+// 		// WaitVsync(50);
+// 		// MapSprite2_nra( 0,  map, SPRITE_OFF );
+
+// 		// Remove the tiles used by the card (if they were the only instances of those tiles.)
+// 		// removeUnusedRamtilesInTilemap( map );
+// 	}
+// /*
+// 	// Get the tilemap for the new card.
+// 	setVramTilemap( tile_x, tile_y , w, h, map );
+
+// 	// Redraw the Draw Pile.
+// 	DrawMap2(tile_x, tile_y, card_back_lg);
+
+// 	// Redraw the Draw pile stack.
+// 	redrawUnderDrawPile();
+
+// 	// Map the card to a spritemap.
+// 	MapSprite2_nra( 1, map, SPRITE_BANK1 );
+
+// 	// Set the xdir for the card movement.
+// 	if     (sprite_x<dst_x){ xdir =  1; }
+// 	else if(sprite_x>dst_x){ xdir = -1; }
+// 	else                   { xdir =  0; }
+
+// 	// Set the ydir for the card movement.
+// 	if     (sprite_y<dst_y){ ydir =  1; }
+// 	else if(sprite_y>dst_y){ ydir = -1; }
+// 	else                   { ydir =  0; }
+
+// 	// Reset the counter. (Is used to speed-limit the card movement.)
+// 	counter=0;
+
+// 	// Move the card.
+// 	while(1){
+// 		// Determine if an x and/or y movement is required this iteration.
+// 		if(sprite_x != dst_x){ sprite_x += xdir; }
+// 		if(sprite_y != dst_y){ sprite_y += ydir; }
+
+// 		// Redraw the sprite at the new location.
+// 		MoveSprite(1, sprite_x, sprite_y, map[0], map[1]);
+
+// 		// If both the x and the y values match the discard values then break.
+// 		if( sprite_x==dst_x && sprite_y==dst_y ) { break; }
+
+// 		// Do a vsync wait every other time.
+// 		// if(counter & 1) { WaitVsync(1); }
+// 		if(counter % cardDelay == 0 ){ WaitVsync(1); }
+
+// 		// Increment the counter.
+// 		counter+=1;
+// 	}
+
+// 	// Remove the card that the sprite is now overlapping.
+// 	removeCard_sm(playerNum, cardPos);
+
+// 	// Hide the small card spritemap.
+// 	MapSprite2_nra( 1, map, SPRITE_OFF );
+
+// 	// Use the spritemap to draw the card tiles back into vram.
+// 	DrawMap_vramtiles( dst_x>>3, dst_y>>3, map );
+
+// 	// Remove the tiles used by the small card (if they were the only instances of those tiles.)
+// 	removeUnusedRamtilesInTilemap(map);
+// 	// clearAllUnusedReservedRamtiles();
+
+// 	// Update the displayed player data.
+// 	updatePlayerDisplayedData();
+
+// 	// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
+// 	// redrawMainInfoRegion();
+
+// 	return;
+// */
+// }
 // Get the X and the Y for a player's card and card position.
-static void get_cardDims_byPlayerAndCardPosition(u8 playerNum, u8 position, u8 *x, u8 *y){
+void get_cardDims_byPlayerAndCardPosition(u8 playerNum, u8 position, u8 *x, u8 *y){
 	switch(playerNum){
 		case 1 : {
 			*x=pgm_read_byte(&(p1_pos[position][0]));
@@ -2151,36 +2426,64 @@ static void get_cardDims_byPlayerAndCardPosition(u8 playerNum, u8 position, u8 *
 
 }
 // Redraws center of board, Draw and Discard Piles, play direction, active color.
-static void redrawMainInfoRegion(){
+void redrawMainInfoRegion(){
 	u8 colorTile;
 
-	// Remove the discard card. (Always do this first.)
-	removeCard_lg();
+	// Only redraw the center if needed. (Reduces graphical "flashing.")
+	if(game.needCenterRedraw==1){
+		// Remove the discard card. (Always do this first.)
+		removeCard_lg();
 
-	// Redraw the center.
-	// Fill(9,10, 10, 7, pgm_read_byte(&(wood_color1 [2])));
-	DrawMap2(9,10,board_center_12x10);
+		// Redraw the center.
+		// Fill(9,10, 10, 7, pgm_read_byte(&(wood_color1 [2])));
+		DrawMap2(9,10,board_center_12x10);
 
-	// Redraw the Draw Pile.
-	DrawMap2(pgm_read_byte(&(draw_pos[0])), pgm_read_byte(&(draw_pos[1])), card_back_lg);
+		// Redraw the Draw Pile.
+		DrawMap2(pgm_read_byte(&(draw_pos[0])), pgm_read_byte(&(draw_pos[1])), card_back_lg);
+
+		// Redraw the Draw pile stack.
+		// redrawUnderDrawPile();
+
+		// Redraw the last discard if it was a valid card.
+		if(game.lastCardPlayed != 255){
+			// Redraw the Discard Card.
+			// drawCard(
+			// 	255                              ,
+			// 	pgm_read_byte(&(discard_pos[0])) ,
+			// 	pgm_read_byte(&(discard_pos[1])) ,
+			// 	LARGE_CARD                       ,
+			// 	cards[game.lastCardPlayed].value ,
+			// 	cards[game.lastCardPlayed].color
+			// );
+
+			// Draw the discard card.
+			getNewCardTilemap(
+				game.activePlayer               , // playerNum
+				LARGE_CARD                      , // size
+				cards[game.lastCardPlayed].value, // value
+				cards[game.lastCardPlayed].color, // color
+				game.vramTilemap                  // map
+			);
+
+			DrawMap_vramtiles(
+				pgm_read_byte(&(discard_pos[0])),
+				pgm_read_byte(&(discard_pos[1])),
+				game.vramTilemap
+			);
+
+			// Redraw the Discard pile stack.
+			// redrawUnderDiscardPile();
+		}
+
+		game.needCenterRedraw=0;
+		// game.needCenterRedraw=1;
+	}
 
 	// Redraw the Draw pile stack.
 	redrawUnderDrawPile();
 
-	// Redraw the last discard if it was a valid card.
-	if(game.lastCardPlayed != 255){
-		// Redraw the Discard Card.
-		drawCard(
-			255                              ,
-			pgm_read_byte(&(discard_pos[0])) ,
-			pgm_read_byte(&(discard_pos[1])) ,
-			LARGE_CARD                       ,
-			cards[game.lastCardPlayed].value ,
-			cards[game.lastCardPlayed].color
-		);
-		// Redraw the Discard pile stack.
-		redrawUnderDiscardPile();
-	}
+	// Redraw the Discard pile stack.
+	redrawUnderDiscardPile();
 
 	// Play direction.
 	if     (game.direction==FORWARD ) {
@@ -2238,7 +2541,7 @@ static void redrawMainInfoRegion(){
 	// debug_showDebugData();
 }
 // Displays player name, card count, uno.
-static void updatePlayerDisplayedData(){
+void updatePlayerDisplayedData(){
 	// Count all player cards.
 	u8 cardCount_p1 = countPlayerCards(1);
 	u8 cardCount_p2 = countPlayerCards(2);
@@ -2254,13 +2557,17 @@ static void updatePlayerDisplayedData(){
 		N782_print    ( 23 , VRAM_TILES_V-3 , S_P1   , 0 ) ;
 		N782_print    ( 23 , VRAM_TILES_V-2 , S_CARDS, 0 ) ;
 		Fill(25 , VRAM_TILES_V-1, 3,1, 0);
+
+		Fill(23 , VRAM_TILES_V-1,3,1,0);
 		N782_print_u8 ( 23 , VRAM_TILES_V-1 , cardCount_p1) ;
 
 		// Clear the UNO indicator.
 		Fill(24 , VRAM_TILES_V-4, 4,1, 0x00);
 
 		// Set the UNO indicator where applicable.
-		if( cardCount_p1==1 ) { N782_print( 24 , VRAM_TILES_V-4, S_UNO , 0 ) ; }
+		if(game.gamestate2==GS_PLAYING_PLAYING){
+			if( cardCount_p1==1 ) { N782_print( 24 , VRAM_TILES_V-4, S_UNO , 0 ) ; }
+		}
 	}
 	// P2
 	if(game.activePlayers[1]==1){
@@ -2268,9 +2575,13 @@ static void updatePlayerDisplayedData(){
 		N782_print    ( 0 , VRAM_TILES_V-3 , S_P2   , 0 ) ;
 		N782_print    ( 0 , VRAM_TILES_V-2 , S_CARDS, 0 ) ;
 		Fill(2 , VRAM_TILES_V-1, 3,1, 0);
+
+		Fill(0 , VRAM_TILES_V-1,3,1,0);
 		N782_print_u8 ( 0 , VRAM_TILES_V-1 , cardCount_p2) ;
 		Fill(1  , VRAM_TILES_V-4, 4,1, 0x00);
-		if( cardCount_p2==1 ) { N782_print( 1  , VRAM_TILES_V-4, S_UNO , 0 ) ; }
+		if(game.gamestate2==GS_PLAYING_PLAYING){
+			if( cardCount_p2==1 ) { N782_print( 1  , VRAM_TILES_V-4, S_UNO , 0 ) ; }
+		}
 	}
 	// P3
 	if(game.activePlayers[2]==1){
@@ -2278,9 +2589,13 @@ static void updatePlayerDisplayedData(){
 		N782_print    ( 0 , 0 , S_P3   ,0 ) ;
 		N782_print    ( 0 , 1 , S_CARDS,0)  ;
 		Fill(2 , 2, 3,1, 0);
+
+		Fill(0,2,3,1,0);
 		N782_print_u8 ( 0 , 2 , cardCount_p3) ;
 		Fill(1  , 3             , 4,1, 0x00);
-		if( cardCount_p3==1 ) { N782_print( 1  , 3             , S_UNO , 0 ) ; }
+		if(game.gamestate2==GS_PLAYING_PLAYING){
+			if( cardCount_p3==1 ) { N782_print( 1  , 3             , S_UNO , 0 ) ; }
+		}
 	}
 	// P4
 	if(game.activePlayers[3]==1){
@@ -2288,15 +2603,19 @@ static void updatePlayerDisplayedData(){
 		N782_print    ( 23 , 0 , S_P4   ,0 ) ;
 		N782_print    ( 23 , 1 , S_CARDS,0 ) ;
 		Fill(25 , 2, 3,1, 0);
+
+		Fill(23,2,3,1,0);
 		N782_print_u8 ( 23 , 2 , cardCount_p4) ;
 		Fill(24 , 3             , 4,1, 0x00);
-		if( cardCount_p4==1 ) { N782_print( 24 , 3             , S_UNO , 0 ) ; }
+		if(game.gamestate2==GS_PLAYING_PLAYING){
+			if( cardCount_p4==1 ) { N782_print( 24 , 3             , S_UNO , 0 ) ; }
+		}
 	}
 
 }
 
 // DONE -- gstate_title
-static void gstate_title_n782(){
+void gstate_title_n782(){
 	// nicksen782 lense flare animation.
 
 	ClearVram();
@@ -2352,7 +2671,7 @@ static void gstate_title_n782(){
 
 	game.gamestate2=GS_TITLE_UZEBOX;
 }
-static void gstate_title_uzebox(){
+void gstate_title_uzebox(){
 	ClearVram();
 	SetTileTable( bg_tiles );
 	u8 centered_x=(VRAM_TILES_H/2) - (9/2);
@@ -2408,7 +2727,7 @@ static void gstate_title_uzebox(){
 	WaitVsync(50);
 	game.gamestate2=GS_TITLE_MAINMENU;
 }
-static void gstate_title_mainmenu(){
+void gstate_title_mainmenu(){
 	ClearVram();
 	debug_showDebugData();
 	SetTileTable( bg_tiles );
@@ -2556,7 +2875,7 @@ static void gstate_title_mainmenu(){
 		WaitVsync(1);
 	}
 }
-static void gstate_title(){
+void gstate_title(){
 	while(game.gamestate1==GS_TITLE){
 		if     (game.gamestate2==GS_TITLE_N782    ){ gstate_title_n782()    ; }
 		else if(game.gamestate2==GS_TITLE_UZEBOX  ){ gstate_title_uzebox()  ; }
@@ -2568,10 +2887,10 @@ static void gstate_title(){
 }
 
 // DONE -- gstate_options
-static void gstate_options1(){
+void gstate_options1(){
 	// Uzenet setup
 	// NOTHING HERE YET!
-	DrawMap2(0,0,options1_28x28);
+	// DrawMap2(0,0,options1_28x28);
 	while(game.gamestate2==GS_OPTIONS_1){
 		getInputs();
 		if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
@@ -2583,336 +2902,7 @@ static void gstate_options1(){
 	}
 
 }
-// static void gstate_options2(){
-// 	DrawMap2(0,0,options2_28x28);
-
-// 	// Four boxes.
-// 		// Player setup
-// 			// 4 rows.
-// 			// Each row can be adjusted to have the value of "HUMAN", "CPU", "NONE".
-// 		// Win Style
-// 			// 2 rows.
-// 			// Each row can be adjusted to have the value of "FIRST TO ZERO CARDS", "FIRST TO 500 POINTS".
-// 		// No Playable Card.
-// 			// 2 rows.
-// 			// Each row can be adjusted to have the value of "DRAW ONLY ONE CARD", "DRAW UNTIL PLAYABLE".
-// 	// DPAD changes the cursor. DPAD changes the option for the Players box.
-// 	// A accepts the selection(s) and moves to the next box.
-// 		// On the last accepted box, the game starts.
-// 	// B moves back to the previous box. Settings remain the same until changed.
-
-// 	u8 currentBox=0;
-
-// 	u8 box1_y_index=0;
-// 	u8 box3_y_index=0;
-// 	u8 box4_y_index=0;
-
-// 	u8 box1_y_rows[4] = { 5 , 6  ,7, 8 };
-// 	u8 box3_y_rows[2] = { 14, 15 };
-// 	u8 box4_y_rows[2] = { 21, 22 };
-
-// 	u8 cursor_box1_x=3;
-// 	u8 cursor_box1_y=box1_y_rows[box1_y_index];
-
-// 	u8 cursor_box3_x=3;
-// 	u8 cursor_box3_y=box3_y_rows[box3_y_index];
-
-// 	u8 cursor_box4_x=3;
-// 	u8 cursor_box4_y=box4_y_rows[box4_y_index];
-
-// 	// Cursor timer and current frame.
-// 	u8 * cursorTimer = &vsynccounter8b_gen1;
-// 	*cursorTimer=15;
-// 	u8 currentCursor = 0;
-
-// 	u8 nextX    ;
-// 	u8 nextY    ;
-// 	u8 nextType ;
-
-// 	// These values will be copied to the game struct.
-// 	u8 p1_type   = game.player_types[0] ;
-// 	u8 p2_type   = game.player_types[1] ;
-// 	u8 p3_type   = game.player_types[2] ;
-// 	u8 p4_type   = game.player_types[3] ;
-// 	u8 ai_type   = game.ai_type         ;
-// 	u8 winStyle  = game.winStyle        ;
-// 	u8 drawStyle = game.drawStyle       ;
-
-// 	// PRINT THE CURRENT (default) PLAYER TYPES.
-
-// 	void printPlayerType(u8 x, u8 y, enum playerTypes type){
-// 		// Erase the area that is about to be printed to.
-// 		Fill(x, y, 5,1, 0x00);
-// 		// Print the player type.
-// 		switch(type){
-// 			case HUMAN : { N782_print(x, y, S_HUMAN, 0); break; }
-// 			case CPU   : { N782_print(x, y, S_CPU  , 0); break; }
-// 			case NONE  : { N782_print(x, y, S_NONE , 0); break; }
-// 		};
-// 	}
-// 	// Display the default player types.
-// 	printPlayerType( (cursor_box1_x+4) , box1_y_rows[0], game.player_types[0] );
-// 	printPlayerType( (cursor_box1_x+4) , box1_y_rows[1], game.player_types[1] );
-// 	printPlayerType( (cursor_box1_x+4) , box1_y_rows[2], game.player_types[2] );
-// 	printPlayerType( (cursor_box1_x+4) , box1_y_rows[3], game.player_types[3] );
-
-// 	// Game setup
-// 	while(game.gamestate2==GS_OPTIONS_2){
-// 		// Change the cursor frame?
-// 		if(*cursorTimer > 15 ){
-// 			// Hide all cursors.
-
-// 			// "PLAYERS" box.
-// 			MapSprite2( 0, cursor_f1_r, SPRITE_OFF );
-// 			// "WIN STYLE" box.
-// 			MapSprite2( 1, cursor_f1_r, SPRITE_OFF );
-// 			// "DRAW STYLE" box.
-// 			MapSprite2( 2, cursor_f1_r, SPRITE_OFF );
-
-// 			// "PLAYERS" box.
-// 			if     (currentBox==0){
-// 				if     (currentCursor==0){
-// 					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
-// 					MoveSprite( currentBox, cursor_box1_x<<3 , cursor_box1_y<<3, 1, 1);
-// 				}
-// 				else                     {
-// 					MapSprite2( currentBox, cursor_f2_r, SPRITE_BANK0 );
-// 					MoveSprite( currentBox, cursor_box1_x<<3 , cursor_box1_y<<3, 1, 1);
-// 				}
-// 			}
-
-// 			// "WIN STYLE" box.
-// 			else if(currentBox==1){
-// 				if     (currentCursor==0){
-// 					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
-// 					MoveSprite( currentBox, cursor_box3_x<<3 , cursor_box3_y<<3, 1, 1);
-// 				}
-// 				else                     {
-// 					MapSprite2( currentBox, cursor_f2_r, SPRITE_BANK0 );
-// 					MoveSprite( currentBox, cursor_box3_x<<3 , cursor_box3_y<<3, 1, 1);
-// 				}
-// 			}
-
-// 			// "DRAW STYLE" box.
-// 			else if(currentBox==2){
-// 				if     (currentCursor==0){
-// 					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
-// 					MoveSprite( currentBox, cursor_box4_x<<3 , cursor_box4_y<<3, 1, 1);
-// 				}
-// 				else                     {
-// 					MapSprite2( currentBox, cursor_f1_r, SPRITE_BANK0 );
-// 					MoveSprite( currentBox, cursor_box4_x<<3 , cursor_box4_y<<3, 1, 1);
-// 				}
-// 			}
-
-// 			// Flip the cursor frame.
-// 			currentCursor = !currentCursor;
-
-// 			// Reset the counter.
-// 			*cursorTimer=0;
-// 		}
-
-// 		// Read gamepad.
-// 		getInputs();
-
-// 		// Look for the softReset command.
-// 		if( (game.btnHeld1 & BTN_SR) && (game.btnHeld1 & BTN_SL) ) { SoftReset(); }
-
-// 		// If button is held...
-// 		if( (game.btnHeld1) ) {
-// 			// "PLAYERS" box.
-// 			if     (currentBox==0){
-// 				// Move the cursor up or down.
-// 				if( (game.btnHeld1 & BTN_UP) || (game.btnHeld1 & BTN_DOWN) ) {
-// 					// Move cursor UP (do bounds check.)
-// 					if( (game.btnHeld1 & BTN_UP   ) ) {
-// 						box1_y_index = box1_y_index==0                     ? sizeof(box1_y_rows)-1 : box1_y_index-1;
-// 					}
-// 					// Move cursor DOWN (do bounds check.)
-// 					if( (game.btnHeld1 & BTN_DOWN ) ) {
-// 						box1_y_index = box1_y_index==sizeof(box1_y_rows)-1 ? 0                     : box1_y_index+1;
-// 					}
-// 					// Adjust cursor y position.
-// 					cursor_box1_y=box1_y_rows[box1_y_index];
-// 					// Redraw cursor.
-// 					MoveSprite( 0 , cursor_box1_x<<3 , cursor_box1_y<<3, 1, 1);
-// 				}
-// 				// Change the selected option.
-// 				else if( (game.btnHeld1 & BTN_LEFT) || (game.btnHeld1 & BTN_RIGHT) ) {
-// 					if     (box1_y_index==0){
-// 						// Set the new player type. (Do bounds check.)
-// 						p1_type = p1_type==0 ? 2 : p1_type-1;
-// 						// Set the nextX to print from.
-// 						nextX=cursor_box1_x+4;
-// 						// Set the nextY to print from.
-// 						nextY=box1_y_rows[box1_y_index];
-// 						// Set the nextType to print.
-// 						nextType=p1_type;
-// 					}
-// 					else if(box1_y_index==1){
-// 						p2_type = p2_type==0 ? 2 : p2_type-1;
-// 						nextX=cursor_box1_x+4;
-// 						nextY=box1_y_rows[box1_y_index];
-// 						nextType=p2_type;
-// 					}
-// 					else if(box1_y_index==2){
-// 						p3_type = p3_type==0 ? 2 : p3_type-1;
-// 						nextX=cursor_box1_x+4;
-// 						nextY=box1_y_rows[box1_y_index];
-// 						nextType=p3_type;
-// 					}
-// 					else if(box1_y_index==3){
-// 						p4_type = p4_type==0 ? 2 : p4_type-1;
-// 						nextX=cursor_box1_x+4;
-// 						nextY=box1_y_rows[box1_y_index];
-// 						nextType=p4_type;
-// 					}
-
-// 					printPlayerType( nextX , nextY, nextType );
-
-// 				}
-// 				// Confirm selection, move to the next box.
-// 				if( (game.btnHeld1 & BTN_A || game.btnHeld1 & BTN_START  ) ) {
-// 					currentBox++;
-// 				}
-// 				// Return to the title screen.
-// 				if( (game.btnHeld1 & BTN_B    ) ) {
-// 					// Go back to the title screen.
-// 					game.gamestate1=GS_TITLE;
-// 					game.gamestate2=GS_TITLE_MAINMENU;
-// 				}
-// 			}
-
-// 			// "WIN STYLE" box.
-// 			else if(currentBox==1){
-// 				// winStyle
-// 				// Move the cursor up or down.
-// 				if( (game.btnHeld1 & BTN_UP) || (game.btnHeld1 & BTN_DOWN) ) {
-// 					// Move cursor UP (do bounds check.)
-// 					if( (game.btnHeld1 & BTN_UP   ) ) {
-// 						box3_y_index = box3_y_index==0                     ? sizeof(box3_y_rows)-1 : box3_y_index-1;
-// 					}
-// 					// Move cursor DOWN (do bounds check.)
-// 					if( (game.btnHeld1 & BTN_DOWN ) ) {
-// 						box3_y_index = box3_y_index==sizeof(box3_y_rows)-1 ? 0                     : box3_y_index+1;
-// 					}
-// 					// FIRSTTO500POINTS is 0, FIRSTTO0CARDS is 1.
-// 					winStyle=box3_y_index;
-// 					// Adjust cursor y position.
-// 					cursor_box3_y=box3_y_rows[box3_y_index];
-// 					// Redraw cursor.
-// 					MoveSprite( 1 , cursor_box3_x<<3 , cursor_box3_y<<3, 1, 1);
-// 				}
-// 				// Confirm selection, move to the next box.
-// 				if( (game.btnHeld1 & BTN_A || game.btnHeld1 & BTN_START  ) ) {
-// 					currentBox++;
-// 				}
-// 				// Move to the previous box.
-// 				if( (game.btnHeld1 & BTN_B    ) ) {
-// 					currentBox--;
-// 				}
-// 			}
-
-// 			// "DRAW STYLE" box.
-// 			else if(currentBox==2){
-// 				// Move the cursor up or down.
-// 				if( (game.btnHeld1 & BTN_UP) || (game.btnHeld1 & BTN_DOWN) ) {
-// 					// Move cursor UP (do bounds check.)
-// 					if( (game.btnHeld1 & BTN_UP   ) ) {
-// 						box4_y_index = box4_y_index==0                     ? sizeof(box4_y_rows)-1 : box4_y_index-1;
-// 					}
-// 					// Move cursor DOWN (do bounds check.)
-// 					if( (game.btnHeld1 & BTN_DOWN ) ) {
-// 						box4_y_index = box4_y_index==sizeof(box4_y_rows)-1 ? 0                     : box4_y_index+1;
-// 					}
-// 					//
-// 					drawStyle=box4_y_index;
-// 					// Adjust cursor y position.
-// 					cursor_box4_y=box4_y_rows[box4_y_index];
-// 					// Redraw cursor.
-// 					MoveSprite( 1 , cursor_box4_x<<3 , cursor_box4_y<<3, 1, 1);
-// 				}
-// 				// Confirm selection. Save settings and start the game.
-// 				if( (game.btnHeld1 & BTN_A || game.btnHeld1 & BTN_START  ) ) {
-// 					// Hide all cursors.
-// 					MapSprite2( 0, cursor_f1_r, SPRITE_OFF );
-// 					MapSprite2( 1, cursor_f1_r, SPRITE_OFF );
-// 					MapSprite2( 2, cursor_f1_r, SPRITE_OFF );
-// 					MapSprite2( 3, cursor_f1_r, SPRITE_OFF );
-
-// 					// Save the settings to the game struct.
-
-// 					// Count and set the active players. (Either HUMAN or CPU.)
-// 					game.numPlayers    =  0                         ;
-// 					if( p1_type==HUMAN || p1_type==CPU ) { game.numPlayers+=1; game.activePlayers[0]=1; } else{ game.activePlayers[0]=0 ; }
-// 					if( p2_type==HUMAN || p2_type==CPU ) { game.numPlayers+=1; game.activePlayers[1]=1; } else{ game.activePlayers[1]=0 ; }
-// 					if( p3_type==HUMAN || p3_type==CPU ) { game.numPlayers+=1; game.activePlayers[2]=1; } else{ game.activePlayers[2]=0 ; }
-// 					if( p4_type==HUMAN || p4_type==CPU ) { game.numPlayers+=1; game.activePlayers[3]=1; } else{ game.activePlayers[3]=0 ; }
-
-// 					// Make sure there is at least 2 players.
-// 					if(game.numPlayers<2){
-// 						currentBox=0;
-// 						// Wait for the player to release the button.
-// 						while ( game.btnHeld1 ){ getInputs(); WaitVsync(1); }
-// 						continue;
-// 					}
-
-// 					// Set the player types.
-// 					game.player_types[0] = p1_type;
-// 					game.player_types[1] = p2_type;
-// 					game.player_types[2] = p3_type;
-// 					game.player_types[3] = p4_type;
-
-// 					// Set the ai_type, winStyle, drawStyle.
-// 					game.ai_type        = ai_type   ;
-// 					game.winStyle       = winStyle  ;
-// 					if     (game.winStyle==FIRSTTO500POINTS){ game.pointsForWin=500; }
-// 					else if(game.winStyle==FIRSTTO0CARDS   ){ game.pointsForWin=0;   }
-
-// 					game.drawStyle      = drawStyle ;
-
-// 					// Reset accumulated points.
-// 					game.points_p1      = 0         ;
-// 					game.points_p2      = 0         ;
-// 					game.points_p3      = 0         ;
-// 					game.points_p4      = 0         ;
-
-// 					// Set active player to invalid, last card played to invalid, direction to forward.
-// 					game.activePlayer   = 255       ;
-// 					game.lastCardPlayed = 255       ;
-// 					game.direction      = FORWARD   ;
-
-// 					// DEBUG
-// 					game.autoPlay=0;
-// 					game.buttonPresses=0;
-// 					game.handsPlayed=0;
-// 					// DEBUG
-
-// 					// Start a new game.
-// 					game.gamestate1=GS_PLAYING;
-// 					game.gamestate2=GS_PLAYING_GAMESTART;
-
-// 					// ClearVram();
-// 					// btnPressed1
-// 					// getRandomSeedViaUserInput();
-// 					game.randomSeed=0;
-// 					srand(game.randomSeed);
-
-// 					break;
-// 				}
-// 				// Move to the previous box.
-// 				if( (game.btnHeld1 & BTN_B    ) ) {
-// 					currentBox--;
-// 				}
-// 			}
-
-// 			// While a button is still held...
-// 			while ( game.btnHeld1 ){ getInputs(); }
-// 		}
-
-// 	}
-// }
-static void gstate_options2(){
+void gstate_options2(){
 	DrawMap2(0,0,options2_28x28);
 
 	// Four boxes.
@@ -3226,7 +3216,13 @@ static void gstate_options2(){
 					// ClearVram();
 					// btnPressed1
 					getRandomSeedViaUserInput();
-					// game.randomSeed=1;
+
+#if USESETRANDOMSEED==1
+					game.randomSeed=RANDOMSEED;
+					N782_print(0,0, PSTR("RANDOM SEED:"), 0);
+					N782_print_u16(1,1, RANDOMSEED);
+					WaitVsync(100);
+#endif
 					srand(game.randomSeed);
 
 					break;
@@ -3243,7 +3239,7 @@ static void gstate_options2(){
 
 	}
 }
-static void gstate_options(){
+void gstate_options(){
 	while(game.gamestate1==GS_OPTIONS){
 		if     (game.gamestate2==GS_OPTIONS_1){ gstate_options1(); }
 		else if(game.gamestate2==GS_OPTIONS_2){ gstate_options2(); }
@@ -3254,7 +3250,7 @@ static void gstate_options(){
 }
 
 // DONE -- gstate_credits
-static void gstate_credits1(){
+void gstate_credits1(){
 	DrawMap2(0,0,credits1_28x28);
 	while(game.gamestate2==GS_CREDITS_1){
 		getInputs();
@@ -3267,8 +3263,8 @@ static void gstate_credits1(){
 	}
 
 }
-static void gstate_credits2(){
-	DrawMap2(0,0,credits2_28x28);
+void gstate_credits2(){
+	// DrawMap2(0,0,credits2_28x28);
 
 	// Game setup
 	while(game.gamestate2==GS_CREDITS_2){
@@ -3282,7 +3278,7 @@ static void gstate_credits2(){
 	}
 
 }
-static void gstate_credits(){
+void gstate_credits(){
 	while(game.gamestate1==GS_CREDITS){
 		if     (game.gamestate2==GS_CREDITS_1){ gstate_credits1(); }
 		else if(game.gamestate2==GS_CREDITS_2){ gstate_credits2(); }
@@ -3293,7 +3289,7 @@ static void gstate_credits(){
 }
 
 // DONE -- gstate_rules
-static void gstate_rules_1(){
+void gstate_rules_1(){
 	DrawMap2(0,0,rules1_28x28);
 	while(game.gamestate2==GS_RULES_1){
 		getInputs();
@@ -3305,7 +3301,7 @@ static void gstate_rules_1(){
 		}
 	}
 }
-static void gstate_rules_2(){
+void gstate_rules_2(){
 	DrawMap2(0,0,rules2_28x28);
 	while(game.gamestate2==GS_RULES_2){
 		getInputs();
@@ -3317,7 +3313,7 @@ static void gstate_rules_2(){
 		}
 	}
 }
-static void gstate_rules(){
+void gstate_rules(){
 	while(game.gamestate1==GS_RULES){
 		if     (game.gamestate2==GS_RULES_1){ gstate_rules_1(); }
 		else if(game.gamestate2==GS_RULES_2){ gstate_rules_2(); }
@@ -3328,7 +3324,7 @@ static void gstate_rules(){
 }
 
 // Resets the game for a new round. (Does NOT impact scores.)
-static void newGameSetup(){
+void newGameSetup(){
 	// Clear all reserved ramtile data.
 	clearAllReservedRamtiles();
 
@@ -3555,7 +3551,7 @@ static void newGameSetup(){
 
 // ===== GS_PLAYING UTILITIES =====
 // Draws a card face down for a player at the specified position (remove fully the card first!)
-static void drawFaceDownCard(u8 playerNum, u8 position){
+void drawFaceDownCard(u8 playerNum, u8 position){
 	// This function assumes that the cards have been removed first.
 	// :: From the screen
 	// :: From ramtile reservations (important!)
@@ -3594,10 +3590,13 @@ static void drawFaceDownCard(u8 playerNum, u8 position){
 	DrawMap2(x, y, card);
 }
 // Only works with the cards of the specified player.
-static void displayCards_byPlayer(u8 playerNum, u8 option){
+void displayCards_byPlayer(u8 playerNum, u8 option){
 	if( option==CARDS_FACEDOWN ){
 		// Get the count of this player's cards.
 		u8 numCards = countPlayerCards(playerNum) ;
+
+		// Clear game.playerVisibleHand.
+		for(u8 pos=0; pos<5; pos+=1){ game.playerVisibleHand[pos]=255; }
 
 		for(u8 pos=0; pos<5; pos+=1){
 			// Remove the existing card.
@@ -3619,7 +3618,7 @@ static void displayCards_byPlayer(u8 playerNum, u8 option){
 	}
 }
 // Determine where the card select cursor should be based on cursor index and player number.
-static void getCursorPos(u8 playerNum, u8 cursorIndex, u8 *x, u8 *y){
+void getCursorPos(u8 playerNum, u8 cursorIndex, u8 *x, u8 *y){
 	if     (playerNum==1){
 		*x = pgm_read_byte(&(p1_pos_cursor[cursorIndex][0]));
 		*y = pgm_read_byte(&(p1_pos_cursor[cursorIndex][1]));
@@ -3642,10 +3641,16 @@ static void getCursorPos(u8 playerNum, u8 cursorIndex, u8 *x, u8 *y){
 	// WaitVsync(75);
 }
 // Allows the user to choose a new color when using a Wild card.
-static void askUserToSetNewColor(enum SNC_choices howToChoose){
+void askUserToSetNewColor(enum SNC_choices howToChoose){
+	game.needCenterRedraw=1;
+
 	// Ask the user to chose the new color.
 	// Use the message area rows and the draw/discard rows.
 	// The erased rows will be drawn after the user makes their selection.
+
+	// Hide all sprite tiles.
+	for(u8 i=0; i<MAX_SPRITES; i+=1){ sprites[i].flags=SPRITE_OFF; }
+	WaitVsync(1);
 
 	const u8 replacementTile = pgm_read_byte(&(wood_color2 [2]));
 	// const u8 YELLOW_VALUE    = pgm_read_byte(&(yellow_color[2]));
@@ -3843,7 +3848,12 @@ static void askUserToSetNewColor(enum SNC_choices howToChoose){
 			// Remove the last line of the window.
 			Fill(startx,y,rowWidth,1, replacementTile);
 
+			// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
+			redrawMainInfoRegion();
+
 			SetSpriteVisibility(true);
+
+
 
 			// End the loop.
 			break;
@@ -3855,7 +3865,7 @@ static void askUserToSetNewColor(enum SNC_choices howToChoose){
 
 }
 // Draws and moves a card as a sprite from point A to point B.
-static void moveCard( struct cardData_ *cardData, u8 autoRemove, u8 autoRemoveDelay, u8 cardDelay){
+void moveCard( struct cardData_ *cardData, u8 autoRemove, u8 autoRemoveDelay, u8 cardDelay){
 	// Reset the counter. (Is used to speed-limit the card movement.)
 	u8 counter=0;
 	// u8 cardDelay=ENDOFROUNDDEALBASESPEED;
@@ -3864,20 +3874,26 @@ static void moveCard( struct cardData_ *cardData, u8 autoRemove, u8 autoRemoveDe
 	s8 xdir;
 	s8 ydir;
 
+	// Get a vram tilemap for the specified card.
+	getNewCardTilemap( cardData->player , cardData->cardSize, cardData->value , cardData->color, cardData->map );
+
+	// Draw the vram tilemap.
+	// DrawMap_vramtiles(cardData->tile_x, cardData->tile_y, cardData->map);
+
 	// Draw the card.
-	drawCard(
-		cardData->player   ,
-		cardData->tile_x   ,
-		cardData->tile_y   ,
-		cardData->cardSize ,
-		cardData->value    ,
-		cardData->color
-	);
+	// drawCard(
+	// 	cardData->player   ,
+	// 	cardData->tile_x   ,
+	// 	cardData->tile_y   ,
+	// 	cardData->cardSize ,
+	// 	cardData->value    ,
+	// 	cardData->color
+	// );
 
 	// Get the tilemap for the new card.
-	setVramTilemap( cardData->tile_x, cardData->tile_y , cardData->w, cardData->h, (cardData->map) );
+	// setVramTilemap( cardData->tile_x, cardData->tile_y , cardData->w, cardData->h, (cardData->map) );
 
-	// Hide the vram card.
+	// Hide the original vram card region.
 	Fill(cardData->tile_x, cardData->tile_y , cardData->w, cardData->h, cardData->fillTile);
 
 	// Map the card to a spritemap.
@@ -3929,112 +3945,102 @@ static void moveCard( struct cardData_ *cardData, u8 autoRemove, u8 autoRemoveDe
 	}
 }
 // (End of round) Displays the points for all active players.
-static void showPoints(){
+void showPoints(){
 	// Show existing points for all players.
 	u8 startX=7;
 	u8 startY=7;
 
 	N782_print    ( startX+0 , startY+0 , S_SCORES       , 0 );
 
-	startY+=2;
+	u8 y=startY+2;
 
 	if(game.activePlayers[0]==1){
-		N782_print    ( startX+0 , startY+0 , S_PLAYER       , 0 ); // Player 1
-		N782_print_u8 ( startX+5 , startY+0 , 1                  ); // Player 1
-		N782_print_u16( startX+9 , startY+0 , game.points_p1     ); // Player 1
+		N782_print    ( startX+0 , y , S_PLAYER       , 0 ); // Player 1
+		N782_print_u8 ( startX+5 , y , 1                  ); // Player 1
+		N782_print_u16( startX+9 , y , game.points_p1     ); // Player 1
+		y++;
 	}
 
 	if(game.activePlayers[1]==1){
-		N782_print    ( startX+0 , startY+1 , S_PLAYER       , 0 ); // Player 2
-		N782_print_u8 ( startX+5 , startY+1 , 2                  ); // Player 2
-		N782_print_u16( startX+9 , startY+1 , game.points_p2     ); // Player 2
+		N782_print    ( startX+0 , y , S_PLAYER       , 0 ); // Player 2
+		N782_print_u8 ( startX+5 , y , 2                  ); // Player 2
+		N782_print_u16( startX+9 , y , game.points_p2     ); // Player 2
+		y++;
 	}
 
 	if(game.activePlayers[2]==1){
-		N782_print    ( startX+0 , startY+2 , S_PLAYER       , 0 ); // Player 3
-		N782_print_u8 ( startX+5 , startY+2 , 3                  ); // Player 3
-		N782_print_u16( startX+9 , startY+2 , game.points_p3     ); // Player 3
+		N782_print    ( startX+0 , y , S_PLAYER       , 0 ); // Player 3
+		N782_print_u8 ( startX+5 , y , 3                  ); // Player 3
+		N782_print_u16( startX+9 , y , game.points_p3     ); // Player 3
+		y++;
 	}
 
 	if(game.activePlayers[3]==1){
-		N782_print    ( startX+0 , startY+3 , S_PLAYER       , 0 ); // Player 4
-		N782_print_u8 ( startX+5 , startY+3 , 4                  ); // Player 4
-		N782_print_u16( startX+9 , startY+3 , game.points_p4     ); // Player 4
+		N782_print    ( startX+0 , y , S_PLAYER       , 0 ); // Player 4
+		N782_print_u8 ( startX+5 , y , 4                  ); // Player 4
+		N782_print_u16( startX+9 , y , game.points_p4     ); // Player 4
+		y++;
 	}
 
 }
 // (End of round) Adds points to the winner's score. Shows animation show of the point tallys.
-static void setPoints(u8 winner){
-	// Tally up the points.
-
-	// Points are now added. The remaining player's cards are added up and that score is added to the winning player's score.
-		// "Number Card"    - Number value of the card is number of points.
-		// "Draw Two"       - 20 Points
-		// "Reverse"        - 20 Points
-		// "Skip"           - 20 Points
-		// "Wild"           - 50 Points
-		// "Wild Draw Four" - 50 Points
-	// If a player reaches 500 points then they win.
-
-	// Fill(0, 0 , VRAM_TILES_H, VRAM_TILES_V, 1);
+void setPoints(u8 winner){
+	// Black out center.
 	Fill(6, 6 , 16, 16, 0);
 
+	// Show the current points.
 	showPoints();
-	WaitVsync(100);
 
-	// Contains the tilemap (vram tiles) used by the selected card sprite. (3x2 tilemaps.)
-	u8 map_2x3 [ 2 + (2*3) ]; // 2+6
-	u8 map_3x2 [ 2 + (3*2) ]; // 2+6
-	u8 map_3x4 [ 2 + (3*4) ]; // 2+12
-	map_2x3[0]=2; map_2x3[1]=3;
-	map_3x2[0]=3; map_3x2[1]=2;
-	map_3x4[0]=3; map_3x4[1]=4;
-
-	// Pointer to the tilemap arrayy
+	// Create pointer to game.vramTilemap.
 	u8 * map;
-	// Dimensions for the selected card map.
-	u8 w;
-	u8 h;
-	// s8 xdir;
-	// s8 ydir;
-	u8 dst_x;
-	u8 dst_y;
+	map=game.vramTilemap;
+
+	// Variables.
+	u8 s_w;
+	u8 s_h;
+	u8 l_w;
+	u8 l_h;
+	u8 dst_x=18;
+	u8 dst_y=15;
 	u8 tile_x;
 	u8 tile_y;
-	// u8 sprite_x ;
-	// u8 sprite_y ;
+	u8 pos;
+	u8 playerCardCount;
+	u8 newPoints;
+
+	// DEBUG
+	returnCardsForPlayer(winner);
+	removePlayerCards(winner);
+	// DEBUG
 
 	// Only the winner of the round will get points.
 	// u8 location;
 	u16 * points_slot;
 
+	// Determine which points slot will be added to.
 	switch(winner){
 		case 1  : {
-			// location=CARD_LOCATION_PLAYER1;
 			points_slot=&game.points_p1;
-			dst_x=28-3;
-			dst_y=28-3;
+			// dst_x=28-3;
+			// dst_y=28-3;
 			break;
 		}
 		case 2  : {
-			// location=CARD_LOCATION_PLAYER2;
 			points_slot=&game.points_p2;
-			dst_x=0;
-			dst_y=28-3;
+			// dst_x=0;
+			// dst_y=28-3;
 			break;
 		}
 		case 3  : {
-			// location=CARD_LOCATION_PLAYER3;
 			points_slot=&game.points_p3;
-			dst_x=0;
-			dst_y=0;
+			// dst_x=0;
+			// dst_y=0;
 			break;
 		}
 		case 4  : {
-			// location=CARD_LOCATION_PLAYER4;
 			points_slot=&game.points_p4;
-			dst_x=28-3;
-			dst_y=0;
+			// dst_x=28-3;
+			// dst_y=0;
 			break;
 		}
 		default : {
@@ -4043,172 +4049,96 @@ static void setPoints(u8 winner){
 		}
 	}
 
-	u8 pos=0;
-	u8 cardsSent=0;
-	u8 playerCardCount;
-	// u8 player_cardPosition;
-	u8 onLast5Cards=0;
-	// u8 debugValue=0;
-	u8 newPoints=0;
-
-	// DEBUG
-	returnCardsForPlayer(winner);
-	removePlayerCards(winner);
-	// DEBUG
-
+	// Go through all player's cards.
 	for(u8 player=1; player<4+1; player+=1){
-		// Is this player an active player?
+		// Skip inactive players.
 		if(game.activePlayers[player-1]==0){ continue; }
 
-		// Resets.
-		// clearAllRamtiles();
-		clearAllReservedRamtiles();
-		game.handRow=0;
-		pos=0;
-		cardsSent=0;
-		updatePlayerDisplayedData();
-
-		// Does this player have any cards?
-		playerCardCount=countPlayerCards(player);
-		if(playerCardCount==0) { continue; }
-
-		// Is this player the winner?
+		// Skip the winner.
 		if(player==winner){ continue; }
 
-		// Show this player's cards.
+		// Get player card count.
+		playerCardCount=countPlayerCards(player);
+
+		// If the player does not have any cards then skip.
+		if(playerCardCount==0) { continue; }
+
+		// Flip up the player's cards.
 		displayCards_byPlayer(player, CARDS_FACEUP);
+		WaitVsync(10);
+
+		pos=0;
 
 		// Go through the deck.
 		for(u8 i=0; i<TOTALCARDSINDECK; i+=1){
-			// CHECK FOR 5 CARD CYCLE RESTART.
-			// Count the cards for this player.
-			playerCardCount=countPlayerCards(player);
-			// Have 5 cards already been sent?
-			if(cardsSent==5){
-				cardsSent=0;
-				pos=0;
-
-				// This is done earlier ?????
-				displayCards_byPlayer(player, CARDS_FACEUP);
-			}
-			// Do no more cards remain for this player?
-			if(playerCardCount == 0 ){
-				displayCards_byPlayer(player, CARDS_FACEUP);
-				break;
-			}
-			// Reset cardsSent and pos one more time if on the last 5 cards.
-			if( (playerCardCount <5 && onLast5Cards==false) ){
-				cardsSent=0;
-				pos=0;
-				onLast5Cards=true;
-				displayCards_byPlayer(player, CARDS_FACEUP);
-			}
-			// CHECK FOR 5 CARD CYCLE RESTART.
-
-			// Find the next card that is "owned" by the player.
-			if(
-				cards[i].location == player-1                 // Card held by the current player of the outer for loop.
-			) {
-				// Wilds: 50 points.
-				if     (cards[i].color==CARD_BLACK)                             { newPoints=50; }
-				// Number cards: Face value for points.
-				else if(cards[i].value>=CARD_0 && cards[i].value<=CARD_9 )      { newPoints=cards[i].value; }
-				// Action cards: 20 points.
-				else if(cards[i].value>=CARD_DRAW2 && cards[i].value<=CARD_REV ){ newPoints=20; }
-
-				// Set the map, w, h, tile_x, tile_y for the card that will move.
+			// If this card belongs to the player...
+			if( cards[i].location == player-1 ) {
+				// Determine the card dimensions and position coords for the displayed hand.
 				switch(cards[i].location){
 					case CARD_LOCATION_PLAYER1  : {
-						map = map_2x3 ;
-						w=map_2x3[0];h=map_2x3[1];
+						s_w=2; s_h=3;
 						tile_x=pgm_read_byte(&(p1_pos[pos][0]));
 						tile_y=pgm_read_byte(&(p1_pos[pos][1]));
 						break;
 					}
 					case CARD_LOCATION_PLAYER2  : {
-						map = map_3x2 ;
-						w=map_3x2[0];h=map_3x2[1];
+						s_w=3; s_h=2;
 						tile_x=pgm_read_byte(&(p2_pos[pos][0]));
 						tile_y=pgm_read_byte(&(p2_pos[pos][1]));
 						break;
 					}
 					case CARD_LOCATION_PLAYER3  : {
-						map = map_2x3 ;
-						w=map_2x3[0];h=map_2x3[1];
+						s_w=2; s_h=3;
 						tile_x=pgm_read_byte(&(p3_pos[pos][0]));
 						tile_y=pgm_read_byte(&(p3_pos[pos][1]));
 						break;
 					}
 					case CARD_LOCATION_PLAYER4  : {
-						map = map_3x2 ;
-						w=map_3x2[0];h=map_3x2[1];
+						s_w=3; s_h=2;
 						tile_x=pgm_read_byte(&(p4_pos[pos][0]));
 						tile_y=pgm_read_byte(&(p4_pos[pos][1]));
-
 						break;
 					}
-					default : {
-						return ;
-						break;
-					}
-				}
+					default : { return ; break; }
+				};
 
-				// Add the new points.
-				*points_slot+=newPoints;
 
-				// Update the display points.
-				showPoints();
+				// Set the map's dimensions.
+				map[0]=s_w; map[1]=s_h;
 
-				// Erase the area where the card info will be displayed.
-				Fill(6,14, 16, 4, 0x00);
+				// Determine how many points this card is worth.
+				if     (cards[i].color==CARD_BLACK)                             { newPoints=50; }
+				else if(cards[i].value>=CARD_0 && cards[i].value<=CARD_9 )      { newPoints=cards[i].value; }
+				else if(cards[i].value>=CARD_DRAW2 && cards[i].value<=CARD_REV ){ newPoints=20; }
+
+				// Display the color, value, and points for the card.
 
 				// Display the named color of the card.
 				if(cards[i].color==CARD_YELLOW){ N782_print(7,14,PSTR("YELLOW"), 0); }
 				if(cards[i].color==CARD_BLUE)  { N782_print(7,14,PSTR("BLUE"  ), 0); }
 				if(cards[i].color==CARD_RED)   { N782_print(7,14,PSTR("RED"   ), 0); }
 				if(cards[i].color==CARD_GREEN) { N782_print(7,14,PSTR("GREEN" ), 0); }
-
+				if(cards[i].color==CARD_BLACK) { N782_print(7,14,PSTR("BLACK" ), 0); }
 				// Display named value of the card
-				if     (cards[i].value==CARD_0)          { N782_print(7,15,PSTR("ZERO" ), 0); }
-				else if(cards[i].value==CARD_1)          { N782_print(7,15,PSTR("ONE"  ), 0); }
-				else if(cards[i].value==CARD_2)          { N782_print(7,15,PSTR("TWO"  ), 0); }
-				else if(cards[i].value==CARD_3)          { N782_print(7,15,PSTR("THREE"), 0); }
-				else if(cards[i].value==CARD_4)          { N782_print(7,15,PSTR("FOUR" ), 0); }
-				else if(cards[i].value==CARD_5)          { N782_print(7,15,PSTR("FIVE" ), 0); }
-				else if(cards[i].value==CARD_6)          { N782_print(7,15,PSTR("SIX"  ), 0); }
-				else if(cards[i].value==CARD_7)          { N782_print(7,15,PSTR("SEVEN"), 0); }
-				else if(cards[i].value==CARD_8)          { N782_print(7,15,PSTR("EIGHT"), 0); }
-				else if(cards[i].value==CARD_9)          { N782_print(7,15,PSTR("NINE" ), 0); }
-				else if(cards[i].value==CARD_DRAW2)      { N782_print(7,15,PSTR("DRAW 2")    , 0); }
-				else if(cards[i].value==CARD_SKIP)       { N782_print(7,15,PSTR("SKIP")      , 0); }
-				else if(cards[i].value==CARD_REV)        { N782_print(7,15,PSTR("REVERSE")   , 0); }
-				else if(cards[i].value==CARD_WILD)       { N782_print(7,15,PSTR("WILD")      , 0); }
+				if     (cards[i].value==CARD_0)          { N782_print(7,15,PSTR("ZERO"     ) , 0); }
+				else if(cards[i].value==CARD_1)          { N782_print(7,15,PSTR("ONE"      ) , 0); }
+				else if(cards[i].value==CARD_2)          { N782_print(7,15,PSTR("TWO"      ) , 0); }
+				else if(cards[i].value==CARD_3)          { N782_print(7,15,PSTR("THREE"    ) , 0); }
+				else if(cards[i].value==CARD_4)          { N782_print(7,15,PSTR("FOUR"     ) , 0); }
+				else if(cards[i].value==CARD_5)          { N782_print(7,15,PSTR("FIVE"     ) , 0); }
+				else if(cards[i].value==CARD_6)          { N782_print(7,15,PSTR("SIX"      ) , 0); }
+				else if(cards[i].value==CARD_7)          { N782_print(7,15,PSTR("SEVEN"    ) , 0); }
+				else if(cards[i].value==CARD_8)          { N782_print(7,15,PSTR("EIGHT"    ) , 0); }
+				else if(cards[i].value==CARD_9)          { N782_print(7,15,PSTR("NINE"     ) , 0); }
+				else if(cards[i].value==CARD_DRAW2)      { N782_print(7,15,PSTR("DRAW 2"   ) , 0); }
+				else if(cards[i].value==CARD_SKIP)       { N782_print(7,15,PSTR("SKIP"     ) , 0); }
+				else if(cards[i].value==CARD_REV)        { N782_print(7,15,PSTR("REVERSE"  ) , 0); }
+				else if(cards[i].value==CARD_WILD)       { N782_print(7,15,PSTR("WILD"     ) , 0); }
 				else if(cards[i].value==CARD_WILD_DRAW4) { N782_print(7,15,PSTR("W. DRAW 4") , 0); }
 
 				// Display value of the card
-				N782_print   (7,16,PSTR("POINTS:"), 0);
-				N782_print_u8(7+7,16,newPoints);
-
-				dst_x=13+5;
-				dst_y=15;
-
-				// Set the struct data.
-				struct cardData_ cardData;
-				cardData.player   = player         ;
-				cardData.tile_x   = tile_x         ;
-				cardData.tile_y   = tile_y         ;
-				cardData.dst_x    = dst_x          ;
-				cardData.dst_y    = dst_y          ;
-				cardData.cardSize = SMALL_CARD     ;
-				cardData.value    = cards[i].value ;
-				cardData.color    = cards[i].color ;
-				cardData.w        = w              ;
-				cardData.h        = h              ;
-				cardData.map      = map            ;
-				cardData.fillTile = pgm_read_byte(&(offBlackTile[2])) ;
-
-				// Move the card to the center then remove the card after a delay.
-				moveCard(&cardData, 1, 1, ENDOFROUNDDEALBASESPEED);
+				N782_print   (7,17,PSTR("POINTS:"), 0);
+				N782_print_u8(7+7,17,newPoints);
 
 				// Set the card location to the Draw Pile.
 				cards[i].location=CARD_LOCATION_DRAW;
@@ -4216,57 +4146,89 @@ static void setPoints(u8 winner){
 				// Update the displayed card counts.
 				updatePlayerDisplayedData();
 
-				// Draw the card.
-				drawCard(
+				// Generate a new vram map for this card.
+				getNewCardTilemap(
+					player         ,
+					SMALL_CARD     ,
+					cards[i].value ,
+					cards[i].color ,
+					map
+				);
+				// Clear the card from the current position.
+				Fill(tile_x, tile_y , s_w, s_h, 0x00);
+
+				struct cardData_ cardData;
+				cardData.player   = player         ;
+				cardData.tile_x   = tile_x         ;
+				cardData.tile_y   = tile_y         ;
+				cardData.dst_x    = dst_x          ;
+				cardData.dst_y    = dst_y-1        ;
+				cardData.cardSize = SMALL_CARD     ;
+				cardData.value    = cards[i].value ;
+				cardData.color    = cards[i].color ;
+				cardData.w        = s_w            ;
+				cardData.h        = s_h            ;
+				cardData.map      = map            ;
+				cardData.fillTile = pgm_read_byte(&(offBlackTile[2])) ;
+
+				// Fill(dst_x, dst_y-1 , s_w, s_h, 0x01);
+				moveCard(&cardData, 1, 0, ENDOFROUNDDEALBASESPEED);
+				removeUnusedRamtilesInTilemap( (map) );
+
+				// Draw large version.
+				l_w=3; l_h=4;
+				getNewCardTilemap(
 					255            ,
-					dst_x          ,
-					dst_y-1        ,
 					LARGE_CARD     ,
 					cards[i].value ,
-					cards[i].color
+					cards[i].color ,
+					map
 				);
+				// Draw the large card tilemap.
+				DrawMap_vramtiles(dst_x, dst_y-1, map);
 
-				// Get the tilemap for the new card.
-				map = map_3x4 ;
-				w=map_3x4[0];h=map_3x4[1];
-				setVramTilemap( dst_x, dst_y-1 , w, h, (map) );
+				// Add the new points.
+				*points_slot+=newPoints;
 
-				// Increment cardsSent and pos
-				cardsSent++;
-				pos++;
+				// Update the displayed points.
+				showPoints();
 
-				// Have 5 cards already been sent?
-				if(cardsSent==5){
-					// displayCards_byPlayer(player, CARDS_FACEUP);
-				}
-
-				// Wait.
+				// Hold the screen for a moment.
 				WaitVsync(15);
 
-				// Clear the vram where the large card is.
-				Fill(dst_x, dst_y-1 , w, h, 0x00);
-				// Remove the tiles used by the large card (if they were the only instances of those tiles.)
+				// Clear the large card.
+				Fill(dst_x, dst_y-1 , l_w, l_h, 0x00);
+
+				// Clear the large card's ramtiles.
 				removeUnusedRamtilesInTilemap( (map) );
-				// clearAllUnusedReservedRamtiles();
+
 				// Erase the area where the card info will be displayed.
-				Fill(6,14, 16, 4, 0x00);
+				Fill(6,14, 12, 4, 0x00);
+
+				// Flip up the next 5 cards?
+				if(pos==4){
+					pos=0;
+					displayCards_byPlayer(player, CARDS_FACEUP);
+					WaitVsync(10);
+				}
+				else{
+					// Increment pos now. We won't need it until the next iteration.
+					pos++;
+				}
+
+				// WaitVsync(1);
+				// WaitVsync(10);
+
 			}
-
 		}
-
-		// Erase the area where the card info was be displayed.
-		Fill(6,14, 16, 4, 0x00);
-
-		// Update the displayed card counts.
-		updatePlayerDisplayedData();
-
-		// clearAllRamtiles();
-		clearAllReservedRamtiles();
 	}
+	// Erase the area where the card info was displayed.
+	Fill(6,14, 12, 4, 0x00);
+	// WaitVsync(100);
 
 }
 // (UNFINISHED) Checks for UNO at the end of a play. Requires user to acknowledge the UNO or they are forced to draw a card.
-static void unoCheck(){
+void unoCheck(){
 	// Does the player now have UNO?
 	if     (countPlayerCards(game.activePlayer)==1){
 		// Make the user confirm their UNO within a short window of time.
@@ -4277,7 +4239,7 @@ static void unoCheck(){
 	}
 }
 // Handles end of round.
-static void winRound(u8 winnerOfTheRound){
+void winRound(u8 winnerOfTheRound){
 	// Win! End round, count points, start new round.
 	game.activePlayer = winnerOfTheRound;
 
@@ -4294,6 +4256,11 @@ static void winRound(u8 winnerOfTheRound){
 
 	// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
 	redrawMainInfoRegion();
+
+	playSFX(WINROUND); WaitVsync(20);
+	playSFX(WINROUND); WaitVsync(20);
+	playSFX(WINROUND); WaitVsync(20);
+	playSFX(WINROUND); WaitVsync(20);
 
 	msgHandler(ROUNDWIN_PLAYER);
 	WaitVsync(ENDOFROUNDSTARTDELAY);
@@ -4405,10 +4372,16 @@ u8 nextPlayerNumber(u8 playerNum, enum NPN_nextPlayerNumber options){
 }
 // Pauses the game and offers some options such as restarts and auto-play
 u8 pause(){
+	game.needCenterRedraw=1;
+
 	clearbgmessage();
 	// Ask the user to chose the new color.
 	// Use the message area rows and the draw/discard rows.
 	// The erased rows will be drawn after the user makes their selection.
+
+	// Hide all sprite tiles.
+	for(u8 i=0; i<MAX_SPRITES; i+=1){ sprites[i].flags=SPRITE_OFF; }
+	WaitVsync(1);
 
 	const u8 replacementTile = pgm_read_byte(&(wood_color2 [2]));
 	// const u8 YELLOW_VALUE    = pgm_read_byte(&(yellow_color[2]));
@@ -4685,7 +4658,7 @@ u8 canCardBePlayed(u8 cardIndex){
 }
 // ===== GS_PLAYING UTILITIES =====
 
-static void gstate_playing(){
+void gstate_playing(){
 	ClearVram();
 	game.gamestate1=GS_PLAYING;
 
@@ -4710,36 +4683,18 @@ static void gstate_playing(){
 	// Player hand.
 	u8 cardSelected=0;
 
-	// Card sprite.
-	// Contains the tilemap (vram tiles) used by the selected card sprite. (2x3 tilemaps.)
-	u8 map1_2x3 [ 2 + (2*3) ];
-	map1_2x3[0]=2; map1_2x3[1]=3;
-
-	// Contains the tilemap (vram tiles) used by the selected card sprite. (3x2 tilemaps.)
-	u8 map2_3x2 [ 2 + (3*2) ];
-	map2_3x2[0]=3; map2_3x2[1]=2;
-
 	// Pointer to the tilemap array
 	u8 * map ;
+
+	map=game.vramTilemap;
 
 	// Dimensions for the selected card map.
 	u8 w;
 	u8 h;
 
 	//
-	// u8 counter;
 	u8 tile_x;
 	u8 tile_y;
-
-	// u8 sprite_x;
-	// u8 sprite_y;
-
-	// s8 xdir;
-	// s8 ydir;
-
-	// Discard Pile.
-	// u8 discard_x = pgm_read_byte(&(discard_pos[0])) << 3 ; // sprite values.
-	// u8 discard_y = pgm_read_byte(&(discard_pos[1])) << 3 ; // sprite values.
 
 	// End of turn flags.
 	u8 endOfTurnFlag = 0;
@@ -4748,9 +4703,9 @@ static void gstate_playing(){
 	u8 playerDraws4  = 0;
 	u8 playerReverse = 0;
 	u8 initialIteration=1;
+	u8 cardsAlreadyFlippedDown;
+
 	u8 thisPlayer;
-	// u8 maxHandRows;
-	// u8 playerCards;
 	u8 winnerOfTheRound=255;
 	u8 retval;
 	u8 cpu_card1=255;
@@ -4766,6 +4721,7 @@ static void gstate_playing(){
 		// Resets the game for a new round. (Does NOT impact scores.)
 		if     (game.gamestate2==GS_PLAYING_GAMESTART){
 			newGameSetup();
+			game.needCenterRedraw=1;
 			redrawMainInfoRegion();
 
 			// Reset the flags that are checked at the beginning of each hand.
@@ -4778,7 +4734,6 @@ static void gstate_playing(){
 
 			// Set the winner value to the invalid value.
 			winnerOfTheRound = 255;
-			// winnerOfTheRound = 1;
 
 			// Change the gamestate2.
 			game.gamestate2=GS_PLAYING_PLAYING;
@@ -4799,6 +4754,9 @@ static void gstate_playing(){
 			if(game.activePlayers[2]==1){ displayCards_byPlayer(3, CARDS_FACEDOWN); }
 			if(game.activePlayers[3]==1){ displayCards_byPlayer(4, CARDS_FACEDOWN); }
 
+			game.needCenterRedraw=0;
+			// game.needCenterRedraw=1;
+
 			// Main game loop. The program stays within this loop until the round is over or the gamestate2 changes.
 			while(game.gamestate2==GS_PLAYING_PLAYING){
 				clearAllUnusedReservedRamtiles();
@@ -4806,6 +4764,8 @@ static void gstate_playing(){
 				// DEBUG
 				game.handsPlayed++;
 				// DEBUG
+
+				cardsAlreadyFlippedDown=0;
 
 				// Keep in sync.
 				WaitVsync(1);
@@ -4863,6 +4823,9 @@ static void gstate_playing(){
 							if(counts.numCardsInHand<5){ randPos = counts.numCardsInHand; }
 							else                       { randPos = 4; }
 
+							displayCards_byPlayer(game.activePlayer, CARDS_FACEDOWN);
+							cardsAlreadyFlippedDown=1;
+
 							// Non-human cards are dealt face-down.
 							if(game.player_types[thisPlayer-1]!=HUMAN){
 								dealSpecifiedCard_anim(game.activePlayer, 255, randPos, CARDDRAWBASESPEED, CARDS_FACEDOWN);
@@ -4893,6 +4856,9 @@ static void gstate_playing(){
 							countColorsValuesMatches(game.activePlayer);
 							if(counts.numCardsInHand<5){ randPos = counts.numCardsInHand; }
 							else                       { randPos = 4; }
+
+							displayCards_byPlayer(game.activePlayer, CARDS_FACEDOWN);
+							cardsAlreadyFlippedDown=1;
 
 							// Non-human cards are dealt face-down.
 							if(game.player_types[thisPlayer-1]!=HUMAN){
@@ -4961,7 +4927,7 @@ static void gstate_playing(){
 				updatePlayerDisplayedData();
 
 				// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
-				redrawMainInfoRegion();
+				// redrawMainInfoRegion();
 
 				// Do we have a winner??
 				if(winnerOfTheRound!=255){
@@ -4976,7 +4942,9 @@ static void gstate_playing(){
 					WaitVsync(ENDOFTURNDELAY);
 
 					// Flip down this player's cards. (Clear ramtile usages.)
-					displayCards_byPlayer(thisPlayer, CARDS_FACEDOWN);
+					if(cardsAlreadyFlippedDown==0){
+						displayCards_byPlayer(thisPlayer, CARDS_FACEDOWN);
+					}
 
 					clearbgmessage();
 					nextPlayerNumber(255, NPN_NEXT);
@@ -4993,30 +4961,26 @@ static void gstate_playing(){
 				if     (game.activePlayer==1){
 					cursor1map=cursor2_f1_d;     // Cursor tilemap used.
 					cursor2map=cursor2_f2_d;     // Cursor tilemap used.
-					map = map1_2x3;             // vram tilemap for the card sprites.
-					w=map1_2x3[0];h=map1_2x3[1]; // Dimensions for the cards sprites.
-					// w=2; h=3;
+					w=2;h=3;                   // Dimensions for the cards sprites.
+					map[0]=w; map[1]=h;
 				}
 				else if(game.activePlayer==2){
 					cursor1map=cursor2_f1_l;
 					cursor2map=cursor2_f2_l;
-					map = map2_3x2;
-					w=map2_3x2[0];h=map2_3x2[1];
-					// w=3; h=2;
+					w=3; h=2;
+					map[0]=w; map[1]=h;
 				}
 				else if(game.activePlayer==3){
 					cursor1map=cursor2_f1_u;
 					cursor2map=cursor2_f2_u;
-					map = map1_2x3;
-					w=map1_2x3[0];h=map1_2x3[1];
-					// w=2; h=3;
+					w=2; h=3;
+					map[0]=w; map[1]=h;
 				}
 				else if(game.activePlayer==4){
 					cursor1map=cursor2_f1_r;
 					cursor2map=cursor2_f2_r;
-					map = map2_3x2;
-					w=map2_3x2[0];h=map2_3x2[1];
-					// w=3; h=2;
+					w=3; h=2;
+					map[0]=w; map[1]=h;
 				}
 				SetSpriteVisibility(true);
 
@@ -5117,33 +5081,29 @@ static void gstate_playing(){
 							// Set the map, w, h, tile_x, tile_y for the card that will move.
 							switch(game.activePlayer){
 								case 1  : {
-									map = map1_2x3 ;
-									w=map1_2x3[0];h=map1_2x3[1];
-									// w=2; h=3;
+									w=2; h=3;
+									map[0]=w; map[1]=h;
 									tile_x=pgm_read_byte(&(p1_pos[randPos][0]));
 									tile_y=pgm_read_byte(&(p1_pos[randPos][1]));
 									break;
 								}
 								case 2  : {
-									map = map2_3x2 ;
-									w=map2_3x2[0];h=map2_3x2[1];
-									// w=3; h=2;
+									w=3; h=2;
+									map[0]=w; map[1]=h;
 									tile_x=pgm_read_byte(&(p2_pos[randPos][0]));
 									tile_y=pgm_read_byte(&(p2_pos[randPos][1]));
 									break;
 								}
 								case 3  : {
-									map = map1_2x3 ;
-									w=map1_2x3[0];h=map1_2x3[1];
-									// w=2; h=3;
+									w=2; h=3;
+									map[0]=w; map[1]=h;
 									tile_x=pgm_read_byte(&(p3_pos[randPos][0]));
 									tile_y=pgm_read_byte(&(p3_pos[randPos][1]));
 									break;
 								}
 								case 4  : {
-									map = map2_3x2 ;
-									w=map2_3x2[0];h=map2_3x2[1];
-									// w=3; h=2;
+									w=3; h=2;
+									map[0]=w; map[1]=h;
 									tile_x=pgm_read_byte(&(p4_pos[randPos][0]));
 									tile_y=pgm_read_byte(&(p4_pos[randPos][1]));
 
@@ -5189,6 +5149,21 @@ static void gstate_playing(){
 							// Remove the discard card.
 							removeCard_lg();
 
+							// Draw the discard card.
+							getNewCardTilemap(
+								game.activePlayer               , // playerNum
+								LARGE_CARD                      , // size
+								cards[game.lastCardPlayed].value, // value
+								cards[game.lastCardPlayed].color, // color
+								game.vramTilemap                  // map
+							);
+
+							DrawMap_vramtiles(
+								pgm_read_byte(&(discard_pos[0])),
+								pgm_read_byte(&(discard_pos[1])),
+								game.vramTilemap
+							);
+
 							// Set action-card flags for the next turn.
 							if     (cards[game.lastCardPlayed].value==CARD_WILD_DRAW4){
 								playerDraws4=1;
@@ -5217,7 +5192,7 @@ static void gstate_playing(){
 
 						// Do this at the end of the card choose phase.
 						updatePlayerDisplayedData();
-						redrawMainInfoRegion();
+						// redrawMainInfoRegion();
 						endOfTurnFlag=1;
 
 						// Flip card hand over.
@@ -5521,6 +5496,21 @@ static void gstate_playing(){
 								// Remove the discard card.
 								removeCard_lg();
 
+								// Draw the discard card.
+								getNewCardTilemap(
+									game.activePlayer               , // playerNum
+									LARGE_CARD                      , // size
+									cards[game.lastCardPlayed].value, // value
+									cards[game.lastCardPlayed].color, // color
+									game.vramTilemap                  // map
+								);
+
+								DrawMap_vramtiles(
+									pgm_read_byte(&(discard_pos[0])),
+									pgm_read_byte(&(discard_pos[1])),
+									game.vramTilemap
+								);
+
 								// Set flags that will be used on the next player.
 
 								// Was the last card played Wild Draw 4?
@@ -5543,7 +5533,7 @@ static void gstate_playing(){
 								updatePlayerDisplayedData();
 
 								// Update the displayed color, direction, draw pile, discard pile and last played card on discard pile.
-								redrawMainInfoRegion();
+								// redrawMainInfoRegion();
 
 								endOfTurnFlag=1;
 								break;
@@ -5653,6 +5643,9 @@ static void gstate_playing(){
 				// Find and set the next active player number.
 				nextPlayerNumber(255, NPN_NEXT);
 
+				//
+				// redrawMainInfoRegion();
+
 				// Keep in sync.
 				WaitVsync(1);
 			}
@@ -5660,10 +5653,85 @@ static void gstate_playing(){
 	}
 }
 
+/*
+*/
+
 // ===== MAIN =====
-void main(){
+void main() {
+
 	// Initialize the game.
 	gameInit();
+
+/*
+Fill(0,0,VRAM_TILES_H, VRAM_TILES_V, 0x01);
+u8 arr[][4] = {
+	// { 255, LARGE_CARD, CARD_0,          CARD_YELLOW },
+	// { 255, LARGE_CARD, CARD_1,          CARD_BLUE   },
+	// { 255, LARGE_CARD, CARD_2,          CARD_RED    },
+	// { 255, LARGE_CARD, CARD_3,          CARD_GREEN  },
+	// { 255, LARGE_CARD, CARD_4,          CARD_YELLOW },
+	// { 255, LARGE_CARD, CARD_5,          CARD_BLUE   },
+	// { 255, LARGE_CARD, CARD_6,          CARD_RED    },
+	// { 255, LARGE_CARD, CARD_7,          CARD_GREEN  },
+	// { 255, LARGE_CARD, CARD_8,          CARD_YELLOW },
+	// { 255, LARGE_CARD, CARD_9,          CARD_BLUE   },
+	// { 255, LARGE_CARD, CARD_DRAW2,      CARD_RED    },
+	// { 255, LARGE_CARD, CARD_SKIP,       CARD_GREEN  },
+	// { 255, LARGE_CARD, CARD_REV,        CARD_BLUE   },
+	// { 255, LARGE_CARD, CARD_WILD,       CARD_BLACK  },
+	// { 255, LARGE_CARD, CARD_WILD_DRAW4, CARD_BLACK  },
+
+	// { 1, SMALL_CARD, CARD_0,          CARD_YELLOW },
+	// { 1, SMALL_CARD, CARD_1,          CARD_BLUE   },
+	// { 1, SMALL_CARD, CARD_2,          CARD_RED    },
+	// { 1, SMALL_CARD, CARD_3,          CARD_GREEN  },
+	// { 1, SMALL_CARD, CARD_4,          CARD_YELLOW },
+	// { 1, SMALL_CARD, CARD_5,          CARD_BLUE   },
+	// { 1, SMALL_CARD, CARD_6,          CARD_RED    },
+	// { 1, SMALL_CARD, CARD_7,          CARD_GREEN  },
+	// { 1, SMALL_CARD, CARD_8,          CARD_YELLOW },
+	// { 1, SMALL_CARD, CARD_9,          CARD_BLUE   },
+	// { 1, SMALL_CARD, CARD_DRAW2,      CARD_RED    },
+	// { 1, SMALL_CARD, CARD_SKIP,       CARD_GREEN  },
+	// { 1, SMALL_CARD, CARD_REV,        CARD_BLUE   },
+	// { 1, SMALL_CARD, CARD_WILD,       CARD_BLACK  },
+	// { 1, SMALL_CARD, CARD_WILD_DRAW4, CARD_BLACK  },
+
+	{ 2, SMALL_CARD, CARD_0,          CARD_YELLOW },
+	{ 2, SMALL_CARD, CARD_1,          CARD_BLUE   },
+	{ 2, SMALL_CARD, CARD_2,          CARD_RED    },
+	{ 2, SMALL_CARD, CARD_3,          CARD_GREEN  },
+	{ 2, SMALL_CARD, CARD_4,          CARD_YELLOW },
+	{ 2, SMALL_CARD, CARD_5,          CARD_BLUE   },
+	{ 2, SMALL_CARD, CARD_6,          CARD_RED    },
+	{ 2, SMALL_CARD, CARD_7,          CARD_GREEN  },
+	{ 2, SMALL_CARD, CARD_8,          CARD_YELLOW },
+	{ 2, SMALL_CARD, CARD_9,          CARD_BLUE   },
+	{ 2, SMALL_CARD, CARD_DRAW2,      CARD_RED    },
+	{ 2, SMALL_CARD, CARD_SKIP,       CARD_GREEN  },
+	{ 2, SMALL_CARD, CARD_REV,        CARD_BLUE   },
+	{ 2, SMALL_CARD, CARD_WILD,       CARD_BLACK  },
+	{ 2, SMALL_CARD, CARD_WILD_DRAW4, CARD_BLACK  },
+};
+	while(1){
+		for(u8 outside=0; outside<sizeof(arr)/4; outside+=1){
+			getNewCardTilemap(
+				arr[outside][0], // playerNum
+				arr[outside][1], // size
+				arr[outside][2], // value
+				arr[outside][3], // color
+				game.vramTilemap              // map
+			);
+			DrawMap_vramtiles(8+7,20, game.vramTilemap);
+			debug_showDebugData();
+			WaitVsync(10);
+			// Fill(0,0,VRAM_TILES_H, VRAM_TILES_V, 0x01);
+			Fill(8+7,20, game.vramTilemap[0], game.vramTilemap[1], 0x01);
+			removeUnusedRamtilesInTilemap(game.vramTilemap);
+			// clearAllReservedRamtiles();
+		}
+	}
+*/
 
 	// Main loop.
 	while(1){

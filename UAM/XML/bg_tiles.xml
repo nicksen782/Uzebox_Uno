@@ -9,11 +9,11 @@
   <map var-name="FULLfontset" left="18" top="2" width="16" height="4" mapOutputTo="SKIPMAP" /> 
   <map var-name="fontset" left="1" top="2" width="16" height="4" mapOutputTo="NOWHERE" /> 
   <map var-name="colorsTile" left="16" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="orange_color" left="2" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
-  <map var-name="yellow_color" left="4" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
-  <map var-name="blue_color" left="6" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
-  <map var-name="red_color" left="8" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
-  <map var-name="green_color" left="10" top="7" width="1" height="1" mapOutputTo="SKIPMAP" /> 
+  <map var-name="tile_orange_color" left="2" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="tile_yellow_color" left="4" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="tile_blue_color" left="6" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="tile_red_color" left="8" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="tile_green_color" left="10" top="7" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="wood_color1" left="3" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="wood_color2" left="4" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="border_yellow" left="6" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
@@ -56,7 +56,7 @@
   <map var-name="map_sm_draw2" left="2" top="24" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="map_lg_draw2" left="1" top="28" width="3" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="map_sm_skip" left="2" top="25" width="1" height="1" mapOutputTo="PROGMEM" /> 
-  <map var-name="map_lg_skip" left="1" top="30" width="3" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="map_lg_skip" left="1" top="30" width="2" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="map_sm_reverse" left="2" top="26" width="1" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="map_lg_reverse" left="1" top="32" width="3" height="1" mapOutputTo="PROGMEM" /> 
   <map var-name="card_front_yellow_sm" left="9" top="14" width="2" height="3" mapOutputTo="PROGMEM" /> 

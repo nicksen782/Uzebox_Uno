@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<gfx-xform version="SINGLE_TS">
+ <input file="/non-web/Uzebox/UZEUNO/UAM/IMG/font_tiles.png" type="png" tile-width="8" tile-height="8" />
+ <output file="UAM/PROGMEM/font_tiles_progmem.inc">
+ <tiles var-name="font_tiles" tilesetOutputTo="PROGMEM" removeDupeTiles="1" />
+ <maps pointers-size="8">
+  <map var-name="FULLfontset" left="17" top="0" width="16" height="4" mapOutputTo="SKIPMAP" /> 
+  <map var-name="fontset" left="0" top="0" width="16" height="4" mapOutputTo="NOWHERE" /> 
+ </maps> 
+ </output> 
+</gfx-xform> 

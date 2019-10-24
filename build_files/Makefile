@@ -28,8 +28,8 @@ KERNEL_OPTIONS += -DINTRO_LOGO=0
 KERNEL_OPTIONS += -DVIDEO_MODE=3             # Use video mode 3
 KERNEL_OPTIONS += -DSCROLLING=0              # Scrolling
 KERNEL_OPTIONS += -DRESOLUTION_EXT=1         # Use the new timing to allow for more square tiles?
-KERNEL_OPTIONS += -DVRAM_TILES_H=32          # VRAM width.
-# KERNEL_OPTIONS += -DVRAM_TILES_H=28          # VRAM width.
+# KERNEL_OPTIONS += -DVRAM_TILES_H=32          # VRAM width.
+KERNEL_OPTIONS += -DVRAM_TILES_H=28          # VRAM width.
 KERNEL_OPTIONS += -DVRAM_TILES_V=28          # VRAM height. (Must match DSCREEN_TILES_V.)
 KERNEL_OPTIONS += -DSCREEN_TILES_V=28        # VRAM height. (Must match DVRAM_TILES_V.)
 KERNEL_OPTIONS += -DFIRST_RENDER_LINE=20     # First render line.
@@ -113,10 +113,10 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 LDFLAGS = $(COMMON)
 LDFLAGS += -Wl,-Map,${GAME}.map
 LDFLAGS += -Wl,-gc-sections           # Garbage collect unused code.
-LDFLAGS += -Wl,--relax                # Enables linker relaxations.
-LDFLAGS += --param inline-call-cost=2 # Can reduce flash usage
-
-# LDFLAGS += -Wl,--section-start,.noinit=0x800100 -Wl,--section-start,.data=0x800500
+# LDFLAGS += -Wl,--relax                # Enables linker relaxations.
+# LDFLAGS += --param inline-call-cost=2 # Can reduce flash usage
+# LDFLAGS += -Wl,--section-start,.noinit=0x800100 -Wl,--section-start,.data=0x800500  # http://uzebox.org/wiki/Video_Mode_3
+# 
 # LDFLAGS += -Wl,--section-start,.noinit=0x800100 -Wl,--section-start,.data=0x800D00
 
 ## Intel Hex file production flags
@@ -243,6 +243,49 @@ size: ${TARGET}
 	# @ avr-size ${AVRSIZEFLAGS} >> lastbuild.txt
 	@ echo "===============================================================  size"
 	@ echo ""
+
+
+	# @echo --- CFLOW
+	# cflow                       \
+	#  --print-level              \
+	#  --main=gstate_playing      \
+	#  -o cflow.txt               \
+	#  --omit-symbol-names        \
+	#  --omit-arguments           \
+	#  --level-indent='0=|      ' \
+	#  --level-indent='1=|      ' \
+	#  $(GAMESRC)/UZEUNO.c
+
+	#  #--usage                    \
+	#  #--main=main                \
+	#  #--reverse                  \
+	#  #$(GAMESRC)/UZEUNO.h        \
+	#  #$(GAMESRC)/prototypes.h
+
+	# cat                      \
+	#  $(GAMESRC)/UZEUNO.c     \
+	#  > $(GAMESRC)/combined.c
+
+	#  #$(GAMESRC)/UZEUNO.h     \
+	#  #$(GAMESRC)/prototypes.h \
+
+	# @echo --- CFLOW2DOT
+	# cflow2dot -i $(GAMESRC)/combined.c -f pdf -o cflow
+	# cflow2dot -i $(GAMESRC)/combined.c -f png -o cflow2
+
+	# rm ./CFLOW/cflow.dot
+	# rm ./CFLOW/cflow.pdf
+	# rm ./CFLOW/cflow2.png
+	# rm ./CFLOW/cflow.txt
+	# rm ./CFLOW/cflow20.dot
+
+	# mv cflow0.dot  ./CFLOW/cflow.dot
+	# mv cflow0.pdf  ./CFLOW/cflow.pdf
+	# mv cflow20.png ./CFLOW/cflow2.png
+	# mv cflow.txt   ./CFLOW/cflow.txt
+	# mv cflow20.dot ./CFLOW/cflow20.dot
+	# rm $(GAMESRC)/combined.c
+
 
 ## Clean target
 # .PHONY: clean
